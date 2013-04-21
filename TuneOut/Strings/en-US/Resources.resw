@@ -313,7 +313,7 @@
   <data name="SettingsCharm/Options" xml:space="preserve">
     <value>Options</value>
   </data>
-  <data name="MainPage/AudioError/OKButton.Content" xml:space="preserve">
+  <data name="MainPage/AudioError/OKButton" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="MainPage/AudioError/Text" xml:space="preserve">

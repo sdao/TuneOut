@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace TuneOut
 {
-    internal static class TuneOutExtensions
+    internal static class TuneOutModelExtensions
     {
         /// <summary>
         /// Calculates the MD5 hash for a string.

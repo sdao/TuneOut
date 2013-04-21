@@ -184,6 +184,7 @@
       <DependentUpon>SettingsLibrary.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsUIManager.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

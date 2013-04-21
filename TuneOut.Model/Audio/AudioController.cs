@@ -865,11 +865,9 @@ namespace TuneOut.Audio
         /// reports the error. In the event that the user changes the track within
         /// the two seconds or pauses the audio transport, does nothing.
         /// </summary>
-        /// <exception cref="InvalidOperationException">if <seealso cref="Status"/> is not <seealso cref="AudioControllerStatus.Playing"/>.</exception>
         /// <exception cref="InvalidOperationException">if <seealso cref="Current"/> is null.</exception>
         private async void HandleStreamError()
         {
-            Contract.Requires<InvalidOperationException>(Status == AudioControllerStatus.Playing);
             Contract.Requires<InvalidOperationException>(Current != null);
 
             _media.Stop();

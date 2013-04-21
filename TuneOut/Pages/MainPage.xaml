@@ -104,7 +104,7 @@
                                         <TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold"/>
                                         <TextBlock Text="{Binding Track.TotalTime, Converter={StaticResource TSConverter}}" FontSize="13" Margin="10,0,0,10" TextTrimming="WordEllipsis"/>
                                     </StackPanel>
-                                    <Button Grid.Column="2" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Click="SinglePlayButton_Click" />
+                                    <Button Grid.Column="2" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Click="SinglePlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -153,70 +153,32 @@
                                     <TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis"/>
                                     <TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5" Click="CutQueueButton_Click" />
+                                <Button Grid.Column="1" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5" Click="CutQueueButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
         </Grid>
+        
+        <Rectangle x:Name="HiddenBottomEdge" VerticalAlignment="Bottom"/>
 
-        <Grid x:Name="MessageBar" Canvas.ZIndex="1" Visibility="Collapsed">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <Border Grid.ColumnSpan="2" Background="#FF4B4B4B" BorderBrush="#FFE21F26" BorderThickness="0,5,0,0"/>
-
-            <TextBlock x:Name="MessageBarText" Grid.Column="0" Text="&quot;Thriller&quot; was skipped because of a problem with the file." VerticalAlignment="Center" Margin="15,15,10,10" FontSize="{StaticResource ControlContentThemeFontSize}" TextWrapping="Wrap" />
-            <Button x:Name="MessageBarButton" x:Uid="MainPage/AudioError/OKButton" Grid.Column="1" Content="OK" Margin="10,15,15,10" Click="MessageBarButton_Click" />
-        </Grid>
-
-
-        <Grid x:Name="VolumeControlsHidden" Visibility="Collapsed">
-            <StackPanel x:Name="VolumeControlsInner">
+        <Grid x:Name="HiddenControls" Visibility="Collapsed">
+            <StackPanel x:Name="VolumeControls">
                 <local:AppBarToggleButton x:Name="MuteButton" AutoToggle="True" Style="{StaticResource FlyoutUnmutedSymbolButton}" CheckedStyle="{StaticResource FlyoutMutedSymbolButton}" HorizontalAlignment="Center" IsChecked="{Binding Controller.IsMuted, Source={StaticResource ACProxy}, Mode=TwoWay}" />
                 <Slider HorizontalAlignment="Center" VerticalAlignment="Top" Value="{Binding Controller.Volume, Source={StaticResource ACProxy}, Mode=TwoWay}" IsEnabled="{Binding Controller.IsMuted, Source={StaticResource ACProxy}, Converter={StaticResource BNConverter}}" Orientation="Vertical" Height="200" Margin="10" Style="{StaticResource SliderLight}"/>
+            </StackPanel>
+            <StackPanel x:Name="AlertControls" Margin="10">
+                <TextBlock x:Name="AlertText" Style="{StaticResource FlyoutText}"/>
+                <Button x:Name="AlertButton" Style="{StaticResource FlyoutActionButton}">
+                    <TextBlock x:Name="AlertButtonText"/>
+                </Button>
             </StackPanel>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="PageModeState">
-                <VisualState x:Name="AlbumMode">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="bottomAppBar" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="False"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="topAppBar" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="False"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="PlaylistMode">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="bottomAppBar" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="False"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="topAppBar" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="False"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-
             <VisualStateGroup x:Name="AppBarSelectionStates">
-                <VisualState x:Name="NoSelection">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="bottomAppBar" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="False"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
+                <VisualState x:Name="NoSelection"/>
                 <VisualState x:Name="SelectionQueue">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ClearQueueSelectionButton" Storyboard.TargetProperty="Visibility">
@@ -224,12 +186,6 @@
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteFromQueueButton" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="bottomAppBar" Storyboard.TargetProperty="IsSticky">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="bottomAppBar" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NowPlayingImage">
                             <DiscreteObjectKeyFrame KeyTime="0">
@@ -275,12 +231,6 @@
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddToQueueButton" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="bottomAppBar" Storyboard.TargetProperty="IsSticky">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="bottomAppBar" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NowPlayingDuration">
                             <DiscreteObjectKeyFrame KeyTime="0">
@@ -328,9 +278,6 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QueueTitle" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NowPlayingPanel" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlayButton" Storyboard.TargetProperty="IsChecked">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
                         </ObjectAnimationUsingKeyFrames>
@@ -354,22 +301,14 @@
                                 </DiscreteObjectKeyFrame.Value>
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NowPlayingSliderPanel">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <Visibility>Visible</Visibility>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NowPlayingSliderPanel" d:IsOptimized="True"/>
+                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NowPlayingPanel" d:IsOptimized="True"/>
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="PlayingPaused">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QueueTitle" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NowPlayingPanel" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RewindButton" Storyboard.TargetProperty="IsEnabled">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
@@ -391,73 +330,9 @@
                                 </DiscreteObjectKeyFrame.Value>
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NowPlayingSliderPanel">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <Visibility>Visible</Visibility>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NowPlayingPanel" d:IsOptimized="True"/>
+                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NowPlayingSliderPanel" d:IsOptimized="True"/>
                     </Storyboard>
-                </VisualState>
-                <VisualState x:Name="Error">
-                	<Storyboard>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetName="QueueTitle" Storyboard.TargetProperty="Visibility">
-                			<DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetName="NowPlayingPanel" Storyboard.TargetProperty="Visibility">
-                			<DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="QueueNowPlayingImage">
-                			<DiscreteObjectKeyFrame KeyTime="0">
-                				<DiscreteObjectKeyFrame.Value>
-                					<Visibility>Visible</Visibility>
-                				</DiscreteObjectKeyFrame.Value>
-                			</DiscreteObjectKeyFrame>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
-                			<DiscreteObjectKeyFrame KeyTime="0">
-                				<DiscreteObjectKeyFrame.Value>
-                					<Visibility>Visible</Visibility>
-                				</DiscreteObjectKeyFrame.Value>
-                			</DiscreteObjectKeyFrame>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NowPlayingSliderPanel">
-                			<DiscreteObjectKeyFrame KeyTime="0">
-                				<DiscreteObjectKeyFrame.Value>
-                					<Visibility>Visible</Visibility>
-                				</DiscreteObjectKeyFrame.Value>
-                			</DiscreteObjectKeyFrame>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="NowPlayingSlider">
-                			<DiscreteObjectKeyFrame KeyTime="0">
-                				<DiscreteObjectKeyFrame.Value>
-                					<x:Boolean>False</x:Boolean>
-                				</DiscreteObjectKeyFrame.Value>
-                			</DiscreteObjectKeyFrame>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBarToggleButton.IsChecked)" Storyboard.TargetName="PlayButton">
-                			<DiscreteObjectKeyFrame KeyTime="0">
-                				<DiscreteObjectKeyFrame.Value>
-                					<x:Boolean>True</x:Boolean>
-                				</DiscreteObjectKeyFrame.Value>
-                			</DiscreteObjectKeyFrame>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="SkipButton">
-                			<DiscreteObjectKeyFrame KeyTime="0">
-                				<DiscreteObjectKeyFrame.Value>
-                					<x:Boolean>True</x:Boolean>
-                				</DiscreteObjectKeyFrame.Value>
-                			</DiscreteObjectKeyFrame>
-                		</ObjectAnimationUsingKeyFrames>
-                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="RewindButton">
-                			<DiscreteObjectKeyFrame KeyTime="0">
-                				<DiscreteObjectKeyFrame.Value>
-                					<x:Boolean>True</x:Boolean>
-                				</DiscreteObjectKeyFrame.Value>
-                			</DiscreteObjectKeyFrame>
-                		</ObjectAnimationUsingKeyFrames>
-                	</Storyboard>
                 </VisualState>
             </VisualStateGroup>
 
@@ -484,9 +359,6 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LeftCommands" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RightCommands" Storyboard.TargetProperty="HorizontalAlignment">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Center"/>
-                        </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="topAppBar">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -501,26 +373,40 @@
                                 </DiscreteObjectKeyFrame.Value>
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NowPlayingPanel">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<Visibility>Collapsed</Visibility>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NowPlayingSliderPanel">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<Visibility>Collapsed</Visibility>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Column)" Storyboard.TargetName="RightCommands">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<x:Int32>0</x:Int32>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.ColumnSpan)" Storyboard.TargetName="RightCommands">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<x:Int32>3</x:Int32>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup x:Name="OverlayStates">
                 <VisualState x:Name="NoOverlay">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.IsOpen)" Storyboard.TargetName="topAppBar">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Boolean>False</x:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.IsOpen)" Storyboard.TargetName="bottomAppBar">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Boolean>False</x:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="QueueOverlay">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -542,20 +428,6 @@
                 </VisualState>
                 <VisualState x:Name="OverlayQueue">
                     <Storyboard AutoReverse="False">
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.IsOpen)" Storyboard.TargetName="topAppBar">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Boolean>False</x:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.IsOpen)" Storyboard.TargetName="bottomAppBar">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Boolean>False</x:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="QueueOverlay">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -584,20 +456,6 @@
                 </VisualState>
                 <VisualState x:Name="OverlayAlbum">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.IsOpen)" Storyboard.TargetName="topAppBar">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Boolean>False</x:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.IsOpen)" Storyboard.TargetName="bottomAppBar">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Boolean>False</x:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="QueueOverlay">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -630,20 +488,6 @@
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="MessageBarStates">
-            	<VisualState x:Name="NoMessageBar"/>
-            	<VisualState x:Name="DisplayMessageBar">
-            		<Storyboard>
-            			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MessageBar">
-            				<DiscreteObjectKeyFrame KeyTime="0">
-            					<DiscreteObjectKeyFrame.Value>
-            						<Visibility>Visible</Visibility>
-            					</DiscreteObjectKeyFrame.Value>
-            				</DiscreteObjectKeyFrame>
-            			</ObjectAnimationUsingKeyFrames>
-            		</Storyboard>
-            	</VisualState>
-            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
 
@@ -667,7 +511,7 @@
     </Page.TopAppBar>
 
     <Page.BottomAppBar>
-        <AppBar x:Name="bottomAppBar" Loaded="bottomAppBar_Loaded" Unloaded="bottomAppBar_Unloaded" BorderBrush="#E5111111">
+        <AppBar x:Name="bottomAppBar" Loaded="BottomAppBar_Loaded" Unloaded="BottomAppBar_Unloaded" BorderBrush="#E5111111">
             <AppBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#E5111111"/>
@@ -680,13 +524,13 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel x:Name="LeftCommands" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel x:Name="LeftCommands" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                     <Button x:Name="AddToQueueButton" x:Uid="MainPage/CmdAppBar/AddToQueueButton" Style="{StaticResource AddAppBarButtonStyle}" Visibility="Collapsed" Click="AddToQueueButton_Click" />
                     <Button x:Name="DeleteFromQueueButton" x:Uid="MainPage/CmdAppBar/DeleteFromQueueButton" Style="{StaticResource DiscardAppBarButtonStyle}" Visibility="Collapsed" Click="DeleteFromQueueButton_Click" />
                     <Button x:Name="ClearAlbumSelectionButton" x:Uid="MainPage/CmdAppBar/ClearAlbumSelectionButton" Style="{StaticResource ClearSelectionAppBarButtonStyle}" Visibility="Collapsed" Click="ClearAlbumSelectionButton_Click" />
                     <Button x:Name="ClearQueueSelectionButton" x:Uid="MainPage/CmdAppBar/ClearQueueSelectionButton" Style="{StaticResource ClearSelectionAppBarButtonStyle}" Visibility="Collapsed" Click="ClearQueueSelectionButton_Click" />
                 </StackPanel>
-                <Grid x:Name="NowPlayingPanel" Grid.Column="0" Visibility="Collapsed">
+                <Grid x:Name="NowPlayingPanel" Grid.Column="0" Opacity="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -698,7 +542,7 @@
                         <TextBlock Text="{Binding Controller.Current.Artist, Source={StaticResource ACProxy}}" TextTrimming="WordEllipsis" FontSize="13" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Grid>
-                <Grid x:Name="NowPlayingSliderPanel" Grid.Column="1" Margin="20,0" Visibility="Collapsed">
+                <Grid x:Name="NowPlayingSliderPanel" Grid.Column="1" Margin="20,0" Opacity="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -708,7 +552,7 @@
                     <Slider x:Name="NowPlayingSlider" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,8" Height="45" Maximum="{Binding Controller.Current.TotalTime, Source={StaticResource ACProxy}, Converter={StaticResource TDConverter}}" Value="{Binding Controller.Position, Source={StaticResource ACProxy}, Converter={StaticResource TDConverter}, Mode=TwoWay}" ThumbToolTipValueConverter="{StaticResource TDSConverter}" VerticalAlignment="Top"/>
                     <TextBlock x:Name="NowPlayingDuration" Grid.Column="2" Text="{Binding Controller.Current.TotalTime, Converter={StaticResource TSConverter}, Source={StaticResource ACProxy}}" FontSize="13" VerticalAlignment="Top" Margin="10,58,10,0" FontWeight="SemiBold" HorizontalAlignment="Right"/>
                 </Grid>
-                <StackPanel x:Name="RightCommands" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel x:Name="RightCommands" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button x:Name="RewindButton" x:Uid="MainPage/RewindButton" Style="{StaticResource SkipBackAppBarButtonStyle}" IsEnabled="False" Click="RewindButton_Click" />
                     <local:AppBarToggleButton x:Name="PlayButton" x:Uid="MainPage/PlayButton" Style="{StaticResource PlayAppBarButtonStyle}" CheckedStyle="{StaticResource PauseAppBarButtonStyle}" Click="PlayPauseButton_Pressed" />
                     <Button x:Name="SkipButton" x:Uid="MainPage/SkipButton" Style="{StaticResource SkipAheadAppBarButtonStyle}" IsEnabled="False" Click="SkipButton_Click" />

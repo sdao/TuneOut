@@ -27,6 +27,7 @@ namespace TuneOut
 
         Flyout _volumeFlyout;
         Flyout _playFlyout;
+        Flyout _alertFlyout;
 
         Dictionary<string, object> _pageState;
         Guid? _navigationParameter;
@@ -38,10 +39,10 @@ namespace TuneOut
             this.InitializeComponent();
 
             // Initialize volume controls
-            VolumeControlsHidden.Children.Remove(VolumeControlsInner);
+            HiddenControls.Children.Remove(VolumeControls);
 
             _volumeFlyout = new Flyout();
-            _volumeFlyout.Content = VolumeControlsInner;
+            _volumeFlyout.Content = VolumeControls;
             _volumeFlyout.Placement = PlacementMode.Top;
             _volumeFlyout.PlacementTarget = VolumeButton;
             _volumeFlyout.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
@@ -70,13 +71,15 @@ namespace TuneOut
             _playFlyout.Content = menu;
             _playFlyout.Placement = PlacementMode.Top;
             _playFlyout.PlacementTarget = PlayButton;
+            _playFlyout.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
         }
 
         public void Dispose()
         {
-            _volumeFlyout.Dispose();
-            _playFlyout.Dispose();
-            (this.Resources["ACProxy"] as AudioControllerProxy).Dispose();
+            _volumeFlyout.DisposeIfNonNull();
+            _playFlyout.DisposeIfNonNull();
+            _alertFlyout.DisposeIfNonNull();
+            (this.Resources["ACProxy"] as IDisposable).DisposeIfNonNull();
         }
 
         /// <summary>
@@ -268,20 +271,33 @@ namespace TuneOut
             }
         }
 
-        private void ShowWarningFlyout(Func<bool> dangerousAction, string warning, string action, UIElement target, PlacementMode placement)
+        /// <summary>
+        /// Shows an alert flyout.
+        /// </summary>
+        /// <param name="action">The action to perform when the flyout's button is clicked.</param>
+        /// <param name="alertText">The text to display in the flyout.</param>
+        /// <param name="alertActionText">The text to display in the flyout's button.</param>
+        /// <param name="target">The object above which the flyout will be shown. If null, the flyout will be shown at the bottom of the screen.</param>
+        private void ShowAlertFlyout(Action action, string alertText, string alertActionText, UIElement target = null)
         {
-            Flyout warningFlyout = new Flyout();
+            if (_alertFlyout != null)
+            {
+                _alertFlyout.IsOpen = false;
+                _alertFlyout.Dispose();
+            }
+
+            _alertFlyout = new Flyout();
 
             TextBlock text = new TextBlock();
-            text.Text = warning;
+            text.Text = alertText;
             text.Style = (Style)(Application.Current.Resources["FlyoutText"]);
 
             TextBlock buttonText = new TextBlock();
-            buttonText.Text = action;
+            buttonText.Text = alertActionText;
 
             Button button = new Button();
             button.Content = buttonText;
-            button.Click += (sender, e) => { warningFlyout.IsOpen = false; dangerousAction(); };
+            button.Click += (sender, e) => { _alertFlyout.IsOpen = false; action(); };
             button.Style = (Style)(Application.Current.Resources["FlyoutActionButton"]);
 
             StackPanel flyoutContents = new StackPanel();
@@ -290,11 +306,29 @@ namespace TuneOut
             flyoutContents.Children.Add(button);
             flyoutContents.Margin = new Thickness(10.0);
 
-            warningFlyout.Content = flyoutContents;
-            warningFlyout.PlacementTarget = target;
-            warningFlyout.Placement = placement;
-            warningFlyout.HostMargin = new Thickness(10.0, 0.0, 10.0, 0.0);
-            warningFlyout.IsOpen = true;
+            _alertFlyout.Content = flyoutContents;
+            _alertFlyout.HostMargin = new Thickness(10.0, 0.0, 10.0, 0.0);
+            _alertFlyout.Placement = PlacementMode.Top;
+
+            if (target != null)
+            {
+                _alertFlyout.PlacementTarget = target;
+            }
+            else if (BottomAppBar.IsOpen)
+            {
+                _alertFlyout.PlacementTarget = BottomAppBar;
+            }
+            else
+            {
+                _alertFlyout.PlacementTarget = HiddenBottomEdge;
+            }
+
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                _alertFlyout.MaxWidth = MainGrid.ActualWidth;
+            }
+
+            _alertFlyout.IsOpen = true;
         }
 
         private async void MainPage_SourceRequested(Windows.Media.PlayTo.PlayToManager sender, Windows.Media.PlayTo.PlayToSourceRequestedEventArgs args)
@@ -331,17 +365,11 @@ namespace TuneOut
 
         void Default_CurrentTrackFailed(object sender, TrackEventArgs e)
         {
-            var text = e.Track != null ?
-                   string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) :
-                   LocalizationManager.GetString("MainPage/AudioError/Text");
-
-            MessageBarText.Text = text;
-            VisualStateManager.GoToState(this, "DisplayMessageBar", true);
-        }
-
-        private void MessageBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            VisualStateManager.GoToState(this, "NoMessageBar", true);
+            ShowAlertFlyout(
+                () => { },
+                e.Track != null ? string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) : LocalizationManager.GetString("MainPage/AudioError/Text"),
+                LocalizationManager.GetString("MainPage/AudioError/OKButton")
+                );
         }
 
         #endregion
@@ -377,13 +405,15 @@ namespace TuneOut
                     {
                         _PageMode = typeof(Playlist);
                         this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.PlaylistsFlat;
-                        VisualStateManager.GoToState(this, "PlaylistMode", true);
+                        BottomAppBar.IsOpen = false;
+                        TopAppBar.IsOpen = false;
                     }
                     else
                     {
                         _PageMode = typeof(Album);
                         this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.AlbumsFlat;
-                        VisualStateManager.GoToState(this, "AlbumMode", true);
+                        BottomAppBar.IsOpen = false;
+                        TopAppBar.IsOpen = false;
                     }
                 }
             }
@@ -407,10 +437,14 @@ namespace TuneOut
                     {
                         IsQueueOverlayShown = false; // Only one at a time
                         VisualStateManager.GoToState(this, "OverlayAlbum", true);
+                        BottomAppBar.IsOpen = false;
+                        TopAppBar.IsOpen = false;
                     }
                     else
                     {
                         VisualStateManager.GoToState(this, "NoOverlay", true);
+                        BottomAppBar.IsOpen = false;
+                        TopAppBar.IsOpen = false;
                         SelectedAlbumTracks.SelectedItems.Clear();
                     }
                 }
@@ -434,12 +468,15 @@ namespace TuneOut
                     if (_IsQueueOverlayShown)
                     {
                         IsAlbumOverlayShown = false; // Only one at a time
-
                         VisualStateManager.GoToState(this, "OverlayQueue", true);
+                        BottomAppBar.IsOpen = false;
+                        TopAppBar.IsOpen = false;
                     }
                     else
                     {
                         VisualStateManager.GoToState(this, "NoOverlay", true);
+                        BottomAppBar.IsOpen = false;
+                        TopAppBar.IsOpen = false;
                         QueueTracks.SelectedItems.Clear();
                     }
                 }
@@ -510,10 +547,10 @@ namespace TuneOut
             }
         }
 
-        private void bottomAppBar_Loaded(object sender, RoutedEventArgs e)
+        private void BottomAppBar_Loaded(object sender, RoutedEventArgs e)
         {
             // Get the app bar'path root Panel.
-            Panel root = bottomAppBar.Content as Panel;
+            Panel root = BottomAppBar.Content as Panel;
             if (root != null)
             {
                 // Get the Panels that hold the controls.
@@ -529,10 +566,10 @@ namespace TuneOut
 
         }
 
-        private void bottomAppBar_Unloaded(object sender, RoutedEventArgs e)
+        private void BottomAppBar_Unloaded(object sender, RoutedEventArgs e)
         {
             // Get the app bar'path root Panel.
-            Panel root = bottomAppBar.Content as Panel;
+            Panel root = BottomAppBar.Content as Panel;
             if (root != null)
             {
                 // Get the Panels that hold the controls.
@@ -567,10 +604,14 @@ namespace TuneOut
             if (SelectedAlbumTracks.SelectedItems.Count > 0)
             {
                 VisualStateManager.GoToState(this, "SelectionAlbum", true);
+                BottomAppBar.IsSticky = true;
+                BottomAppBar.IsOpen = true;
             }
             else
             {
                 VisualStateManager.GoToState(this, "NoSelection", true);
+                BottomAppBar.IsSticky = false;
+                BottomAppBar.IsOpen = false;
             }
         }
 
@@ -604,11 +645,10 @@ namespace TuneOut
                 if (AudioController.Default.UserMutatedQueue)
                 {
                     // Prompt before replacement!
-                    ShowWarningFlyout(() =>
-                    {
-                        AudioController.Default.ReplaceAll(target, CurrentSelection, true);
-                        return true;
-                    }, String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), target.Title), LocalizationManager.GetString("Library/QueueWarning/Confirm"), (UIElement)sender, PlacementMode.Left);
+                    ShowAlertFlyout(() => AudioController.Default.ReplaceAll(target, CurrentSelection, true),
+                        String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), target.Title),
+                        LocalizationManager.GetString("Library/QueueWarning/Confirm"),
+                        (UIElement)sender);
                 }
                 else
                 {
@@ -622,11 +662,11 @@ namespace TuneOut
             if (AudioController.Default.UserMutatedQueue)
             {
                 // Prompt before replacement!
-                ShowWarningFlyout(() =>
-                {
-                    AudioController.Default.ReplaceAll(CurrentSelection, false, true);
-                    return true;
-                }, String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), CurrentSelection.Title), LocalizationManager.GetString("Library/QueueWarning/Confirm"), (UIElement)sender, PlacementMode.Top);
+                ShowAlertFlyout(() => AudioController.Default.ReplaceAll(CurrentSelection, false, true),
+                    String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"),
+                    CurrentSelection.Title),
+                    LocalizationManager.GetString("Library/QueueWarning/Confirm"),
+                    (UIElement)sender);
             }
             else
             {
@@ -639,11 +679,10 @@ namespace TuneOut
             if (AudioController.Default.UserMutatedQueue)
             {
                 // Prompt before replacement!
-                ShowWarningFlyout(() =>
-                {
-                    AudioController.Default.ReplaceAll(CurrentSelection, true, true);
-                    return true;
-                }, String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), CurrentSelection.Title), LocalizationManager.GetString("Library/QueueWarning/Confirm"), (UIElement)sender, PlacementMode.Top);
+                ShowAlertFlyout(() =>AudioController.Default.ReplaceAll(CurrentSelection, true, true),
+                    String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"),
+                    CurrentSelection.Title), LocalizationManager.GetString("Library/QueueWarning/Confirm"),
+                    (UIElement)sender);
             }
             else
             {
@@ -670,10 +709,14 @@ namespace TuneOut
             if (QueueTracks.SelectedItems.Count > 0)
             {
                 VisualStateManager.GoToState(this, "SelectionQueue", true);
+                BottomAppBar.IsSticky = true;
+                BottomAppBar.IsOpen = true;
             }
             else
             {
                 VisualStateManager.GoToState(this, "NoSelection", true);
+                BottomAppBar.IsSticky = false;
+                BottomAppBar.IsOpen = false;
             }
         }
 
