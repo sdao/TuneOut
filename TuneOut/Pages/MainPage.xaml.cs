@@ -32,6 +32,8 @@ namespace TuneOut
         Dictionary<string, object> _pageState;
         Guid? _navigationParameter;
 
+        #region Init/deinit code
+
         public MainPage()
         {
             Contract.Requires(TunesDataSource.IsLoaded);
@@ -39,12 +41,12 @@ namespace TuneOut
             this.InitializeComponent();
 
             // Initialize volume controls
-            HiddenControls.Children.Remove(VolumeControls);
+            hiddenControls.Children.Remove(volumeControls);
 
             _volumeFlyout = new Flyout();
-            _volumeFlyout.Content = VolumeControls;
+            _volumeFlyout.Content = volumeControls;
             _volumeFlyout.Placement = PlacementMode.Top;
-            _volumeFlyout.PlacementTarget = VolumeButton;
+            _volumeFlyout.PlacementTarget = volumeButton;
             _volumeFlyout.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
 
             // Initialize Play All menu
@@ -70,7 +72,7 @@ namespace TuneOut
             _playFlyout = new Flyout();
             _playFlyout.Content = menu;
             _playFlyout.Placement = PlacementMode.Top;
-            _playFlyout.PlacementTarget = PlayButton;
+            _playFlyout.PlacementTarget = playButton;
             _playFlyout.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
         }
 
@@ -79,7 +81,7 @@ namespace TuneOut
             _volumeFlyout.DisposeIfNonNull();
             _playFlyout.DisposeIfNonNull();
             _alertFlyout.DisposeIfNonNull();
-            (this.Resources["ACProxy"] as IDisposable).DisposeIfNonNull();
+            ACProxy.DisposeIfNonNull();
         }
 
         /// <summary>
@@ -107,7 +109,7 @@ namespace TuneOut
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
             pageState["PageMode"] = this.PageMode.AssemblyQualifiedName;
-            pageState["AlbumViewer.Scroll"] = FindVisualChild<ScrollViewer>(AlbumViewer).HorizontalOffset;
+            pageState["AlbumScroll"] = FindVisualChild<ScrollViewer>(albumGridView).HorizontalOffset;
         }
 
         /// <summary>
@@ -119,15 +121,11 @@ namespace TuneOut
             base.OnNavigatedTo(e);
 
             // Start receiving notifications for volume app bar button
-            var acProxy = this.Resources["ACProxy"] as AudioControllerProxy;
-            if (acProxy != null)
-            {
-                acProxy.IsSynchronizingValues = true;
-            }
+            ACProxy.IsSynchronizingValues = true;
 
             // Load the audio controller
-            AudioController.Default.CurrentTrackFailed += Default_CurrentTrackFailed;
-            AudioController.Default.StatusChanged += Default_StatusChanged;
+            AudioController.Default.CurrentTrackFailed += AudioController_CurrentTrackFailed;
+            AudioController.Default.StatusChanged += AudioController_StatusChanged;
 
             // Enable type-to-search
             Windows.ApplicationModel.Search.SearchPane.GetForCurrentView().ShowOnKeyboardInput = true;
@@ -144,14 +142,10 @@ namespace TuneOut
             base.OnNavigatedFrom(e);
 
             // Stop receiving notifications for volume app bar button
-            var abProxy = this.Resources["ACProxy"] as AudioControllerProxy;
-            if (abProxy != null)
-            {
-                abProxy.IsSynchronizingValues = false;
-            }
+            ACProxy.IsSynchronizingValues = false;
 
-            AudioController.Default.CurrentTrackFailed -= Default_CurrentTrackFailed;
-            AudioController.Default.StatusChanged -= Default_StatusChanged;
+            AudioController.Default.CurrentTrackFailed -= AudioController_CurrentTrackFailed;
+            AudioController.Default.StatusChanged -= AudioController_StatusChanged;
 
             Windows.Media.PlayTo.PlayToManager.GetForCurrentView().SourceRequested -= MainPage_SourceRequested;
         }
@@ -211,9 +205,9 @@ namespace TuneOut
                     pageMode = Type.GetType((string)_pageState["PageMode"]);
                 }
 
-                if (_pageState.ContainsKey("AlbumViewer.Scroll"))
+                if (_pageState.ContainsKey("AlbumScroll"))
                 {
-                    scroll = (double)_pageState["AlbumViewer.Scroll"];
+                    scroll = (double)_pageState["AlbumScroll"];
                 }
             }
 
@@ -223,19 +217,19 @@ namespace TuneOut
 
             if (navigationContainer != null)
             {
-                VisualStateManager.GoToState(this, "ViewerPreparing", false);
+                VisualStateManager.GoToState(this, "AlbumGridViewPreparing", false);
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     // Delay scrolling after animation
                     CurrentSelection = navigationContainer;
-                    AlbumViewer.ScrollIntoView(CurrentSelection);
+                    albumGridView.ScrollIntoView(CurrentSelection);
 
-                    VisualStateManager.GoToState(this, "ViewerReady", true);
+                    VisualStateManager.GoToState(this, "AlbumGridViewReady", true);
 
                     if (navigationItem != null)
                     {
-                        SelectedAlbumTracks.SelectedIndex = navigationContainer.IndexOf(navigationItem);
-                        SelectedAlbumTracks.ScrollIntoView(SelectedAlbumTracks.SelectedItem);
+                        albumDetailListView.SelectedIndex = navigationContainer.IndexOf(navigationItem);
+                        albumDetailListView.ScrollIntoView(albumDetailListView.SelectedItem);
                     }
                 });
 
@@ -243,15 +237,408 @@ namespace TuneOut
             }
             else if (scroll > double.Epsilon) // Don't scroll if scroll is negative or less than Epsilon
             {
-                VisualStateManager.GoToState(this, "ViewerPreparing", false);
+                VisualStateManager.GoToState(this, "AlbumGridViewPreparing", false);
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     // Delay scrolling after animation
-                    FindVisualChild<ScrollViewer>(AlbumViewer).ScrollToHorizontalOffset(scroll);
+                    FindVisualChild<ScrollViewer>(albumGridView).ScrollToHorizontalOffset(scroll);
 
-                    VisualStateManager.GoToState(this, "ViewerReady", true);
+                    VisualStateManager.GoToState(this, "AlbumGridViewReady", true);
                 });
             }
+        }
+
+        #endregion
+
+        #region AudioController events
+
+        void AudioController_StatusChanged(object sender, AudioControllerStatusEventArgs e)
+        {
+            switch (e.Status)
+            {
+                case AudioControllerStatus.Inactive:
+                    VisualStateManager.GoToState(this, "NotPlaying", true);
+                    return;
+                case AudioControllerStatus.Paused:
+                    VisualStateManager.GoToState(this, "Paused", true);
+                    return;
+                case AudioControllerStatus.Playing:
+                    VisualStateManager.GoToState(this, "Playing", true);
+                    return;
+            }
+        }
+
+        void AudioController_CurrentTrackFailed(object sender, TrackEventArgs e)
+        {
+            ShowAlertFlyout(
+                () => { },
+                e.Track != null ? string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) : LocalizationManager.GetString("MainPage/AudioError/Text"),
+                LocalizationManager.GetString("MainPage/AudioError/OKButton")
+                );
+        }
+
+        #endregion
+
+        #region Properties
+
+        ITrackContainer CurrentSelection
+        {
+            get
+            {
+                return this.DefaultViewModel["CurrentSelection"] as ITrackContainer;
+            }
+
+            set
+            {
+                this.DefaultViewModel["CurrentSelection"] = value;
+            }
+        }
+
+        Type _PageMode = null;
+        private Type PageMode
+        {
+            get
+            {
+                return _PageMode;
+            }
+
+            set
+            {
+                if (_PageMode != value)
+                {
+                    if (value == typeof(Playlist))
+                    {
+                        _PageMode = typeof(Playlist);
+                        this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.PlaylistsFlat;
+                        this.ShowAppBars();
+                    }
+                    else
+                    {
+                        _PageMode = typeof(Album);
+                        this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.AlbumsFlat;
+                        this.ShowAppBars();
+                    }
+                }
+            }
+        }
+
+        bool _IsAlbumOverlayShown = false;
+        public bool IsAlbumOverlayShown
+        {
+            get
+            {
+                return _IsAlbumOverlayShown;
+            }
+
+            private set
+            {
+                if (_IsAlbumOverlayShown != value)
+                {
+                    _IsAlbumOverlayShown = value;
+
+                    if (_IsAlbumOverlayShown)
+                    {
+                        IsQueueOverlayShown = false; // Only one at a time
+                        VisualStateManager.GoToState(this, "OverlayAlbum", true);
+                        this.ShowAppBars();
+                    }
+                    else
+                    {
+                        VisualStateManager.GoToState(this, "NoOverlay", true);
+                        albumDetailListView.SelectedItems.Clear();
+                        this.ShowAppBars();
+                    }
+                }
+            }
+        }
+
+        bool _IsQueueOverlayShown = false;
+        public bool IsQueueOverlayShown
+        {
+            get
+            {
+                return _IsQueueOverlayShown;
+            }
+
+            private set
+            {
+                if (_IsQueueOverlayShown != value)
+                {
+                    _IsQueueOverlayShown = value;
+
+                    if (_IsQueueOverlayShown)
+                    {
+                        IsAlbumOverlayShown = false; // Only one at a time
+                        VisualStateManager.GoToState(this, "OverlayQueue", true);
+                        this.ShowAppBars();
+                    }
+                    else
+                    {
+                        VisualStateManager.GoToState(this, "NoOverlay", true);
+                        queueListView.SelectedItems.Clear();
+                        this.ShowAppBars();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Top app bar commands
+
+        private void navigateOpenQueueButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsQueueOverlayShown)
+            {
+                IsQueueOverlayShown = false;
+            }
+            else
+            {
+                IsQueueOverlayShown = true;
+            }
+        }
+
+        private void navigateToAlbumsButton_Click(object sender, RoutedEventArgs e)
+        {
+            PageMode = typeof(Album);
+        }
+
+        private void navigateToPlaylistsButton_Click(object sender, RoutedEventArgs e)
+        {
+            PageMode = typeof(Playlist);
+        }
+
+        #endregion
+
+        #region Bottom app bar commands
+
+        private void playButton_Click(object sender, object e)
+        {
+            if (AudioController.Default.Status == AudioControllerStatus.Inactive)
+            {
+                // Show a Play All menu
+                _playFlyout.IsOpen = true;
+            }
+            else if (AudioController.Default.Status == AudioControllerStatus.Paused)
+            {
+                AudioController.Default.Play();
+            }
+            else
+            {
+                AudioController.Default.Pause();
+            }
+        }
+
+        private void volumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            _volumeFlyout.IsOpen = true;
+        }
+
+        private void skipBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AudioController.Default.Status == AudioControllerStatus.Playing || AudioController.Default.Status == AudioControllerStatus.Paused)
+            {
+                AudioController.Default.SkipBack();
+            }
+        }
+
+        private void skipAheadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AudioController.Default.Status == AudioControllerStatus.Playing || AudioController.Default.Status == AudioControllerStatus.Paused)
+            {
+                AudioController.Default.SkipAhead();
+            }
+        }
+
+        private void clearQueueSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            queueListView.SelectedItems.Clear();
+        }
+
+        private void clearAlbumSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            albumDetailListView.SelectedItems.Clear();
+        }
+
+        private void addSelectionToQueueButton_Click(object sender, RoutedEventArgs e)
+        {
+            AudioController.Default.Add(albumDetailListView.SelectedItems
+                .Cast<IndexedTrack>()
+                .Select((p) => p.Track), true);
+
+            if (AudioController.Default.Status == AudioControllerStatus.Inactive)
+            {
+                AudioController.Default.Play();
+            }
+
+            albumDetailListView.SelectedItems.Clear();
+        }
+
+        private void deleteSelectionFromQueueButton_Click(object sender, RoutedEventArgs e)
+        {
+            var itemsToDelete = queueListView.SelectedItems.Cast<UniqueTrack>().ToList();
+            foreach (UniqueTrack t in itemsToDelete)
+            {
+                AudioController.Default.Remove(t);
+            }
+        }
+
+        private void BottomAppBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Get the app bar'path root Panel.
+            Panel root = BottomAppBar.Content as Panel;
+            if (root != null)
+            {
+                // Get the Panels that hold the controls.
+                foreach (Panel panel in root.Children)
+                {
+                    // Get each control and register for layout updates.
+                    foreach (UIElement child in panel.Children)
+                    {
+                        base.StartLayoutUpdates(child, new RoutedEventArgs());
+                    }
+                }
+            }
+
+        }
+
+        private void BottomAppBar_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Get the app bar'path root Panel.
+            Panel root = BottomAppBar.Content as Panel;
+            if (root != null)
+            {
+                // Get the Panels that hold the controls.
+                foreach (Panel panel in root.Children)
+                {
+                    // Get each control and unregister layout updates.
+                    foreach (UIElement child in panel.Children)
+                    {
+                        base.StopLayoutUpdates(child, new RoutedEventArgs());
+                    }
+                }
+            }
+        }
+        
+        #endregion
+
+        #region UI: Album detail overlay
+
+        private void albumGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CurrentSelection = e.ClickedItem as ITrackContainer;
+            IsAlbumOverlayShown = true;
+        }
+
+        private void albumDetailBlackOverlay_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            IsAlbumOverlayShown = false;
+        }
+
+        private void albumDetailListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.ShowAppBars();
+        }
+
+        private void albumDetailListView_ItemPlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement senderElement;
+            if ((senderElement = sender as FrameworkElement) != null
+                && senderElement.Tag is IndexedTrack)
+            {
+                Track target = ((IndexedTrack)senderElement.Tag).Track;
+
+                if (AudioController.Default.UserMutatedQueue)
+                {
+                    // Prompt before replacement!
+                    ShowAlertFlyout(() => AudioController.Default.ReplaceAll(target, CurrentSelection, true),
+                        String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), target.Title),
+                        LocalizationManager.GetString("Library/QueueWarning/Confirm"),
+                        (UIElement)sender);
+                }
+                else
+                {
+                    AudioController.Default.ReplaceAll(target, CurrentSelection, true);
+                }
+            }
+        }
+
+        private void playAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AudioController.Default.UserMutatedQueue)
+            {
+                // Prompt before replacement!
+                ShowAlertFlyout(() => AudioController.Default.ReplaceAll(CurrentSelection, false, true),
+                    String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"),
+                    CurrentSelection.Title),
+                    LocalizationManager.GetString("Library/QueueWarning/Confirm"),
+                    (UIElement)sender);
+            }
+            else
+            {
+                AudioController.Default.ReplaceAll(CurrentSelection, false, true);
+            }
+        }
+
+        private void shuffleAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AudioController.Default.UserMutatedQueue)
+            {
+                // Prompt before replacement!
+                ShowAlertFlyout(() =>AudioController.Default.ReplaceAll(CurrentSelection, true, true),
+                    String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"),
+                    CurrentSelection.Title), LocalizationManager.GetString("Library/QueueWarning/Confirm"),
+                    (UIElement)sender);
+            }
+            else
+            {
+                AudioController.Default.ReplaceAll(CurrentSelection, true, true);
+            }
+        }
+
+        private void queueAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            AudioController.Default.Add(CurrentSelection.TrackList, true);
+        }
+
+        #endregion
+
+        #region UI: Queue overlay
+
+        private void queueBlackOverlay_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            IsQueueOverlayShown = false;
+        }
+
+        private void queueListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.ShowAppBars();
+        }
+
+        private void queueListView_ItemPlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement senderElement;
+            if ((senderElement = sender as FrameworkElement) != null
+                && senderElement.Tag is UniqueTrack)
+            {
+                AudioController.Default.Play((UniqueTrack)senderElement.Tag);
+            }
+        }
+
+        #endregion
+
+        private async void MainPage_SourceRequested(Windows.Media.PlayTo.PlayToManager sender, Windows.Media.PlayTo.PlayToSourceRequestedEventArgs args)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                try
+                {
+                    Windows.Media.PlayTo.PlayToSourceDeferral deferral = args.SourceRequest.GetDeferral();
+                    args.SourceRequest.SetSource(AudioController.Default.PlayToSource);
+                    deferral.Complete();
+                }
+                catch (Exception) { }
+            });
         }
 
         /// <summary>
@@ -320,442 +707,48 @@ namespace TuneOut
             }
             else
             {
-                _alertFlyout.PlacementTarget = HiddenBottomEdge;
+                _alertFlyout.PlacementTarget = hiddenBottomEdge;
             }
 
             if (ApplicationView.Value == ApplicationViewState.Snapped)
             {
-                _alertFlyout.MaxWidth = MainGrid.ActualWidth;
+                _alertFlyout.MaxWidth = mainGrid.ActualWidth;
             }
 
             _alertFlyout.IsOpen = true;
         }
 
         /// <summary>
-        /// Shows or hides the app bars.
+        /// Shows or hides the app bars depending on the UI state.
         /// </summary>
-        /// <param name="top">Whether to modify the top app bar.</param>
-        /// <param name="bottom">Whether to modify the bottom app bar.</param>
-        /// <param name="open">Whether to open or close the app bars.</param>
-        /// <param name="sticky">Whether to make the app bar sticky, if opening.</param>
-        private void ShowAppBar(bool top, bool bottom, bool open, bool sticky)
+        private void ShowAppBars()
         {
-            if (top)
+            if (BottomAppBar == null || TopAppBar == null)
             {
-                TopAppBar.IsSticky = sticky && open;
-                TopAppBar.IsOpen = open;
+                return;
             }
-
-            if (bottom)
-            {
-                BottomAppBar.IsSticky = sticky && open;
-                BottomAppBar.IsOpen = open;
-            }
-        }
-
-        private async void MainPage_SourceRequested(Windows.Media.PlayTo.PlayToManager sender, Windows.Media.PlayTo.PlayToSourceRequestedEventArgs args)
-        {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                try
-                {
-                    Windows.Media.PlayTo.PlayToSourceDeferral deferral = args.SourceRequest.GetDeferral();
-                    args.SourceRequest.SetSource(AudioController.Default.PlayToSource);
-                    deferral.Complete();
-                }
-                catch (Exception) { }
-            });
-        }
-
-        #region AudioController events
-
-        void Default_StatusChanged(object sender, AudioControllerStatusEventArgs e)
-        {
-            switch (e.Status)
-            {
-                case AudioControllerStatus.Inactive:
-                    VisualStateManager.GoToState(this, "NotPlaying", true);
-                    return;
-                case AudioControllerStatus.Paused:
-                    VisualStateManager.GoToState(this, "PlayingPaused", true);
-                    return;
-                case AudioControllerStatus.Playing:
-                    VisualStateManager.GoToState(this, "Playing", true);
-                    return;
-            }
-        }
-
-        void Default_CurrentTrackFailed(object sender, TrackEventArgs e)
-        {
-            ShowAlertFlyout(
-                () => { },
-                e.Track != null ? string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) : LocalizationManager.GetString("MainPage/AudioError/Text"),
-                LocalizationManager.GetString("MainPage/AudioError/OKButton")
-                );
-        }
-
-        #endregion
-
-        #region Properties
-
-        ITrackContainer CurrentSelection
-        {
-            get
-            {
-                return this.DefaultViewModel["CurrentSelection"] as ITrackContainer;
-            }
-
-            set
-            {
-                this.DefaultViewModel["CurrentSelection"] = value;
-            }
-        }
-
-        Type _PageMode = null;
-        private Type PageMode
-        {
-            get
-            {
-                return _PageMode;
-            }
-
-            set
-            {
-                if (_PageMode != value)
-                {
-                    if (value == typeof(Playlist))
-                    {
-                        _PageMode = typeof(Playlist);
-                        this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.PlaylistsFlat;
-                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
-                    }
-                    else
-                    {
-                        _PageMode = typeof(Album);
-                        this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.AlbumsFlat;
-                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
-                    }
-                }
-            }
-        }
-
-        bool _IsAlbumOverlayShown = false;
-        public bool IsAlbumOverlayShown
-        {
-            get
-            {
-                return _IsAlbumOverlayShown;
-            }
-
-            private set
-            {
-                if (_IsAlbumOverlayShown != value)
-                {
-                    _IsAlbumOverlayShown = value;
-
-                    if (_IsAlbumOverlayShown)
-                    {
-                        IsQueueOverlayShown = false; // Only one at a time
-                        VisualStateManager.GoToState(this, "OverlayAlbum", true);
-                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
-                    }
-                    else
-                    {
-                        VisualStateManager.GoToState(this, "NoOverlay", true);
-                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
-                        SelectedAlbumTracks.SelectedItems.Clear();
-                    }
-                }
-            }
-        }
-
-        bool _IsQueueOverlayShown = false;
-        public bool IsQueueOverlayShown
-        {
-            get
-            {
-                return _IsQueueOverlayShown;
-            }
-
-            private set
-            {
-                if (_IsQueueOverlayShown != value)
-                {
-                    _IsQueueOverlayShown = value;
-
-                    if (_IsQueueOverlayShown)
-                    {
-                        IsAlbumOverlayShown = false; // Only one at a time
-                        VisualStateManager.GoToState(this, "OverlayQueue", true);
-                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
-                    }
-                    else
-                    {
-                        VisualStateManager.GoToState(this, "NoOverlay", true);
-                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
-                        QueueTracks.SelectedItems.Clear();
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region App bar commands
-
-        private void QueueButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsQueueOverlayShown)
-            {
-                IsQueueOverlayShown = false;
-            }
-            else
-            {
-                IsQueueOverlayShown = true;
-            }
-        }
-
-        private void NavAlbums_Click(object sender, RoutedEventArgs e)
-        {
-            PageMode = typeof(Album);
-        }
-
-        private void NavPlaylists_Click(object sender, RoutedEventArgs e)
-        {
-            PageMode = typeof(Playlist);
-        }
-
-        private void PlayPauseButton_Pressed(object sender, object e)
-        {
-            if (AudioController.Default.Status == AudioControllerStatus.Inactive)
-            {
-                // Show a Play All menu
-                _playFlyout.IsOpen = true;
-            }
-            else if (AudioController.Default.Status == AudioControllerStatus.Paused)
-            {
-                AudioController.Default.Play();
-            }
-            else
-            {
-                AudioController.Default.Pause();
-            }
-        }
-
-        private void VolumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            _volumeFlyout.IsOpen = true;
-        }
-
-        private void RewindButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AudioController.Default.Status == AudioControllerStatus.Playing || AudioController.Default.Status == AudioControllerStatus.Paused)
-            {
-                AudioController.Default.SkipBack();
-            }
-        }
-
-        private void SkipButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AudioController.Default.Status == AudioControllerStatus.Playing || AudioController.Default.Status == AudioControllerStatus.Paused)
-            {
-                AudioController.Default.SkipAhead();
-            }
-        }
-
-        private void BottomAppBar_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Get the app bar'path root Panel.
-            Panel root = BottomAppBar.Content as Panel;
-            if (root != null)
-            {
-                // Get the Panels that hold the controls.
-                foreach (Panel panel in root.Children)
-                {
-                    // Get each control and register for layout updates.
-                    foreach (UIElement child in panel.Children)
-                    {
-                        base.StartLayoutUpdates(child, new RoutedEventArgs());
-                    }
-                }
-            }
-
-        }
-
-        private void BottomAppBar_Unloaded(object sender, RoutedEventArgs e)
-        {
-            // Get the app bar'path root Panel.
-            Panel root = BottomAppBar.Content as Panel;
-            if (root != null)
-            {
-                // Get the Panels that hold the controls.
-                foreach (Panel panel in root.Children)
-                {
-                    // Get each control and unregister layout updates.
-                    foreach (UIElement child in panel.Children)
-                    {
-                        base.StopLayoutUpdates(child, new RoutedEventArgs());
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region UI: Album overlay
-
-        private void AlbumViewer_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            CurrentSelection = e.ClickedItem as ITrackContainer;
-            IsAlbumOverlayShown = true;
-        }
-
-        private void ClickCatcher_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            IsAlbumOverlayShown = false;
-        }
-
-        private void SelectedAlbumTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (SelectedAlbumTracks.SelectedItems.Count > 0)
+            else if (IsAlbumOverlayShown && albumDetailListView != null && albumDetailListView.SelectedItems.Count != 0)
             {
                 VisualStateManager.GoToState(this, "SelectionAlbum", true);
-                this.ShowAppBar(top: false, bottom: true, open: true, sticky: true);
+
+                BottomAppBar.IsSticky = true;
+                BottomAppBar.IsOpen = true;
             }
-            else
-            {
-                VisualStateManager.GoToState(this, "NoSelection", true);
-                this.ShowAppBar(top: false, bottom: true, open: false, sticky: false);
-            }
-        }
-
-        private void ClearAlbumSelectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedAlbumTracks.SelectedItems.Clear();
-        }
-
-        private void AddToQueueButton_Click(object sender, RoutedEventArgs e)
-        {
-            AudioController.Default.Add(SelectedAlbumTracks.SelectedItems
-                .Cast<IndexedTrack>()
-                .Select((p) => p.Track), true);
-
-            if (AudioController.Default.Status == AudioControllerStatus.Inactive)
-            {
-                AudioController.Default.Play();
-            }
-
-            SelectedAlbumTracks.SelectedItems.Clear();
-        }
-
-        private void SinglePlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            FrameworkElement senderElement;
-            if ((senderElement = sender as FrameworkElement) != null
-                && senderElement.Tag is IndexedTrack)
-            {
-                Track target = ((IndexedTrack)senderElement.Tag).Track;
-
-                if (AudioController.Default.UserMutatedQueue)
-                {
-                    // Prompt before replacement!
-                    ShowAlertFlyout(() => AudioController.Default.ReplaceAll(target, CurrentSelection, true),
-                        String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), target.Title),
-                        LocalizationManager.GetString("Library/QueueWarning/Confirm"),
-                        (UIElement)sender);
-                }
-                else
-                {
-                    AudioController.Default.ReplaceAll(target, CurrentSelection, true);
-                }
-            }
-        }
-
-        private void PlayWholeAlbumButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AudioController.Default.UserMutatedQueue)
-            {
-                // Prompt before replacement!
-                ShowAlertFlyout(() => AudioController.Default.ReplaceAll(CurrentSelection, false, true),
-                    String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"),
-                    CurrentSelection.Title),
-                    LocalizationManager.GetString("Library/QueueWarning/Confirm"),
-                    (UIElement)sender);
-            }
-            else
-            {
-                AudioController.Default.ReplaceAll(CurrentSelection, false, true);
-            }
-        }
-
-        private void ShuffleWholeAlbumButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AudioController.Default.UserMutatedQueue)
-            {
-                // Prompt before replacement!
-                ShowAlertFlyout(() =>AudioController.Default.ReplaceAll(CurrentSelection, true, true),
-                    String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"),
-                    CurrentSelection.Title), LocalizationManager.GetString("Library/QueueWarning/Confirm"),
-                    (UIElement)sender);
-            }
-            else
-            {
-                AudioController.Default.ReplaceAll(CurrentSelection, true, true);
-            }
-        }
-
-        private void QueueWholeAlbumButton_Click(object sender, RoutedEventArgs e)
-        {
-            AudioController.Default.Add(CurrentSelection.TrackList, true);
-        }
-
-        #endregion
-
-        #region UI: Queue flyout
-
-        private void QueueClickCatcher_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            IsQueueOverlayShown = false;
-        }
-
-        private void QueueTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (QueueTracks.SelectedItems.Count > 0)
+            else if (IsQueueOverlayShown && queueListView != null && queueListView.SelectedItems.Count != 0)
             {
                 VisualStateManager.GoToState(this, "SelectionQueue", true);
-                this.ShowAppBar(top: false, bottom: true, open: true, sticky: true);
+
+                BottomAppBar.IsSticky = true;
+                BottomAppBar.IsOpen = true;
             }
             else
             {
                 VisualStateManager.GoToState(this, "NoSelection", true);
-                this.ShowAppBar(top: false, bottom: true, open: false, sticky: false);
+
+                BottomAppBar.IsSticky = false;
+                BottomAppBar.IsOpen = false;
+                TopAppBar.IsOpen = false;
             }
         }
-
-        private void ClearQueueSelectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            QueueTracks.SelectedItems.Clear();
-        }
-
-        private void CutQueueButton_Click(object sender, RoutedEventArgs e)
-        {
-            FrameworkElement senderElement;
-            if ((senderElement = sender as FrameworkElement) != null
-                && senderElement.Tag is UniqueTrack)
-            {
-                AudioController.Default.Play((UniqueTrack)senderElement.Tag);
-            }
-        }
-
-        private void DeleteFromQueueButton_Click(object sender, RoutedEventArgs e)
-        {
-            var itemsToDelete = QueueTracks.SelectedItems.Cast<UniqueTrack>().ToList();
-            foreach (UniqueTrack t in itemsToDelete)
-            {
-                AudioController.Default.Remove(t);
-            }
-        }
-
-        #endregion
     }
 }

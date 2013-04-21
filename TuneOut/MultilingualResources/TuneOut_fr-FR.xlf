@@ -29,7 +29,7 @@
         <trans-unit id="Resources\TransportControls\Volume\Active_F" translate="yes" xml:space="preserve">
           <source>Volume
 {0}</source>
-          <target state="translated" state-qualifier="mt-suggestion">Volume
+          <target state="translated">Volume
 {0}</target>
           <note from="MultilingualBuild" priority="2" annotates="source">Two lines: indiate Volume on 1st, \n, {0}=volume on 2nd</note>
         </trans-unit>
