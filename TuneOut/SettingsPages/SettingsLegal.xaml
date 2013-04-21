@@ -1,0 +1,21 @@
+﻿<UserControl
+    x:Class="TuneOut.SettingsLegal"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TuneOut"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock x:Uid="Legal/Privacy/Header" FontSize="15" FontWeight="SemiBold" Margin="6,0,0,4">Privacy Policy</TextBlock>
+            <TextBlock x:Uid="Legal/Privacy/Content" FontSize="15" TextWrapping="Wrap" Margin="6,0,0,4">TuneOut uses your Internet connection to download album art and to connect to Last.fm</TextBlock>
+            <HyperlinkButton x:Uid="Legal/Privacy/Link" Content="View Privacy Policy" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="https://sites.google.com/site/pamplemoussesoftware/tuneout-privacy-policy"/>
+
+            <TextBlock x:Uid="Legal/Credits/Header" FontSize="15" FontWeight="SemiBold" Margin="6,10,0,4">Credits and Licenses</TextBlock>
+            <TextBlock x:Uid="Legal/Credits/Content" FontSize="15" TextWrapping="Wrap" Margin="6,0,0,4">TuneOut uses software components under license</TextBlock>
+            <HyperlinkButton x:Uid="Legal/Credits/Link" Content="View Credits" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="https://sites.google.com/site/pamplemoussesoftware/tuneout-credits"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

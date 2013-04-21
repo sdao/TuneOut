@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="fr-FR" original="TuneOut_Multilingual.prilog.xml" tool-id="MultilingualAppToolkit" product-name="TuneOut" product-version="1.0.0.0" build-num="0001">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="1.2.2017.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="Resources">
+        <trans-unit id="Resources\Library\QueueWarning\Text_F" translate="yes" xml:space="preserve">
+          <source>Playing “{0}” will replace the contents of your Queue.</source>
+          <target state="translated">Si vous lisez « {0} », les morceaux précédemment ajoutés à votre file d'attente seront remplacés.</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=Item name</note>
+        </trans-unit>
+        <trans-unit id="Resources\Library\QueueWarning\Confirm" translate="yes" xml:space="preserve">
+          <source>Play anyway</source>
+          <target state="translated">Lire quand même</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Confirmation button</note>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\LastFm\LoggedInNote_F" translate="yes" xml:space="preserve">
+          <source>Your account: {0}</source>
+          <target state="translated" state-qualifier="mt-suggestion">Votre compte : {0}</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=Last.fm username</note>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\Linked_F" translate="yes" xml:space="preserve">
+          <source>Your iTunes Library: {0}</source>
+          <target state="translated" state-qualifier="mt-suggestion">Votre bibliothèque iTunes : {0}</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=iTunes Library path</note>
+        </trans-unit>
+        <trans-unit id="Resources\TransportControls\Volume\Active_F" translate="yes" xml:space="preserve">
+          <source>Volume
+{0}</source>
+          <target state="translated" state-qualifier="mt-suggestion">Volume
+{0}</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Two lines: indiate Volume on 1st, \n, {0}=volume on 2nd</note>
+        </trans-unit>
+        <trans-unit id="Resources\TransportControls\Volume\Muted" translate="yes" xml:space="preserve">
+          <source>Muted
+</source>
+          <target state="translated">Muet
+</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Two lines: indicate Muted on 1st, \n, blank on 2nd</note>
+        </trans-unit>
+        <trans-unit id="Resources\LastFmLoginPage\CancelButton\Content" translate="yes" xml:space="preserve">
+          <source>Cancel Last.fm login</source>
+          <target state="translated">Annuler</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Cancel before finishing</note>
+        </trans-unit>
+        <trans-unit id="Resources\LastFmLoginPage\ErrorText\Text" translate="yes" xml:space="preserve">
+          <source>There was a problem connecting to the Last.fm site. Please try again later.</source>
+          <target state="translated">Un problème s'est produit lors de la connexion au site Last.fm. Veuillez essayer de nouveau plus tard.</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Shown after error</note>
+        </trans-unit>
+        <trans-unit id="Resources\LastFmLoginPage\FinishButton\Content" translate="yes" xml:space="preserve">
+          <source>Finish Last.fm login!</source>
+          <target state="translated">Continuer !</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Finish after done logging in</note>
+        </trans-unit>
+        <trans-unit id="Resources\LastFmLoginPage\FinishText\Text" translate="yes" xml:space="preserve">
+          <source>Thank you for logging into Last.fm! Click Finish to continue.</source>
+          <target state="translated">Merci d'avoir connecté à Last.fm ! Cliquez sur Continuer.</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Shown after login</note>
+        </trans-unit>
+        <trans-unit id="Resources\LastFmLoginPage\Title\Text" translate="yes" xml:space="preserve">
+          <source>Login to Last.fm</source>
+          <target state="translated" state-qualifier="mt-suggestion">Connectez-vous à Last.fm</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Page title</note>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\CmdAppBar\AddToQueueButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Add to Queue</source>
+          <target state="translated" state-qualifier="mt-suggestion">Ajouter à la file d'attente</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">App bar</note>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\CmdAppBar\ClearAlbumSelectionButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Clear Selection</source>
+          <target state="translated" state-qualifier="mt-suggestion">Effacer la sélection</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">App bar</note>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\CmdAppBar\ClearQueueSelectionButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Clear Selection</source>
+          <target state="translated" state-qualifier="mt-suggestion">Effacer la sélection</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">App bar</note>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\CmdAppBar\DeleteFromQueueButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Remove from Queue</source>
+          <target state="translated" state-qualifier="mt-suggestion">Supprimer de la file d'attente</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">App bar</note>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\NavAppBar\QueueButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Queue</source>
+          <target state="translated">File d'attente de lecture</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">App bar</note>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\QueuePaneTitle\Text" translate="yes" xml:space="preserve">
+          <source>Queue</source>
+          <target state="translated">File d'attente</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Title of Queue flyout</note>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\BrowseButton\Content" translate="yes" xml:space="preserve">
+          <source>Browse for iTunes Library…</source>
+          <target state="translated">Rechercher votre bibliothèque iTunes...</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\ErrorText\Text" translate="yes" xml:space="preserve">
+          <source>Sorry for the inconvenience, but TuneOut could not read your iTunes Library. Please try selecting it again, or choose another folder.</source>
+          <target state="translated">Désolé ! TuneOut ne peut pas lire votre bibliothéque iTunes. Veuillez la choisir de nouveau, ou choisissez un autre dossier.</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\IntroText\Text" translate="yes" xml:space="preserve">
+          <source>TuneOut needs to find your iTunes Library folder to continue. It must be setup to copy files to iTunes Media folder when adding to library. No protected tracks will be loaded.</source>
+          <target state="translated">TuneOut a besoin de trouver votre bibliothèque iTunes. Il faut avoir choisi le préférence « Copier dans le dossier iTunes Media les fichiers ajoutés à la bibliothèque ». Aucun fichier protégé ne sera chargé.</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\MacPath\Text" translate="yes" xml:space="preserve">
+          <source>Macintosh HD &gt; Users &gt; (User Name) &gt; Music &gt; iTunes</source>
+          <target state="translated">Macintosh HD &gt; Utilisateurs &gt; (Nom d'utilisateur) &gt; Musique &gt; iTunes</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\MacText\Text" translate="yes" xml:space="preserve">
+          <source>If you are running Apple Boot Camp, and your iTunes Library was created in Mac OS X, it is probably located at:</source>
+          <target state="translated">Si vous utilisez Apple Boot Camp et vous avez créé votre bibliothèque iTunes sous Mac OS X, elle est située par défaut à :</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\Title\Text" translate="yes" xml:space="preserve">
+          <source>Link iTunes Library</source>
+          <target state="translated">Lier TuneOut à une bibliothèque iTunes</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\WindowsPath\Text" translate="yes" xml:space="preserve">
+          <source>Music Library &gt; iTunes</source>
+          <target state="translated">Bibliothèque Musique &gt; iTunes</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\WindowsText\Text" translate="yes" xml:space="preserve">
+          <source>If your iTunes Library was created in Windows, it is probably located at:</source>
+          <target state="translated">Si vous avez créé votre bibliothèque iTunes sous Windows, elle est située par défaut à :</target>
+        </trans-unit>
+        <trans-unit id="Resources\Legal\Privacy\Content\Text" translate="yes" xml:space="preserve">
+          <source>TuneOut uses your Internet connection to download album art and to connect to Last.fm</source>
+          <target state="translated">TuneOut utilise votre connexion Internet pour télécharger des pochettes d'album et pour vous connecter à Last.fm</target>
+        </trans-unit>
+        <trans-unit id="Resources\Legal\Privacy\Header\Text" translate="yes" xml:space="preserve">
+          <source>Privacy Policy</source>
+          <target state="translated" state-qualifier="mt-suggestion">Politique de confidentialité</target>
+        </trans-unit>
+        <trans-unit id="Resources\Legal\Privacy\Link\Content" translate="yes" xml:space="preserve">
+          <source>View Privacy Policy Online</source>
+          <target state="translated">Lire la politique en ligne</target>
+        </trans-unit>
+        <trans-unit id="Resources\SearchResultsPage\NoResultsText\Text" translate="yes" xml:space="preserve">
+          <source>No results match your search.</source>
+          <target state="translated">Aucun résultat de recherche.</target>
+        </trans-unit>
+        <trans-unit id="Resources\SearchResultsPage\SubtitleText\Text" translate="yes" xml:space="preserve">
+          <source>Results for </source>
+          <target state="translated">Résulats pour</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Must end with a non-breaking space (U+00a0)</note>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Internet\ForceDownloadSwitch\Header" translate="yes" xml:space="preserve">
+          <source>Download album art even when roaming</source>
+          <target state="translated">Télécharger des pochettes en itinérance</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Internet\Header\Text" translate="yes" xml:space="preserve">
+          <source>Internet</source>
+          <target state="translated" state-qualifier="mt-suggestion">Internet</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Internet\Instructions1\Text" translate="yes" xml:space="preserve">
+          <source>Last.fm scrobbling always occurs when Internet is available</source>
+          <target state="translated">Le scrobbling sur Last.fm se produit toujours lorsqu'une connexion Internet est disponible</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Instructions about Last.fm scrobbling always occurring</note>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Internet\Instructions2\Text" translate="yes" xml:space="preserve">
+          <source>However, by default, album art is not downloaded when roaming</source>
+          <target state="translated">Toutefois, par défaut, TuneOut ne télécharge pas de pochettes d'album avec une connexion en itinérance</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Instructions about album art downloading</note>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\LastFm\Header\Text" translate="yes" xml:space="preserve">
+          <source>Last.fm</source>
+          <target state="translated">Last.fm</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\LastFm\Instructions\Text" translate="yes" xml:space="preserve">
+          <source>Scrobble with Last.fm</source>
+          <target state="translated">Scrobbler avec Last.fm</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\LastFm\LoginButton\Content" translate="yes" xml:space="preserve">
+          <source>Login to Last.fm</source>
+          <target state="translated">Se connecter à Last.fm</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\LastFm\LogoutButton\Content" translate="yes" xml:space="preserve">
+          <source>Logout of Last.fm</source>
+          <target state="translated">Se déconnecter de Last.fm</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\LastFm\NotLoggedInNote\Text" translate="yes" xml:space="preserve">
+          <source>You are not logged in</source>
+          <target state="translated">Vous n'êtes pas connecté(e)</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\Header\Text" translate="yes" xml:space="preserve">
+          <source>iTunes Library</source>
+          <target state="translated" state-qualifier="mt-suggestion">Bibliothèque iTunes</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\Instructions\Text" translate="yes" xml:space="preserve">
+          <source>You can reset TuneOut and choose a different iTunes Library</source>
+          <target state="translated">Vous pouvez réinitialiser TuneOut et choisir une autre bibliothèque iTunes</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\NotLinked\Text" translate="yes" xml:space="preserve">
+          <source>TuneOut is not linked to an iTunes Library</source>
+          <target state="translated">TuneOut n'est lié à aucune bibliothèque iTunes</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\ResetButton\Content" translate="yes" xml:space="preserve">
+          <source>Reset iTunes Library</source>
+          <target state="translated" state-qualifier="mt-suggestion">Réinitialiser la bibliothèque iTunes</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\ResetWarning\Cancel" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated" state-qualifier="mt-suggestion">Annuler</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\ResetWarning\Confirm" translate="yes" xml:space="preserve">
+          <source>Confirm reset</source>
+          <target state="translated">Réinitialiser</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\ResetWarning\Text" translate="yes" xml:space="preserve">
+          <source>Are you sure you want to reset your iTunes Library settings? No files on disk will be deleted.</source>
+          <target state="translated">Voulez-vous vraiment réinitialiser vos paramètres de bibliothèque iTunes ? Aucun fichier sur le disque ne sera supprimé.</target>
+        </trans-unit>
+        <trans-unit id="Resources\Settings\Library\ResetWarning\Title" translate="yes" xml:space="preserve">
+          <source>Confirm reset</source>
+          <target state="translated" state-qualifier="mt-suggestion">Confirmer la réinitialisation</target>
+        </trans-unit>
+        <trans-unit id="Resources\TransportControls\PlayMenu\PlayAll" translate="yes" xml:space="preserve">
+          <source>Play entire library</source>
+          <target state="translated">Lire toute la bibliothèque</target>
+        </trans-unit>
+        <trans-unit id="Resources\TransportControls\PlayMenu\ShuffleAll" translate="yes" xml:space="preserve">
+          <source>Shuffle entire library</source>
+          <target state="translated">Lecture aléatoire</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\PlayButton\AutomationName" translate="yes" xml:space="preserve">
+          <source>Play</source>
+          <target state="translated">Lecture</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\PlayButton\CheckedAutomationName" translate="yes" xml:space="preserve">
+          <source>Pause</source>
+          <target state="translated" state-qualifier="mt-suggestion">Pause</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\PlayWholeAlbumButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Play all</source>
+          <target state="translated">Lire tout</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\QueueWholeAlbumButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Add to queue</source>
+          <target state="translated">Ajouter à la file</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\RewindButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Skip Back</source>
+          <target state="translated">Précédent</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\ShuffleWholeAlbumButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Shuffle all</source>
+          <target state="translated">Lecture aléatoire</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\SkipButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Skip Ahead</source>
+          <target state="translated">Suivant</target>
+        </trans-unit>
+        <trans-unit id="Resources\SettingsCharm\Legal" translate="yes" xml:space="preserve">
+          <source>Legal %%amp; Privacy</source>
+          <target state="translated">À propos de</target>
+        </trans-unit>
+        <trans-unit id="Resources\SettingsCharm\Options" translate="yes" xml:space="preserve">
+          <source>Options</source>
+          <target state="translated">Options</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\AudioError\OKButton\Content" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="translated">OK</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\AudioError\Text" translate="yes" xml:space="preserve">
+          <source>The previous song was skipped because of a problem with the file.</source>
+          <target state="translated">Le morceau précédent a été ignoré en raison d'un problème avec le fichier.</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\AudioError\Text_F" translate="yes" xml:space="preserve">
+          <source>“{0}” was skipped because of a problem with the file.</source>
+          <target state="translated" state-qualifier="mt-suggestion">« {0} » a été ignoré en raison d'un problème avec le fichier.</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\FileErrorDialog\Text" translate="yes" xml:space="preserve">
+          <source>The folder could not be opened, or it does not contain a valid iTunes Library. Please choose a different folder.</source>
+          <target state="translated">Le dossier n'a pas pu être ouvert, ou il ne contient aucune bibliothèque iTunes valide. Veuillez choisir un autre dossier.</target>
+        </trans-unit>
+        <trans-unit id="Resources\FirstRunPage\FileErrorDialog\Title" translate="yes" xml:space="preserve">
+          <source>Problem opening folder</source>
+          <target state="translated">Problème lors de l'ouverture du dossier</target>
+        </trans-unit>
+        <trans-unit id="Resources\LayoutAwarePage\UnsnapText" translate="yes" xml:space="preserve">
+          <source>Please attempt to unsnap TuneOut before continuing.</source>
+          <target state="translated">Veuillez essayer de désancrer TuneOut avant de continuer.</target>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Album\Description" translate="yes" xml:space="preserve">
+          <source>Album</source>
+          <target state="translated" state-qualifier="mt-suggestion">Album</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Name for Album object type</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Album\Subtitle_F" translate="yes" xml:space="preserve">
+          <source>{0} ({1})</source>
+          <target state="translated">{0} ({1})</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=Album artist, {1}=Year</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\All\Description" translate="yes" xml:space="preserve">
+          <source>All</source>
+          <target state="translated">Tous les résultats</target>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Playlist\DefaultAllSongsTitle" translate="yes" xml:space="preserve">
+          <source>Library</source>
+          <target state="translated">Bibliothèque</target>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Playlist\DefaultTitle" translate="yes" xml:space="preserve">
+          <source>Untitled</source>
+          <target state="translated">Sans titre</target>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Playlist\Description" translate="yes" xml:space="preserve">
+          <source>Playlist</source>
+          <target state="translated">Liste de lecture</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Name for Playlist object type</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Playlist\Subtitle\Multiple_F" translate="yes" xml:space="preserve">
+          <source>{0} songs</source>
+          <target state="translated">{0} morceaux</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=Number of songs</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Playlist\Subtitle\Single" translate="yes" xml:space="preserve">
+          <source>One song</source>
+          <target state="translated">Un morceau</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Indicates one single song</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Playlist\Subtitle\Zero" translate="yes" xml:space="preserve">
+          <source>No songs</source>
+          <target state="translated">Pas de morceaux</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Indicates no songs</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Song\DefaultAlbum" translate="yes" xml:space="preserve">
+          <source>Untitled</source>
+          <target state="translated">Sans titre</target>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Song\DefaultArtist" translate="yes" xml:space="preserve">
+          <source>Unknown</source>
+          <target state="translated">Artiste inconnu</target>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Song\DefaultTitle" translate="yes" xml:space="preserve">
+          <source>Untitled</source>
+          <target state="translated">Sans titre</target>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Song\Description" translate="yes" xml:space="preserve">
+          <source>Song</source>
+          <target state="translated">Morceau</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Name for Track object type</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Song\Subtitle\Extended_F" translate="yes" xml:space="preserve">
+          <source>{0}—{1} ({2})</source>
+          <target state="translated">{0}—{1} ({2})</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=Album, {1}=Artist, {2}=Year</note>
+        </trans-unit>
+        <trans-unit id="Resources\Items\Song\Subtitle\Short_F" translate="yes" xml:space="preserve">
+          <source>{0}—{1}</source>
+          <target state="translated">{0}—{1}</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=Album, {1}=Artist</note>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\NavAppBar\AlbumsButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Albums</source>
+          <target state="translated">Albums</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\NavAppBar\PlaylistsButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
+          <source>Playlists</source>
+          <target state="translated">Listes de lecture</target>
+        </trans-unit>
+        <trans-unit id="Resources\SearchResultsPage\Title\Text" translate="yes" xml:space="preserve">
+          <source>TuneOut</source>
+          <target state="translated">TuneOut</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">App title</note>
+        </trans-unit>
+        <trans-unit id="Resources\Legal\Credits\Content\Text" translate="yes" xml:space="preserve">
+          <source>TuneOut uses software components under license</source>
+          <target state="translated">TuneOut utilise des composants logiciels sous licence</target>
+        </trans-unit>
+        <trans-unit id="Resources\Legal\Credits\Header\Text" translate="yes" xml:space="preserve">
+          <source>Credits and Licenses</source>
+          <target state="translated">Attributions et licences</target>
+        </trans-unit>
+        <trans-unit id="Resources\Legal\Credits\Link\Content" translate="yes" xml:space="preserve">
+          <source>View Credits</source>
+          <target state="translated">Afficher les attributions</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
