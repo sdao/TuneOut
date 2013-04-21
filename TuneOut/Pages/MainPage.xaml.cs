@@ -331,6 +331,28 @@ namespace TuneOut
             _alertFlyout.IsOpen = true;
         }
 
+        /// <summary>
+        /// Shows or hides the app bars.
+        /// </summary>
+        /// <param name="top">Whether to modify the top app bar.</param>
+        /// <param name="bottom">Whether to modify the bottom app bar.</param>
+        /// <param name="open">Whether to open or close the app bars.</param>
+        /// <param name="sticky">Whether to make the app bar sticky, if opening.</param>
+        private void ShowAppBar(bool top, bool bottom, bool open, bool sticky)
+        {
+            if (top)
+            {
+                TopAppBar.IsSticky = sticky && open;
+                TopAppBar.IsOpen = open;
+            }
+
+            if (bottom)
+            {
+                BottomAppBar.IsSticky = sticky && open;
+                BottomAppBar.IsOpen = open;
+            }
+        }
+
         private async void MainPage_SourceRequested(Windows.Media.PlayTo.PlayToManager sender, Windows.Media.PlayTo.PlayToSourceRequestedEventArgs args)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -405,15 +427,13 @@ namespace TuneOut
                     {
                         _PageMode = typeof(Playlist);
                         this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.PlaylistsFlat;
-                        BottomAppBar.IsOpen = false;
-                        TopAppBar.IsOpen = false;
+                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
                     }
                     else
                     {
                         _PageMode = typeof(Album);
                         this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.AlbumsFlat;
-                        BottomAppBar.IsOpen = false;
-                        TopAppBar.IsOpen = false;
+                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
                     }
                 }
             }
@@ -437,14 +457,12 @@ namespace TuneOut
                     {
                         IsQueueOverlayShown = false; // Only one at a time
                         VisualStateManager.GoToState(this, "OverlayAlbum", true);
-                        BottomAppBar.IsOpen = false;
-                        TopAppBar.IsOpen = false;
+                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
                     }
                     else
                     {
                         VisualStateManager.GoToState(this, "NoOverlay", true);
-                        BottomAppBar.IsOpen = false;
-                        TopAppBar.IsOpen = false;
+                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
                         SelectedAlbumTracks.SelectedItems.Clear();
                     }
                 }
@@ -469,14 +487,12 @@ namespace TuneOut
                     {
                         IsAlbumOverlayShown = false; // Only one at a time
                         VisualStateManager.GoToState(this, "OverlayQueue", true);
-                        BottomAppBar.IsOpen = false;
-                        TopAppBar.IsOpen = false;
+                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
                     }
                     else
                     {
                         VisualStateManager.GoToState(this, "NoOverlay", true);
-                        BottomAppBar.IsOpen = false;
-                        TopAppBar.IsOpen = false;
+                        this.ShowAppBar(top: true, bottom: true, open: false, sticky: false);
                         QueueTracks.SelectedItems.Clear();
                     }
                 }
@@ -604,14 +620,12 @@ namespace TuneOut
             if (SelectedAlbumTracks.SelectedItems.Count > 0)
             {
                 VisualStateManager.GoToState(this, "SelectionAlbum", true);
-                BottomAppBar.IsSticky = true;
-                BottomAppBar.IsOpen = true;
+                this.ShowAppBar(top: false, bottom: true, open: true, sticky: true);
             }
             else
             {
                 VisualStateManager.GoToState(this, "NoSelection", true);
-                BottomAppBar.IsSticky = false;
-                BottomAppBar.IsOpen = false;
+                this.ShowAppBar(top: false, bottom: true, open: false, sticky: false);
             }
         }
 
@@ -709,14 +723,12 @@ namespace TuneOut
             if (QueueTracks.SelectedItems.Count > 0)
             {
                 VisualStateManager.GoToState(this, "SelectionQueue", true);
-                BottomAppBar.IsSticky = true;
-                BottomAppBar.IsOpen = true;
+                this.ShowAppBar(top: false, bottom: true, open: true, sticky: true);
             }
             else
             {
                 VisualStateManager.GoToState(this, "NoSelection", true);
-                BottomAppBar.IsSticky = false;
-                BottomAppBar.IsOpen = false;
+                this.ShowAppBar(top: false, bottom: true, open: false, sticky: false);
             }
         }
 
