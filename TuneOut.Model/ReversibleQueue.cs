@@ -94,10 +94,7 @@ namespace TuneOut
 			_head += index + 1;
 
 			OnCommonPropertyChanged();
-			for (int i = queueRemoveStart; i < _head; i++)
-			{
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, _backing[i], 0));
-			}
+			OnCollectionDequeue(_backing, queueRemoveStart, _head);
 
 			return Current;
 		}
@@ -134,11 +131,9 @@ namespace TuneOut
 			_backing.AddRange(list);
 
 			OnCommonPropertyChanged();
-			for (int i = 0; i < list.Count; i++)
-			{
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list[i], queueAddStart + i));
-			}
+			OnCollectionEnqueue(list, 0, list.Count, queueAddStart);
 		}
+
 		/// <summary>
 		/// Re-enqueues the last object removed from the queue, that is, the object that is currently contained in the <seealso cref="Current"/> property.
 		/// </summary>
@@ -492,6 +487,28 @@ namespace TuneOut
 			if (!_batching && CollectionChanged != null)
 			{
 				CollectionChanged(this, e);
+			}
+		}
+
+		protected void OnCollectionEnqueue(IList<T> list, int listStart, int listStop, int startIndex)
+		{
+			if (!_batching && CollectionChanged != null)
+			{
+				for (int i = listStart; i < listStop; i++)
+				{
+					CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list[i], startIndex + i));
+				}
+			}
+		}
+
+		protected void OnCollectionDequeue(IList<T> list, int listStart, int listStop)
+		{
+			if (!_batching && CollectionChanged != null)
+			{
+				for (int i = listStart; i < listStop; i++)
+				{
+					CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, list[i], 0));
+				}
 			}
 		}
 

@@ -219,7 +219,7 @@ namespace TuneOut.Audio
 
 			Clear();
 
-			var items = a.TrackList.Select(x => x.UniqueTrack());
+			var items = a.TrackList.AsParallel().Select(x => x.UniqueTrack());
 			_trackList.Enqueue(items);
 
 			int trackOffset = Math.Max(0, a.IndexOf(t));
@@ -245,19 +245,20 @@ namespace TuneOut.Audio
 
 			if (shuffle)
 			{
-				var items = a.TrackList.Select(x => x.UniqueTrack()).OrderBy(x => x.UniqueId);
+				var items = a.TrackList.AsParallel().Select(x => x.UniqueTrack()).OrderBy(x => x.UniqueId);
 				_trackList.Enqueue(items);
 				_trackList.Dequeue();
 			}
 			else
 			{
-				var items = a.TrackList.Select(x => x.UniqueTrack());
+				var items = a.TrackList.AsParallel().Select(x => x.UniqueTrack());
 				_trackList.Enqueue(items);
 				_trackList.Dequeue();
 			}
 
 			_trackList.FlushChanges();
 		}
+
 		[ContractInvariantMethod]
 		private void ObjectInvariant()
 		{
