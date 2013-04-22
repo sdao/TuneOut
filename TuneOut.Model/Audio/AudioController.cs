@@ -908,28 +908,9 @@ namespace TuneOut.Audio
 				//    throw new Exception();
 				//}
 
-				if (TunesDataSource.Default.LibraryOS == TunesLibraryType.Windows)
-				{
-					var winFile = await StorageFile.GetFileFromPathAsync(Current.Location);
-					var winRandomAccessStream = await winFile.OpenReadAsync();
-
-					_media.SetSource(winRandomAccessStream, winFile.ContentType);
-				}
-				else
-				{
-					// Side load HFS+ file by using SharpDX
-
-					var macFile = await StorageFile.GetFileFromPathAsync(Current.Location);
-					var macFileStream = new SharpDX.IO.NativeFileStream(
-								Current.Location,
-								SharpDX.IO.NativeFileMode.Open,
-								SharpDX.IO.NativeFileAccess.Read,
-								SharpDX.IO.NativeFileShare.Read);
-					InMemoryRandomAccessStream macRandomAccessStream = new InMemoryRandomAccessStream();
-					await macFileStream.CopyToAsync(macRandomAccessStream.AsStreamForWrite());
-
-					_media.SetSource(macRandomAccessStream, macFile.ContentType);
-				}
+				var file = await StorageFile.GetFileFromPathAsync(Current.Location);
+				var stream = await file.OpenReadAsync(TunesDataSource.Default.LibraryOS);
+				_media.SetSource(stream, file.ContentType);
 
 				if (resetPosition)
 				{

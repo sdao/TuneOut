@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
+using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace TuneOut
@@ -50,6 +54,12 @@ namespace TuneOut
 		internal CacheStatus Status { get { return _cs; } }
 	}
 
+	internal enum OperatingSystem
+	{
+		Windows,
+		MacBootCamp
+	}
+
 	internal static class TuneOutModelExtensions
 	{
 		/// <summary>
@@ -82,6 +92,45 @@ namespace TuneOut
 			else
 			{
 				return Enumerable.Repeat(element, 1);
+			}
+		}
+
+		internal async static Task<Tuple<OperatingSystem?, IRandomAccessStream>> TryReadAsync(this StorageFile file)
+		{
+			try
+			{
+				var randomAccessStream = await file.OpenReadAsync(OperatingSystem.Windows);
+				return new Tuple<OperatingSystem?, IRandomAccessStream>(OperatingSystem.Windows, randomAccessStream);
+			}
+			catch (Exception) { }
+
+			try
+			{
+				var randomAccessStream = await file.OpenReadAsync(OperatingSystem.MacBootCamp);
+				return new Tuple<OperatingSystem?, IRandomAccessStream>(OperatingSystem.MacBootCamp, randomAccessStream);
+			}
+			catch (Exception) { }
+
+			return new Tuple<OperatingSystem?, IRandomAccessStream>(null, null);
+		}
+
+		internal async static Task<IRandomAccessStream> OpenReadAsync(this StorageFile file, OperatingSystem os)
+		{
+			if (os == OperatingSystem.Windows)
+			{
+				return await file.OpenReadAsync();
+			}
+			else
+			{
+				var macFileStream = new SharpDX.IO.NativeFileStream(
+							file.Path,
+							SharpDX.IO.NativeFileMode.Open,
+							SharpDX.IO.NativeFileAccess.Read,
+							SharpDX.IO.NativeFileShare.Read);
+				InMemoryRandomAccessStream macRandomAccessStream = new InMemoryRandomAccessStream();
+				await macFileStream.CopyToAsync(macRandomAccessStream.AsStreamForWrite());
+				macRandomAccessStream.Seek(0);
+				return macRandomAccessStream;
 			}
 		}
 	}

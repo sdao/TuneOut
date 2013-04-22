@@ -13,12 +13,6 @@ using Windows.Storage.Streams;
 
 namespace TuneOut.Audio
 {
-	internal enum TunesLibraryType
-	{
-		Windows,
-		MacOS
-	}
-
 	/// <summary>
 	/// A helper for accessing the data in the iTunes Library.
 	/// </summary>
@@ -222,39 +216,38 @@ namespace TuneOut.Audio
 			XDocument xmlDocument = null;
 
 			// Attempt to read the XML file format
-			// Copy in case the file is open in iTunes and locked
-			var xmlCopy = await xmlFile.CopyAsync(ApplicationData.Current.LocalFolder, ITUNES_XML, NameCollisionOption.ReplaceExisting);
-			using (var xmlCopyStream = await xmlCopy.OpenReadAsync())
+			var xmlStreamInfo = await xmlFile.TryReadAsync();
+			if (xmlStreamInfo.Item1.HasValue)
 			{
-				xmlDocument = XDocument.Load(xmlCopyStream.AsStreamForRead());
-			}
-			await xmlCopy.DeleteAsync();
+				OperatingSystem libraryType = xmlStreamInfo.Item1.Value;
+				using (var xmlStream = xmlStreamInfo.Item2)
+				{
+					xmlDocument = XDocument.Load(xmlStream.AsStreamForRead());
+				}
 
-			// Get the PLIST from the XML and parse
-			var plist = new PList(xmlDocument);
+				// Get the PLIST from the XML and parse
+				var plist = new PList(xmlDocument);
 
-			IEnumerable<Album> libraryAlbums;
-			IEnumerable<Playlist> libraryPlaylists;
-			TunesLibraryType libraryType;
-			var parseResult = ParseXml(library.Path, plist, out libraryAlbums, out libraryPlaylists, out libraryType);
+				IEnumerable<Album> libraryAlbums;
+				IEnumerable<Playlist> libraryPlaylists;
+				var parseResult = ParseXml(library.Path, plist, out libraryAlbums, out libraryPlaylists);
 
-			// Save the parsed objects if possible
-			if (parseResult)
-			{
-				TunesDataSource.Default = new TunesDataSource(libraryAlbums, libraryPlaylists, libraryType);
-				await SerializeAsync();
-				return true;
+				// Save the parsed objects if possible
+				if (parseResult)
+				{
+					TunesDataSource.Default = new TunesDataSource(libraryAlbums, libraryPlaylists, libraryType);
+					await SerializeAsync();
+					return true;
+				}
 			}
-			else
-			{
-				return false;
-			}
+
+			return false;
 		}
 		/// <summary>
 		/// Helper method to process an iTunes PLIST into a List of Album objects.
 		/// </summary>
 		/// <returns>Whether the process was successful or not.</returns>
-		private static bool ParseXml(string actualLibaryPath, PList libraryIndex, out IEnumerable<Album> outAlbums, out IEnumerable<Playlist> outPlaylists, out TunesLibraryType outLibraryType)
+		private static bool ParseXml(string actualLibaryPath, PList libraryIndex, out IEnumerable<Album> outAlbums, out IEnumerable<Playlist> outPlaylists)
 		{
 			Contract.Requires(!string.IsNullOrEmpty(actualLibaryPath));
 			Contract.Requires(libraryIndex != null);
@@ -275,8 +268,6 @@ namespace TuneOut.Audio
 				{
 					throw new InvalidOperationException();
 				}
-
-				var libraryType = System.Text.RegularExpressions.Regex.IsMatch(musicFolderString, "file://localhost/[A-Za-z]:/.*") ? TunesLibraryType.Windows : TunesLibraryType.MacOS;
 
 				Dictionary<UniqueAlbum, AlbumBuilder> albumBuilders = new Dictionary<UniqueAlbum, AlbumBuilder>();
 				foreach (var trackInfoRaw in trackListRaw)
@@ -344,7 +335,6 @@ namespace TuneOut.Audio
 					}
 				}
 
-				outLibraryType = libraryType;
 				outAlbums = libraryAlbumsUnsorted.OrderBy(thatAlbum => thatAlbum.AlbumArtist).ThenBy(thatAlbum => thatAlbum.Title);
 				outPlaylists = libraryPlaylists.OrderBy(playlist => playlist.Title);
 
@@ -352,7 +342,6 @@ namespace TuneOut.Audio
 			}
 			catch (Exception)
 			{
-				outLibraryType = TunesLibraryType.Windows;
 				outAlbums = null;
 				outPlaylists = null;
 
@@ -382,7 +371,7 @@ namespace TuneOut.Audio
 		private readonly IEnumerable<Album> _albums;
 
 		[DataMember(Name = "LibraryOS")]
-		private readonly TunesLibraryType _libraryType;
+		private readonly OperatingSystem _libraryType;
 
 		[DataMember(Name = "PlaylistsFlat")]
 		private readonly IEnumerable<Playlist> _playlists;
@@ -390,7 +379,7 @@ namespace TuneOut.Audio
 		/// <summary>
 		/// Creates a new TunesDataSource.
 		/// </summary>
-		private TunesDataSource(IEnumerable<Album> albums, IEnumerable<Playlist> playlists, TunesLibraryType libraryType)
+		private TunesDataSource(IEnumerable<Album> albums, IEnumerable<Playlist> playlists, OperatingSystem libraryType)
 		{
 			_albums = albums;
 			_playlists = playlists;
@@ -445,7 +434,7 @@ namespace TuneOut.Audio
 		/// <summary>
 		/// Gets the OS on which the iTunes Library is maintained.
 		/// </summary>
-		internal TunesLibraryType LibraryOS
+		internal OperatingSystem LibraryOS
 		{
 			get
 			{
