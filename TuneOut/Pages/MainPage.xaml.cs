@@ -23,11 +23,11 @@ namespace TuneOut
 	{
 		private const int QUEUE_DISPLAY_LIMIT = 8;
 
-		Menu _playMenu;
-		private Flyout _playFlyout;
-		private Flyout _volumeFlyout;
-		private Flyout _alertFlyout;
-		RoutedEventHandler _alertHandler;
+		private Menu _playMenu = null;
+		private Flyout _playFlyout = null;
+		private Flyout _volumeFlyout = null;
+		private Flyout _alertFlyout = null;
+		private RoutedEventHandler _alertHandler = null;
 
 		private Dictionary<string, object> _pageState;
 		private Guid? _navigationParameter;
