@@ -1,21 +1,21 @@
-﻿using TuneOut.AppData;
-using System;
+﻿using System;
+using TuneOut.AppData;
 
 namespace TuneOut.Audio
 {
-    class StaticArtworkProvider : IArtworkProvider
-    {
-        public static readonly StaticArtworkProvider UNKNOWN = new StaticArtworkProvider(Defaults.UnknownArtwork);
+	internal class StaticArtworkProvider : IArtworkProvider
+	{
+		public static readonly StaticArtworkProvider UNKNOWN = new StaticArtworkProvider(Defaults.UnknownArtwork);
 
-        public StaticArtworkProvider(Uri artUri)
-        {
-            _Image = artUri;
-        }
+		private readonly Uri _Image = null;
 
-        readonly Uri _Image = null;
-        public Uri Image
-        {
-            get { return _Image; }
-        }
-    }
+		public StaticArtworkProvider(Uri artUri)
+		{
+			_Image = artUri;
+		}
+		public Uri Image
+		{
+			get { return _Image; }
+		}
+	}
 }

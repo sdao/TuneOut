@@ -1,44 +1,46 @@
-﻿using TuneOut.AppData;
-using System;
+﻿using System;
+using TuneOut.AppData;
 
 namespace TuneOut
 {
-    static class SettingsUIManager
-    {
-        public static event EventHandler SettingsCharmOpened;
-        public static event EventHandler SettingsCharmClosed;
+	internal static class SettingsUIManager
+	{
+		public static event EventHandler SettingsCharmOpened;
 
-        public static void LoadSettingsCharm()
-        {
-            Callisto.Controls.SettingsManagement.AppSettings.Current.AddCommand<SettingsLibrary>(LocalizationManager.GetString("SettingsCharm/Options"));
-            Callisto.Controls.SettingsManagement.AppSettings.Current.AddCommand<SettingsLegal>(LocalizationManager.GetString("SettingsCharm/Legal"));
-        }
+		public static event EventHandler SettingsCharmClosed;
 
-        static bool _SettingsCharmOpened = false;
-        public static bool SettingsCharmOpen
-        {
-            get
-            {
-                return _SettingsCharmOpened;
-            }
+		public static void LoadSettingsCharm()
+		{
+			Callisto.Controls.SettingsManagement.AppSettings.Current.AddCommand<SettingsLibrary>(LocalizationManager.GetString("SettingsCharm/Options"));
+			Callisto.Controls.SettingsManagement.AppSettings.Current.AddCommand<SettingsLegal>(LocalizationManager.GetString("SettingsCharm/Legal"));
+		}
 
-            set
-            {
-                if (_SettingsCharmOpened != value)
-                {
-                    _SettingsCharmOpened = value;
+		private static bool _SettingsCharmOpened = false;
 
-                    if (_SettingsCharmOpened == true && SettingsCharmOpened != null)
-                    {
-                        SettingsCharmOpened(null, new EventArgs());
-                    }
+		public static bool SettingsCharmOpen
+		{
+			get
+			{
+				return _SettingsCharmOpened;
+			}
 
-                    if (_SettingsCharmOpened == false && SettingsCharmClosed != null)
-                    {
-                        SettingsCharmClosed(null, new EventArgs());
-                    }
-                }
-            }
-        }
-    }
+			set
+			{
+				if (_SettingsCharmOpened != value)
+				{
+					_SettingsCharmOpened = value;
+
+					if (_SettingsCharmOpened == true && SettingsCharmOpened != null)
+					{
+						SettingsCharmOpened(null, new EventArgs());
+					}
+
+					if (_SettingsCharmOpened == false && SettingsCharmClosed != null)
+					{
+						SettingsCharmClosed(null, new EventArgs());
+					}
+				}
+			}
+		}
+	}
 }

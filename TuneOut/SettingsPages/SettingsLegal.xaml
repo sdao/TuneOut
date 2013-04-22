@@ -7,15 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <StackPanel>
-            <TextBlock x:Uid="Legal/Privacy/Header" FontSize="15" FontWeight="SemiBold" Margin="6,0,0,4">Privacy Policy</TextBlock>
-            <TextBlock x:Uid="Legal/Privacy/Content" FontSize="15" TextWrapping="Wrap" Margin="6,0,0,4">TuneOut uses your Internet connection to download album art and to connect to Last.fm</TextBlock>
-            <HyperlinkButton x:Uid="Legal/Privacy/Link" Content="View Privacy Policy" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="http://pamplemousse-software.github.io/TuneOut/#privacy"/>
+	<Grid>
+		<StackPanel>
+			<TextBlock x:Uid="Legal/Privacy/Header" FontSize="15" FontWeight="SemiBold" Margin="6,0,0,4">Privacy Policy</TextBlock>
+			<TextBlock x:Uid="Legal/Privacy/Content" FontSize="15" TextWrapping="Wrap" Margin="6,0,0,4">TuneOut uses your Internet connection to download album art and to connect to Last.fm</TextBlock>
+			<HyperlinkButton x:Uid="Legal/Privacy/Link" Content="View Privacy Policy" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="http://pamplemousse-software.github.io/TuneOut/#privacy" />
 
-            <TextBlock x:Uid="Legal/Credits/Header" FontSize="15" FontWeight="SemiBold" Margin="6,10,0,4">Credits and Licenses</TextBlock>
-            <TextBlock x:Uid="Legal/Credits/Content" FontSize="15" TextWrapping="Wrap" Margin="6,0,0,4">TuneOut uses software components under license</TextBlock>
-            <HyperlinkButton x:Uid="Legal/Credits/Link" Content="View Credits" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="http://pamplemousse-software.github.io/TuneOut/#credits"/>
-        </StackPanel>
-    </Grid>
+			<TextBlock x:Uid="Legal/Credits/Header" FontSize="15" FontWeight="SemiBold" Margin="6,10,0,4">Credits and Licenses</TextBlock>
+			<TextBlock x:Uid="Legal/Credits/Content" FontSize="15" TextWrapping="Wrap" Margin="6,0,0,4">TuneOut uses software components under license</TextBlock>
+			<HyperlinkButton x:Uid="Legal/Credits/Link" Content="View Credits" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="http://pamplemousse-software.github.io/TuneOut/#credits" />
+		</StackPanel>
+	</Grid>
 </UserControl>

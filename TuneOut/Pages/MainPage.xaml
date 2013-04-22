@@ -27,8 +27,8 @@
 	<Grid x:Name="mainGrid">
 		<Grid.Background>
 			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-				<GradientStop Color="#FF0F0F0F"/>
-				<GradientStop Color="#FF4B4B4B" Offset="1"/>
+				<GradientStop Color="#FF0F0F0F" />
+				<GradientStop Color="#FF4B4B4B" Offset="1" />
 			</LinearGradientBrush>
 		</Grid.Background>
 
@@ -37,8 +37,8 @@
 				<DataTemplate>
 					<Grid HorizontalAlignment="Left" Height="220" VerticalAlignment="Top" Width="220">
 						<Grid.RowDefinitions>
-							<RowDefinition Height="*"/>
-							<RowDefinition Height="50"/>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="50" />
 						</Grid.RowDefinitions>
 						<Image Height="220" Width="220" VerticalAlignment="Center" CacheMode="BitmapCache" Grid.RowSpan="3">
 							<Image.Source>
@@ -54,37 +54,37 @@
 			</GridView.ItemTemplate>
 		</GridView>
 
-		<Grid x:Name="albumDetailOverlay" Canvas.ZIndex="2">
+		<Grid x:Name="albumDetailOverlay" Canvas.ZIndex="1">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="1*"/>
-				<RowDefinition Height="4*"/>
-				<RowDefinition Height="1*"/>
+				<RowDefinition Height="1*" />
+				<RowDefinition Height="4*" />
+				<RowDefinition Height="1*" />
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*"/>
-				<ColumnDefinition Width="4*" MinWidth="650"/>
-				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*" />
+				<ColumnDefinition Width="4*" MinWidth="650" />
+				<ColumnDefinition Width="1*" />
 			</Grid.ColumnDefinitions>
 
 			<Grid x:Name="albumDetailBlackOverlay" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="3" PointerPressed="albumDetailBlackOverlay_PointerPressed" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}" />
 			<Grid Grid.Row="1" Grid.Column="1">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="2*" />
 				</Grid.ColumnDefinitions>
 
 				<StackPanel Grid.Column="0" Background="#FFCCCCCC">
-					<Image Source="{Binding CurrentSelection.Artwork.Image}" Margin="15"/>
-					<Button x:Name="playAllButton" x:Uid="MainPage/PlayWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Play all" Click="playAllButton_Click"/>
-					<Button x:Name="shuffleAllButton" x:Uid="MainPage/ShuffleWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Shuffle all" Click="shuffleAllButton_Click"/>
-					<Button x:Name="queueAllButton" x:Uid="MainPage/QueueWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Add to queue" Click="queueAllButton_Click"/>
+					<Image Source="{Binding CurrentSelection.Artwork.Image}" Margin="15" />
+					<Button x:Name="playAllButton" x:Uid="MainPage/PlayWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Play all" Click="playAllButton_Click" />
+					<Button x:Name="shuffleAllButton" x:Uid="MainPage/ShuffleWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Shuffle all" Click="shuffleAllButton_Click" />
+					<Button x:Name="queueAllButton" x:Uid="MainPage/QueueWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Add to queue" Click="queueAllButton_Click" />
 				</StackPanel>
 
 				<Grid Grid.Column="1" Background="#FFEEEEEE">
 					<Grid.RowDefinitions>
-						<RowDefinition Height="50"/>
-						<RowDefinition Height="35"/>
-						<RowDefinition Height="*"/>
+						<RowDefinition Height="50" />
+						<RowDefinition Height="35" />
+						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Text="{Binding CurrentSelection.Title}"  TextTrimming="WordEllipsis" FontSize="30" Foreground="Black" Margin="15,15,15,0" FontStretch="Expanded" />
 					<TextBlock Text="{Binding CurrentSelection.Subtitle}" TextTrimming="WordEllipsis" FontSize="14" FontWeight="SemiBold" Foreground="#FF666666" Margin="15,0,15,15" FontStretch="Expanded" Grid.Row="1" />
@@ -93,16 +93,16 @@
 							<DataTemplate>
 								<Grid>
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="40"/>
-										<ColumnDefinition Width="*"/>
-										<ColumnDefinition Width="60"/>
+										<ColumnDefinition Width="40" />
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="60" />
 									</Grid.ColumnDefinitions>
-									<TextBlock Grid.Column="0" Text="{Binding Index}" FontSize="16" Margin="10,6,0,0" TextTrimming="WordEllipsis" TextWrapping="Wrap" HorizontalAlignment="Center" Visibility="{Binding Track.IsNowPlaying, Converter={StaticResource BTVConverter}, ConverterParameter=True}"/>
-									<TextBlock Grid.Column="0" Text="🔊" FontSize="16" Margin="10,6,0,0" HorizontalAlignment="Center" Visibility="{Binding Track.IsNowPlaying, Converter={StaticResource BTVConverter}}"/>
+									<TextBlock Grid.Column="0" Text="{Binding Index}" FontSize="16" Margin="10,6,0,0" TextTrimming="WordEllipsis" TextWrapping="Wrap" HorizontalAlignment="Center" Visibility="{Binding Track.IsNowPlaying, Converter={StaticResource BTVConverter}, ConverterParameter=True}" />
+									<TextBlock Grid.Column="0" Text="🔊" FontSize="16" Margin="10,6,0,0" HorizontalAlignment="Center" Visibility="{Binding Track.IsNowPlaying, Converter={StaticResource BTVConverter}}" />
 									<StackPanel Grid.Column ="1" Orientation="Vertical">
-										<TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis"/>
-										<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold"/>
-										<TextBlock Text="{Binding Track.TotalTime, Converter={StaticResource TSConverter}}" FontSize="13" Margin="10,0,0,10" TextTrimming="WordEllipsis"/>
+										<TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" />
+										<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
+										<TextBlock Text="{Binding Track.TotalTime, Converter={StaticResource TSConverter}}" FontSize="13" Margin="10,0,0,10" TextTrimming="WordEllipsis" />
 									</StackPanel>
 									<Button Grid.Column="2" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Click="albumDetailListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
 								</Grid>
@@ -113,7 +113,7 @@
 			</Grid>
 		</Grid>
 
-		<Grid x:Name="queueOverlay" Canvas.ZIndex="2">
+		<Grid x:Name="queueOverlay" Canvas.ZIndex="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="queueOverlayCol1" Width="500" />
 				<ColumnDefinition x:Name="queueOverlayCol2" Width="*" />
@@ -128,17 +128,17 @@
 				</Grid.RowDefinitions>
 				<Grid Margin="15,15,15,10" Height="60" Grid.Row="0">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Button x:Name="queueBackButton" Grid.Column="0" Style="{StaticResource RoundButtonStyle}" Content="" Click="navigateOpenQueueButton_Click" />
 					<TextBlock x:Name="queueTitleText" Grid.Column="1" x:Uid="MainPage/QueuePaneTitle" FontSize="30" Foreground="Black" FontStretch="Expanded" Margin="0,12,0,0" FontFamily="Global User Interface" />
 					<Image x:Name="queueNowPlayingImage" Grid.Column="2" Source="{Binding Controller.Current.Artwork.Image, Source={StaticResource ACProxy}}" Margin="5" Visibility="Collapsed" />
 					<StackPanel x:Name="queueNowPlayingTextArea" Grid.Column ="3" Orientation="Vertical" Height="50" Visibility="Collapsed">
-						<TextBlock Text="{Binding Controller.Current.Title, Source={StaticResource ACProxy}}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" Foreground="Black"/>
-						<TextBlock Text="{Binding Controller.Current.Artist, Source={StaticResource ACProxy}}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" Foreground="Black"/>
+						<TextBlock Text="{Binding Controller.Current.Title, Source={StaticResource ACProxy}}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" Foreground="Black" />
+						<TextBlock Text="{Binding Controller.Current.Artist, Source={StaticResource ACProxy}}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" Foreground="Black" />
 					</StackPanel>
 				</Grid>
 				<ListView x:Name="queueListView" Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource queueSource}}" ItemContainerStyle="{StaticResource SongListViewItemStyle}" SelectionMode="Multiple" Margin="0,4,0,0" SelectionChanged="queueListView_SelectionChanged">
@@ -146,12 +146,12 @@
 						<DataTemplate>
 							<Grid>
 								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="60"/>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="60" />
 								</Grid.ColumnDefinitions>
 								<StackPanel Grid.Column ="0" Orientation="Vertical">
-									<TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis"/>
-									<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold"/>
+									<TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" />
+									<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
 								</StackPanel>
 								<Button Grid.Column="1" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5,10,5" Click="queueListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
 							</Grid>
@@ -160,25 +160,25 @@
 				</ListView>
 			</Grid>
 		</Grid>
-		
-		<Rectangle x:Name="hiddenBottomEdge" VerticalAlignment="Bottom"/>
+
+		<Rectangle x:Name="hiddenBottomEdge" VerticalAlignment="Bottom" Canvas.ZIndex="-1" />
 
 		<Grid x:Name="hiddenControls" Visibility="Collapsed">
 			<StackPanel x:Name="volumeControls">
 				<local:AppBarToggleButton x:Name="MuteButton" AutoToggle="True" Style="{StaticResource FlyoutUnmutedSymbolButton}" CheckedStyle="{StaticResource FlyoutMutedSymbolButton}" HorizontalAlignment="Center" IsChecked="{Binding Controller.IsMuted, Source={StaticResource ACProxy}, Mode=TwoWay}" />
-				<Slider HorizontalAlignment="Center" VerticalAlignment="Top" Value="{Binding Controller.Volume, Source={StaticResource ACProxy}, Mode=TwoWay}" IsEnabled="{Binding Controller.IsMuted, Source={StaticResource ACProxy}, Converter={StaticResource BNConverter}}" Orientation="Vertical" Height="200" Margin="10" Style="{StaticResource SliderLight}"/>
+				<Slider HorizontalAlignment="Center" VerticalAlignment="Top" Value="{Binding Controller.Volume, Source={StaticResource ACProxy}, Mode=TwoWay}" IsEnabled="{Binding Controller.IsMuted, Source={StaticResource ACProxy}, Converter={StaticResource BNConverter}}" Orientation="Vertical" Height="200" Margin="10" Style="{StaticResource SliderLight}" />
 			</StackPanel>
 			<StackPanel x:Name="alertControls" Margin="10">
-				<TextBlock x:Name="alertText" Style="{StaticResource FlyoutText}"/>
+				<TextBlock x:Name="alertText" Style="{StaticResource FlyoutText}" />
 				<Button x:Name="alertButton" Style="{StaticResource FlyoutActionButton}">
-					<TextBlock x:Name="alertButtonText"/>
+					<TextBlock x:Name="alertButtonText" />
 				</Button>
 			</StackPanel>
 		</Grid>
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="AppBarSelectionStates">
-				<VisualState x:Name="NoSelection"/>
+				<VisualState x:Name="NoSelection" />
 				<VisualState x:Name="SelectionQueue">
 					<Storyboard>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="clearQueueSelectionButton">
@@ -288,7 +288,7 @@
 			</VisualStateGroup>
 
 			<VisualStateGroup x:Name="PlayStates">
-				<VisualState x:Name="NotPlaying"/>
+				<VisualState x:Name="NotPlaying" />
 				<VisualState x:Name="Playing">
 					<Storyboard>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueTitleText">
@@ -326,8 +326,8 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_Seeker" d:IsOptimized="True"/>
-						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_NowPlaying" d:IsOptimized="True"/>
+						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_Seeker" d:IsOptimized="True" />
+						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_NowPlaying" d:IsOptimized="True" />
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBarToggleButton.IsChecked)" Storyboard.TargetName="playButton">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -374,19 +374,19 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_NowPlaying" d:IsOptimized="True"/>
-						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_Seeker" d:IsOptimized="True"/>
+						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_NowPlaying" d:IsOptimized="True" />
+						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_Seeker" d:IsOptimized="True" />
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
 
 			<!-- Visual states reflect the application's view state -->
 			<VisualStateGroup x:Name="ApplicationViewStates">
-				<VisualState x:Name="FullScreenLandscape"/>
-				<VisualState x:Name="Filled"/>
+				<VisualState x:Name="FullScreenLandscape" />
+				<VisualState x:Name="Filled" />
 
 				<!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
-				<VisualState x:Name="FullScreenPortrait"/>
+				<VisualState x:Name="FullScreenPortrait" />
 
 				<!-- The back button and title have different styles when snapped -->
 				<VisualState x:Name="Snapped">
@@ -481,9 +481,9 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<FadeOutThemeAnimation TargetName="albumDetailOverlay"/>
-						<FadeOutThemeAnimation TargetName="queueOverlay"/>
-						<PopOutThemeAnimation TargetName="queueContentsGrid"/>
+						<FadeOutThemeAnimation TargetName="albumDetailOverlay" />
+						<FadeOutThemeAnimation TargetName="queueOverlay" />
+						<PopOutThemeAnimation TargetName="queueContentsGrid" />
 					</Storyboard>
 				</VisualState>
 				<VisualState x:Name="OverlayQueue">
@@ -502,9 +502,9 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<FadeOutThemeAnimation TargetName="albumDetailOverlay"/>
-						<FadeInThemeAnimation TargetName="queueOverlay"/>
-						<PopInThemeAnimation TargetName="queueContentsGrid" FromHorizontalOffset="-300"/>
+						<FadeOutThemeAnimation TargetName="albumDetailOverlay" />
+						<FadeInThemeAnimation TargetName="queueOverlay" />
+						<PopInThemeAnimation TargetName="queueContentsGrid" FromHorizontalOffset="-300" />
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Selector.SelectedIndex)" Storyboard.TargetName="queueListView">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -530,21 +530,21 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<FadeOutThemeAnimation TargetName="queueOverlay"/>
-						<PopOutThemeAnimation TargetName="queueContentsGrid"/>
-						<FadeInThemeAnimation TargetName="albumDetailOverlay"/>
+						<FadeOutThemeAnimation TargetName="queueOverlay" />
+						<PopOutThemeAnimation TargetName="queueContentsGrid" />
+						<FadeInThemeAnimation TargetName="albumDetailOverlay" />
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
 			<VisualStateGroup x:Name="AlbumGridViewStates">
 				<VisualState x:Name="AlbumGridViewPreparing">
 					<Storyboard>
-						<PopOutThemeAnimation TargetName="albumGridView"/>
+						<PopOutThemeAnimation TargetName="albumGridView" />
 					</Storyboard>
 				</VisualState>
 				<VisualState x:Name="AlbumGridViewReady">
 					<Storyboard>
-						<PopInThemeAnimation TargetName="albumGridView" FromHorizontalOffset="100"/>
+						<PopInThemeAnimation TargetName="albumGridView" FromHorizontalOffset="100" />
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
@@ -555,8 +555,8 @@
 		<AppBar x:Name="topAppBar" BorderBrush="#E5111111">
 			<AppBar.Background>
 				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-					<GradientStop Color="#E5111111" Offset="1"/>
-					<GradientStop Color="#FF000000"/>
+					<GradientStop Color="#E5111111" Offset="1" />
+					<GradientStop Color="#FF000000" />
 				</LinearGradientBrush>
 			</AppBar.Background>
 			<Grid>
@@ -573,15 +573,15 @@
 		<AppBar x:Name="bottomAppBar" Loaded="BottomAppBar_Loaded" Unloaded="BottomAppBar_Unloaded" BorderBrush="#E5111111">
 			<AppBar.Background>
 				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-					<GradientStop Color="#E5111111"/>
-					<GradientStop Color="#FF000000" Offset="1"/>
+					<GradientStop Color="#E5111111" />
+					<GradientStop Color="#FF000000" Offset="1" />
 				</LinearGradientBrush>
 			</AppBar.Background>
 			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition/>
-					<ColumnDefinition/>
-					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<StackPanel x:Name="bottomAppBar_LeftCommands" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
 					<Button x:Name="addSelectionToQueueButton" x:Uid="MainPage/CmdAppBar/AddToQueueButton" Style="{StaticResource AddAppBarButtonStyle}" Visibility="Collapsed" Click="addSelectionToQueueButton_Click" />
@@ -596,9 +596,9 @@
 					</Grid.ColumnDefinitions>
 					<Image x:Name="nowPlayingImage" Grid.Column="0" Height="90" Source="{Binding Controller.Current.Artwork.Image, Source={StaticResource ACProxy}}" Margin="10,5" Width="90" />
 					<StackPanel x:Name="nowPlayingTextArea" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Top" Margin="5,20,5,0">
-						<TextBlock Text="{Binding Controller.Current.Title, Source={StaticResource ACProxy}}" TextTrimming="WordEllipsis" FontSize="18"/>
-						<TextBlock Text="{Binding Controller.Current.Album, Source={StaticResource ACProxy}}" TextTrimming="WordEllipsis" FontSize="13" FontWeight="SemiBold"/>
-						<TextBlock Text="{Binding Controller.Current.Artist, Source={StaticResource ACProxy}}" TextTrimming="WordEllipsis" FontSize="13" FontWeight="SemiBold"/>
+						<TextBlock Text="{Binding Controller.Current.Title, Source={StaticResource ACProxy}}" TextTrimming="WordEllipsis" FontSize="18" />
+						<TextBlock Text="{Binding Controller.Current.Album, Source={StaticResource ACProxy}}" TextTrimming="WordEllipsis" FontSize="13" FontWeight="SemiBold" />
+						<TextBlock Text="{Binding Controller.Current.Artist, Source={StaticResource ACProxy}}" TextTrimming="WordEllipsis" FontSize="13" FontWeight="SemiBold" />
 					</StackPanel>
 				</Grid>
 				<Grid x:Name="bottomAppBar_Seeker" Grid.Column="1" Margin="20,0" Opacity="0">
@@ -607,9 +607,9 @@
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<TextBlock x:Name="seekerPositionText" Grid.Column="0" Text="{Binding Controller.Position, Converter={StaticResource TSConverter}, Source={StaticResource ACProxy}}" FontSize="13" VerticalAlignment="Top" Margin="10,58,10,0" FontWeight="SemiBold" HorizontalAlignment="Left"/>
-					<Slider x:Name="seekerSlider" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,8" Height="45" Maximum="{Binding Controller.Current.TotalTime, Source={StaticResource ACProxy}, Converter={StaticResource TDConverter}}" Value="{Binding Controller.Position, Source={StaticResource ACProxy}, Converter={StaticResource TDConverter}, Mode=TwoWay}" ThumbToolTipValueConverter="{StaticResource TDSConverter}" VerticalAlignment="Top"/>
-					<TextBlock x:Name="seekerDurationText" Grid.Column="2" Text="{Binding Controller.Current.TotalTime, Converter={StaticResource TSConverter}, Source={StaticResource ACProxy}}" FontSize="13" VerticalAlignment="Top" Margin="10,58,10,0" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+					<TextBlock x:Name="seekerPositionText" Grid.Column="0" Text="{Binding Controller.Position, Converter={StaticResource TSConverter}, Source={StaticResource ACProxy}}" FontSize="13" VerticalAlignment="Top" Margin="10,58,10,0" FontWeight="SemiBold" HorizontalAlignment="Left" />
+					<Slider x:Name="seekerSlider" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,8" Height="45" Maximum="{Binding Controller.Current.TotalTime, Source={StaticResource ACProxy}, Converter={StaticResource TDConverter}}" Value="{Binding Controller.Position, Source={StaticResource ACProxy}, Converter={StaticResource TDConverter}, Mode=TwoWay}" ThumbToolTipValueConverter="{StaticResource TDSConverter}" VerticalAlignment="Top" />
+					<TextBlock x:Name="seekerDurationText" Grid.Column="2" Text="{Binding Controller.Current.TotalTime, Converter={StaticResource TSConverter}, Source={StaticResource ACProxy}}" FontSize="13" VerticalAlignment="Top" Margin="10,58,10,0" FontWeight="SemiBold" HorizontalAlignment="Right" />
 				</Grid>
 				<StackPanel x:Name="bottomAppBar_RightCommands" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
 					<Button x:Name="skipBackButton" x:Uid="MainPage/RewindButton" Style="{StaticResource SkipBackAppBarButtonStyle}" IsEnabled="False" Click="skipBackButton_Click" />

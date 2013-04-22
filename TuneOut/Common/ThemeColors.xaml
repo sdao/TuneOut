@@ -1,513 +1,513 @@
 <ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--
-    <SolidColorBrush x:Key="AppBarBackgroundThemeBrushDark" Color="#E5000000"/>
-    <SolidColorBrush x:Key="AppBarBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="AppBarBorderThemeBrushDark" Color="#E5000000"/>
-    <SolidColorBrush x:Key="AppBarBorderThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="AppBarItemBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="AppBarItemBackgroundThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="AppBarItemDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="AppBarItemDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="AppBarItemForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="AppBarItemForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="AppBarItemPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF"/>
-    <SolidColorBrush x:Key="AppBarItemPointerOverBackgroundThemeBrushLight" Color="#3D000000"/>
-    <SolidColorBrush x:Key="AppBarItemPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="AppBarItemPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="AppBarItemPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="AppBarItemPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ApplicationForegroundThemeBrushDark" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="ApplicationForegroundThemeBrushLight" Color="#DE000000"/>
-    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrushDark" Color="#FF1D1D1D"/>
-    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrushLight" Color="#FFF4F4F4"/>
-    <SolidColorBrush x:Key="ApplicationPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ApplicationPointerOverForegroundThemeBrushLight" Color="#73000000"/>
-    <SolidColorBrush x:Key="ApplicationPressedForegroundThemeBrushDark" Color="#FF5AB7E3"/>
-    <SolidColorBrush x:Key="ApplicationPressedForegroundThemeBrushLight" Color="#FF5AB7E3"/>
-    <SolidColorBrush x:Key="ApplicationSecondaryForegroundThemeBrushDark" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ApplicationSecondaryForegroundThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="BackButtonBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="BackButtonBackgroundThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="BackButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="BackButtonDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="BackButtonForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="BackButtonForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="BackButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF"/>
-    <SolidColorBrush x:Key="BackButtonPointerOverBackgroundThemeBrushLight" Color="#3D000000"/>
-    <SolidColorBrush x:Key="BackButtonPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="BackButtonPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="BackButtonPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="BackButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ButtonBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ButtonBackgroundThemeBrushLight" Color="#B3B6B6B6"/>
-    <SolidColorBrush x:Key="ButtonBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ButtonBorderThemeBrushLight" Color="#33000000"/>
-    <SolidColorBrush x:Key="ButtonDisabledBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ButtonDisabledBackgroundThemeBrushLight" Color="#66CACACA"/>
-    <SolidColorBrush x:Key="ButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ButtonDisabledBorderThemeBrushLight" Color="#1A000000"/>
-    <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ButtonForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ButtonForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF"/>
-    <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrushLight" Color="#D1CDCDCD"/>
-    <SolidColorBrush x:Key="ButtonPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ButtonPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ButtonPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxBackgroundThemeBrushDark" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxBackgroundThemeBrushLight" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxBorderThemeBrushDark" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxBorderThemeBrushLight" Color="#45000000"/>
-    <SolidColorBrush x:Key="CheckBoxContentDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxContentDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="CheckBoxContentForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxContentForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxDisabledBackgroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxDisabledBackgroundThemeBrushLight" Color="#66CACACA"/>
-    <SolidColorBrush x:Key="CheckBoxDisabledBorderThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxDisabledBorderThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="CheckBoxDisabledForegroundThemeBrushDark" Color="#66000000"/>
-    <SolidColorBrush x:Key="CheckBoxDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="CheckBoxForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxPointerOverBackgroundThemeBrushDark" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxPointerOverBackgroundThemeBrushLight" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxPointerOverBorderThemeBrushDark" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxPointerOverBorderThemeBrushLight" Color="#70000000"/>
-    <SolidColorBrush x:Key="CheckBoxPointerOverForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxPressedBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="CheckBoxPressedBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="CheckBoxPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxArrowDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxArrowDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ComboBoxArrowForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxArrowForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxArrowPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxArrowPressedForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxBackgroundThemeBrushDark" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxBackgroundThemeBrushLight" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxBorderThemeBrushDark" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxBorderThemeBrushLight" Color="#45000000"/>
-    <SolidColorBrush x:Key="ComboBoxDisabledBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxDisabledBackgroundThemeBrushLight" Color="#66CACACA"/>
-    <SolidColorBrush x:Key="ComboBoxDisabledBorderThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxDisabledBorderThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ComboBoxDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ComboBoxFocusedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxFocusedBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxFocusedBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxFocusedBorderThemeBrushLight" Color="#70000000"/>
-    <SolidColorBrush x:Key="ComboBoxFocusedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxFocusedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemDisabledForegroundThemeBrushDark" Color="#66000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemPointerOverBackgroundThemeBrushDark" Color="#21000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemPointerOverBackgroundThemeBrushLight" Color="#21000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemPointerOverForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemPressedBackgroundThemeBrushDark" Color="#FFD3D3D3"/>
-    <SolidColorBrush x:Key="ComboBoxItemPressedBackgroundThemeBrushLight" Color="#FFD3D3D3"/>
-    <SolidColorBrush x:Key="ComboBoxItemPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemPressedForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedBackgroundThemeBrushDark" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedBackgroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledBackgroundThemeBrushDark" Color="#8C000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledBackgroundThemeBrushLight" Color="#8C000000"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledForegroundThemeBrushDark" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledForegroundThemeBrushLight" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ComboBoxItemSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ComboBoxPointerOverBackgroundThemeBrushDark" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPointerOverBackgroundThemeBrushLight" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPointerOverBorderThemeBrushDark" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPointerOverBorderThemeBrushLight" Color="#70000000"/>
-    <SolidColorBrush x:Key="ComboBoxPopupBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPopupBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPopupBorderThemeBrushDark" Color="#FF212121"/>
-    <SolidColorBrush x:Key="ComboBoxPopupBorderThemeBrushLight" Color="#FF212121"/>
-    <SolidColorBrush x:Key="ComboBoxPopupForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxPopupForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPressedBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPressedBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ComboBoxPressedBorderThemeBrushLight" Color="#A3000000"/>
-    <SolidColorBrush x:Key="ComboBoxPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxPressedForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ComboBoxPressedHighlightThemeBrushDark" Color="#FFD3D3D3"/>
-    <SolidColorBrush x:Key="ComboBoxPressedHighlightThemeBrushLight" Color="#FFD3D3D3"/>
-    <SolidColorBrush x:Key="ComboBoxSelectedBackgroundThemeBrushDark" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ComboBoxSelectedBackgroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ComboBoxSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ComboBoxSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="DefaultTextForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="DefaultTextForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="FlipViewButtonBackgroundThemeBrushDark" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="FlipViewButtonBackgroundThemeBrushLight" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="FlipViewButtonBorderThemeBrushDark" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="FlipViewButtonBorderThemeBrushLight" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="FlipViewButtonForegroundThemeBrushDark" Color="#99000000"/>
-    <SolidColorBrush x:Key="FlipViewButtonForegroundThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="FlipViewButtonPointerOverBackgroundThemeBrushDark" Color="#F0D7D7D7"/>
-    <SolidColorBrush x:Key="FlipViewButtonPointerOverBackgroundThemeBrushLight" Color="#F0D7D7D7"/>
-    <SolidColorBrush x:Key="FlipViewButtonPointerOverBorderThemeBrushDark" Color="#9EC1C1C1"/>
-    <SolidColorBrush x:Key="FlipViewButtonPointerOverBorderThemeBrushLight" Color="#9EC1C1C1"/>
-    <SolidColorBrush x:Key="FlipViewButtonPointerOverForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="FlipViewButtonPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="FlipViewButtonPressedBackgroundThemeBrushDark" Color="#BD292929"/>
-    <SolidColorBrush x:Key="FlipViewButtonPressedBackgroundThemeBrushLight" Color="#BD292929"/>
-    <SolidColorBrush x:Key="FlipViewButtonPressedBorderThemeBrushDark" Color="#BD292929"/>
-    <SolidColorBrush x:Key="FlipViewButtonPressedBorderThemeBrushLight" Color="#BD292929"/>
-    <SolidColorBrush x:Key="FlipViewButtonPressedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="FlipViewButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="FocusVisualBlackStrokeThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="FocusVisualBlackStrokeThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="FocusVisualWhiteStrokeThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="FocusVisualWhiteStrokeThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="HyperlinkButtonBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="HyperlinkButtonBackgroundThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="HyperlinkButtonBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="HyperlinkButtonBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="HyperlinkDisabledThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="HyperlinkDisabledThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="HyperlinkForegroundThemeBrushDark" Color="#FF9C72FF"/>
-    <SolidColorBrush x:Key="HyperlinkForegroundThemeBrushLight" Color="#FF4F1ACB"/>
-    <SolidColorBrush x:Key="HyperlinkPointerOverForegroundThemeBrushDark" Color="#CC9C72FF"/>
-    <SolidColorBrush x:Key="HyperlinkPointerOverForegroundThemeBrushLight" Color="#CC4F1ACB"/>
-    <SolidColorBrush x:Key="HyperlinkPressedForegroundThemeBrushDark" Color="#999C72FF"/>
-    <SolidColorBrush x:Key="HyperlinkPressedForegroundThemeBrushLight" Color="#994F1ACB"/>
-    <SolidColorBrush x:Key="ListBoxBackgroundThemeBrushDark" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxBackgroundThemeBrushLight" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxBorderThemeBrushLight" Color="#45000000"/>
-    <SolidColorBrush x:Key="ListBoxDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ListBoxFocusBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxFocusBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ListBoxForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ListBoxItemDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxItemDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ListBoxItemPointerOverBackgroundThemeBrushDark" Color="#21000000"/>
-    <SolidColorBrush x:Key="ListBoxItemPointerOverBackgroundThemeBrushLight" Color="#21000000"/>
-    <SolidColorBrush x:Key="ListBoxItemPointerOverForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ListBoxItemPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ListBoxItemPressedBackgroundThemeBrushDark" Color="#FFD3D3D3"/>
-    <SolidColorBrush x:Key="ListBoxItemPressedBackgroundThemeBrushLight" Color="#FFD3D3D3"/>
-    <SolidColorBrush x:Key="ListBoxItemPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ListBoxItemPressedForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrushDark" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledBackgroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledBackgroundThemeBrushLight" Color="#8C000000"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledForegroundThemeBrushDark" Color="#99000000"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledForegroundThemeBrushLight" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ListViewItemCheckHintThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemCheckHintThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ListViewItemCheckSelectingThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemCheckSelectingThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ListViewItemCheckThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemCheckThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemDragBackgroundThemeBrushDark" Color="#994617B4"/>
-    <SolidColorBrush x:Key="ListViewItemDragBackgroundThemeBrushLight" Color="#994617B4"/>
-    <SolidColorBrush x:Key="ListViewItemDragForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemDragForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ListViewItemOverlayBackgroundThemeBrushDark" Color="#A6000000"/>
-    <SolidColorBrush x:Key="ListViewItemOverlayBackgroundThemeBrushLight" Color="#A6000000"/>
-    <SolidColorBrush x:Key="ListViewItemOverlayForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemOverlayForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemOverlaySecondaryForegroundThemeBrushDark" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemOverlaySecondaryForegroundThemeBrushLight" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemPlaceholderBackgroundThemeBrushDark" Color="#FF3D3D3D"/>
-    <SolidColorBrush x:Key="ListViewItemPlaceholderBackgroundThemeBrushLight" Color="#FF3D3D3D"/>
-    <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrushDark" Color="#4DFFFFFF"/>
-    <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrushLight" Color="#4D000000"/>
-    <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrushDark" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrushDark" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrushLight" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ProgressBarBackgroundThemeBrushDark" Color="#59FFFFFF"/>
-    <SolidColorBrush x:Key="ProgressBarBackgroundThemeBrushLight" Color="#30000000"/>
-    <SolidColorBrush x:Key="ProgressBarBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ProgressBarBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ProgressBarForegroundThemeBrushDark" Color="#FF5B2EC5"/>
-    <SolidColorBrush x:Key="ProgressBarForegroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrushDark" Color="#FF8A57FF"/>
-    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="RadioButtonBackgroundThemeBrushDark" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonBackgroundThemeBrushLight" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonBorderThemeBrushDark" Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonBorderThemeBrushLight" Color="#45000000"/>
-    <SolidColorBrush x:Key="RadioButtonContentDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonContentDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="RadioButtonContentForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonContentForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonDisabledBackgroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonDisabledBackgroundThemeBrushLight" Color="#66CACACA"/>
-    <SolidColorBrush x:Key="RadioButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonDisabledBorderThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="RadioButtonDisabledForegroundThemeBrushDark" Color="#66000000"/>
-    <SolidColorBrush x:Key="RadioButtonDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="RadioButtonForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonPointerOverBackgroundThemeBrushDark" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonPointerOverBackgroundThemeBrushLight" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonPointerOverBorderThemeBrushDark" Color="#DEFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonPointerOverBorderThemeBrushLight" Color="#70000000"/>
-    <SolidColorBrush x:Key="RadioButtonPointerOverForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonPressedBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RadioButtonPressedBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RadioButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonBorderThemeBrushLight" Color="#33000000"/>
-    <SolidColorBrush x:Key="RepeatButtonDisabledBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonDisabledBackgroundThemeBrushLight" Color="#66CACACA"/>
-    <SolidColorBrush x:Key="RepeatButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonDisabledBorderThemeBrushLight" Color="#1A000000"/>
-    <SolidColorBrush x:Key="RepeatButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="RepeatButtonForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RepeatButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonPointerOverBackgroundThemeBrushLight" Color="#D1CDCDCD"/>
-    <SolidColorBrush x:Key="RepeatButtonPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RepeatButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="RepeatButtonPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RepeatButtonPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="RepeatButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ScrollBarButtonForegroundThemeBrushDark" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonForegroundThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBackgroundThemeBrushDark" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBackgroundThemeBrushLight" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBorderThemeBrushDark" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBorderThemeBrushLight" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPointerOverForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPressedBackgroundThemeBrushDark" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPressedBackgroundThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPressedBorderThemeBrushDark" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPressedBorderThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPressedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ScrollBarButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ScrollBarPanningBackgroundThemeBrushDark" Color="#FFCDCDCD"/>
-    <SolidColorBrush x:Key="ScrollBarPanningBackgroundThemeBrushLight" Color="#FFCDCDCD"/>
-    <SolidColorBrush x:Key="ScrollBarPanningBorderThemeBrushDark" Color="#7D9A9A9A"/>
-    <SolidColorBrush x:Key="ScrollBarPanningBorderThemeBrushLight" Color="#7D9A9A9A"/>
-    <SolidColorBrush x:Key="ScrollBarThumbBackgroundThemeBrushDark" Color="#FFCDCDCD"/>
-    <SolidColorBrush x:Key="ScrollBarThumbBackgroundThemeBrushLight" Color="#FFCDCDCD"/>
-    <SolidColorBrush x:Key="ScrollBarThumbBorderThemeBrushDark" Color="#3B555555"/>
-    <SolidColorBrush x:Key="ScrollBarThumbBorderThemeBrushLight" Color="#3B555555"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBackgroundThemeBrushDark" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBackgroundThemeBrushLight" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBorderThemeBrushDark" Color="#6BB7B7B7"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBorderThemeBrushLight" Color="#6BB7B7B7"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPressedBackgroundThemeBrushDark" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPressedBackgroundThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPressedBorderThemeBrushDark" Color="#ED555555"/>
-    <SolidColorBrush x:Key="ScrollBarThumbPressedBorderThemeBrushLight" Color="#ED555555"/>
-    <SolidColorBrush x:Key="ScrollBarTrackBackgroundThemeBrushDark" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="ScrollBarTrackBackgroundThemeBrushLight" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="ScrollBarTrackBorderThemeBrushDark" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="ScrollBarTrackBorderThemeBrushLight" Color="#59D5D5D5"/>
-    <SolidColorBrush x:Key="SliderBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="SliderBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="SliderDisabledBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="SliderDisabledBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="SliderThumbBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderThumbBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderThumbBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderThumbBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderThumbDisabledBackgroundThemeBrushDark" Color="#FF7E7E7E"/>
-    <SolidColorBrush x:Key="SliderThumbDisabledBackgroundThemeBrushLight" Color="#FF929292"/>
-    <SolidColorBrush x:Key="SliderThumbPointerOverBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderThumbPointerOverBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderThumbPointerOverBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderThumbPointerOverBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderThumbPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderThumbPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderThumbPressedBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderThumbPressedBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderTickMarkInlineBackgroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderTickMarkInlineBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderTickMarkInlineDisabledForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="SliderTickMarkInlineDisabledForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="SliderTickmarkOutsideBackgroundThemeBrushDark" Color="#80FFFFFF"/>
-    <SolidColorBrush x:Key="SliderTickmarkOutsideBackgroundThemeBrushLight" Color="#80000000"/>
-    <SolidColorBrush x:Key="SliderTickMarkOutsideDisabledForegroundThemeBrushDark" Color="#80FFFFFF"/>
-    <SolidColorBrush x:Key="SliderTickMarkOutsideDisabledForegroundThemeBrushLight" Color="#80000000"/>
-    <SolidColorBrush x:Key="SliderTrackBackgroundThemeBrushDark" Color="#29FFFFFF"/>
-    <SolidColorBrush x:Key="SliderTrackBackgroundThemeBrushLight" Color="#1A000000"/>
-    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrushDark" Color="#FF5B2EC5"/>
-    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="SliderTrackDecreaseDisabledBackgroundThemeBrushDark" Color="#1FFFFFFF"/>
-    <SolidColorBrush x:Key="SliderTrackDecreaseDisabledBackgroundThemeBrushLight" Color="#1C000000"/>
-    <SolidColorBrush x:Key="SliderTrackDecreasePointerOverBackgroundThemeBrushDark" Color="#FF724BCD"/>
-    <SolidColorBrush x:Key="SliderTrackDecreasePointerOverBackgroundThemeBrushLight" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="SliderTrackDecreasePressedBackgroundThemeBrushDark" Color="#FF8152EF"/>
-    <SolidColorBrush x:Key="SliderTrackDecreasePressedBackgroundThemeBrushLight" Color="#FF7241E4"/>
-    <SolidColorBrush x:Key="SliderTrackDisabledBackgroundThemeBrushDark" Color="#29FFFFFF"/>
-    <SolidColorBrush x:Key="SliderTrackDisabledBackgroundThemeBrushLight" Color="#1A000000"/>
-    <SolidColorBrush x:Key="SliderTrackPointerOverBackgroundThemeBrushDark" Color="#46FFFFFF"/>
-    <SolidColorBrush x:Key="SliderTrackPointerOverBackgroundThemeBrushLight" Color="#26000000"/>
-    <SolidColorBrush x:Key="SliderTrackPressedBackgroundThemeBrushDark" Color="#59FFFFFF"/>
-    <SolidColorBrush x:Key="SliderTrackPressedBackgroundThemeBrushLight" Color="#33000000"/>
-    <SolidColorBrush x:Key="TextBoxBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxBorderThemeBrushLight" Color="#A3000000"/>
-    <SolidColorBrush x:Key="TextBoxButtonBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonBackgroundThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="TextBoxButtonForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="TextBoxButtonPointerOverBackgroundThemeBrushDark" Color="#FFDEDEDE"/>
-    <SolidColorBrush x:Key="TextBoxButtonPointerOverBackgroundThemeBrushLight" Color="#FFDEDEDE"/>
-    <SolidColorBrush x:Key="TextBoxButtonPointerOverBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonPointerOverBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonPointerOverForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="TextBoxButtonPointerOverForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="TextBoxButtonPressedBackgroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="TextBoxButtonPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="TextBoxButtonPressedBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonPressedBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonPressedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxDisabledBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxDisabledBackgroundThemeBrushLight" Color="#66CACACA"/>
-    <SolidColorBrush x:Key="TextBoxDisabledBorderThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="TextBoxDisabledBorderThemeBrushLight" Color="#26000000"/>
-    <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrushDark" Color="#FF666666"/>
-    <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrushLight" Color="#FF666666"/>
-    <SolidColorBrush x:Key="TextBoxForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="TextBoxForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ThumbBackgroundThemeBrushDark" Color="#FFCDCDCD"/>
-    <SolidColorBrush x:Key="ThumbBackgroundThemeBrushLight" Color="#FFCDCDCD"/>
-    <SolidColorBrush x:Key="ThumbBorderThemeBrushDark" Color="#3B555555"/>
-    <SolidColorBrush x:Key="ThumbBorderThemeBrushLight" Color="#3B555555"/>
-    <SolidColorBrush x:Key="ThumbPointerOverBackgroundThemeBrushDark" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ThumbPointerOverBackgroundThemeBrushLight" Color="#FFDADADA"/>
-    <SolidColorBrush x:Key="ThumbPointerOverBorderThemeBrushDark" Color="#6BB7B7B7"/>
-    <SolidColorBrush x:Key="ThumbPointerOverBorderThemeBrushLight" Color="#6BB7B7B7"/>
-    <SolidColorBrush x:Key="ThumbPressedBackgroundThemeBrushDark" Color="#99000000"/>
-    <SolidColorBrush x:Key="ThumbPressedBackgroundThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="ThumbPressedBorderThemeBrushDark" Color="#ED555555"/>
-    <SolidColorBrush x:Key="ThumbPressedBorderThemeBrushLight" Color="#ED555555"/>
-    <SolidColorBrush x:Key="ToggleButtonBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonBackgroundThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledBackgroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledBackgroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBackgroundThemeBrushDark" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBackgroundThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBorderThemeBrushDark" Color="#99FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBorderThemeBrushLight" Color="#99000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBackgroundThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPressedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonCheckedPressedForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonDisabledBorderThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ToggleButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ToggleButtonForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonPointerOverBackgroundThemeBrushLight" Color="#21000000"/>
-    <SolidColorBrush x:Key="ToggleButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleButtonPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonPressedForegroundThemeBrushDark" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrushDark" Color="#FF5729C1"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrushLight" Color="#FF4617B4"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainDisabledBackgroundThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainDisabledBackgroundThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainPointerOverBackgroundThemeBrushDark" Color="#FF6E46CA"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainPressedBackgroundThemeBrushDark" Color="#FF7E4FEC"/>
-    <SolidColorBrush x:Key="ToggleSwitchCurtainPressedBackgroundThemeBrushLight" Color="#FF7241E4"/>
-    <SolidColorBrush x:Key="ToggleSwitchDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchHeaderDisabledForegroundThemeBrushDark" Color="#66FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchHeaderDisabledForegroundThemeBrushLight" Color="#66000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchHeaderForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchHeaderForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchOuterBorderBorderThemeBrushDark" Color="#59FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchOuterBorderBorderThemeBrushLight" Color="#59000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchOuterBorderDisabledBorderThemeBrushDark" Color="#33FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchOuterBorderDisabledBorderThemeBrushLight" Color="#33000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBackgroundThemeBrushDark" Color="#FF7E7E7E"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBackgroundThemeBrushLight" Color="#FF929292"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBorderThemeBrushDark" Color="#FF7E7E7E"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBorderThemeBrushLight" Color="#FF929292"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBorderThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBorderThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPressedBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPressedBackgroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPressedForegroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchThumbPressedForegroundThemeBrushLight" Color="#FF000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackBackgroundThemeBrushDark" Color="#42FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackBackgroundThemeBrushLight" Color="#59000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackBorderThemeBrushDark" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackBorderThemeBrushLight" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackDisabledBackgroundThemeBrushDark" Color="#1FFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackDisabledBackgroundThemeBrushLight" Color="#1F000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackPointerOverBackgroundThemeBrushDark" Color="#4AFFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackPointerOverBackgroundThemeBrushLight" Color="#4A000000"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackPressedBackgroundThemeBrushDark" Color="#59FFFFFF"/>
-    <SolidColorBrush x:Key="ToggleSwitchTrackPressedBackgroundThemeBrushLight" Color="#42000000"/>
-    <SolidColorBrush x:Key="ToolTipBackgroundThemeBrushDark" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToolTipBackgroundThemeBrushLight" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ToolTipBorderThemeBrushDark" Color="#FF808080"/>
-    <SolidColorBrush x:Key="ToolTipBorderThemeBrushLight" Color="#FF808080"/>
-    <SolidColorBrush x:Key="ToolTipForegroundThemeBrushDark" Color="#FF666666"/>
-    <SolidColorBrush x:Key="ToolTipForegroundThemeBrushLight" Color="#FF666666"/>
+	<!--
+    <SolidColorBrush x:Key="AppBarBackgroundThemeBrushDark" Color="#E5000000" />
+    <SolidColorBrush x:Key="AppBarBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="AppBarBorderThemeBrushDark" Color="#E5000000" />
+    <SolidColorBrush x:Key="AppBarBorderThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="AppBarItemBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="AppBarItemBackgroundThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="AppBarItemDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="AppBarItemDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="AppBarItemForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="AppBarItemForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="AppBarItemPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF" />
+    <SolidColorBrush x:Key="AppBarItemPointerOverBackgroundThemeBrushLight" Color="#3D000000" />
+    <SolidColorBrush x:Key="AppBarItemPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="AppBarItemPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="AppBarItemPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="AppBarItemPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ApplicationForegroundThemeBrushDark" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="ApplicationForegroundThemeBrushLight" Color="#DE000000" />
+    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrushDark" Color="#FF1D1D1D" />
+    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrushLight" Color="#FFF4F4F4" />
+    <SolidColorBrush x:Key="ApplicationPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ApplicationPointerOverForegroundThemeBrushLight" Color="#73000000" />
+    <SolidColorBrush x:Key="ApplicationPressedForegroundThemeBrushDark" Color="#FF5AB7E3" />
+    <SolidColorBrush x:Key="ApplicationPressedForegroundThemeBrushLight" Color="#FF5AB7E3" />
+    <SolidColorBrush x:Key="ApplicationSecondaryForegroundThemeBrushDark" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ApplicationSecondaryForegroundThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="BackButtonBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="BackButtonBackgroundThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="BackButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="BackButtonDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="BackButtonForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="BackButtonForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="BackButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF" />
+    <SolidColorBrush x:Key="BackButtonPointerOverBackgroundThemeBrushLight" Color="#3D000000" />
+    <SolidColorBrush x:Key="BackButtonPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="BackButtonPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="BackButtonPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="BackButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ButtonBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ButtonBackgroundThemeBrushLight" Color="#B3B6B6B6" />
+    <SolidColorBrush x:Key="ButtonBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ButtonBorderThemeBrushLight" Color="#33000000" />
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundThemeBrushLight" Color="#66CACACA" />
+    <SolidColorBrush x:Key="ButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ButtonDisabledBorderThemeBrushLight" Color="#1A000000" />
+    <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ButtonForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ButtonForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF" />
+    <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrushLight" Color="#D1CDCDCD" />
+    <SolidColorBrush x:Key="ButtonPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ButtonPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ButtonPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundThemeBrushDark" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundThemeBrushLight" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxBorderThemeBrushDark" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxBorderThemeBrushLight" Color="#45000000" />
+    <SolidColorBrush x:Key="CheckBoxContentDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxContentDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="CheckBoxContentForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxContentForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxDisabledBackgroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxDisabledBackgroundThemeBrushLight" Color="#66CACACA" />
+    <SolidColorBrush x:Key="CheckBoxDisabledBorderThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxDisabledBorderThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="CheckBoxDisabledForegroundThemeBrushDark" Color="#66000000" />
+    <SolidColorBrush x:Key="CheckBoxDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="CheckBoxForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxPointerOverBackgroundThemeBrushDark" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxPointerOverBackgroundThemeBrushLight" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxPointerOverBorderThemeBrushDark" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxPointerOverBorderThemeBrushLight" Color="#70000000" />
+    <SolidColorBrush x:Key="CheckBoxPointerOverForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxPressedBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="CheckBoxPressedBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="CheckBoxPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxArrowDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxArrowDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ComboBoxArrowForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxArrowForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxArrowPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxArrowPressedForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundThemeBrushDark" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundThemeBrushLight" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxBorderThemeBrushDark" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxBorderThemeBrushLight" Color="#45000000" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBackgroundThemeBrushLight" Color="#66CACACA" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBorderThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBorderThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ComboBoxDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ComboBoxFocusedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxFocusedBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxFocusedBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxFocusedBorderThemeBrushLight" Color="#70000000" />
+    <SolidColorBrush x:Key="ComboBoxFocusedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxFocusedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxItemDisabledForegroundThemeBrushDark" Color="#66000000" />
+    <SolidColorBrush x:Key="ComboBoxItemDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ComboBoxItemPointerOverBackgroundThemeBrushDark" Color="#21000000" />
+    <SolidColorBrush x:Key="ComboBoxItemPointerOverBackgroundThemeBrushLight" Color="#21000000" />
+    <SolidColorBrush x:Key="ComboBoxItemPointerOverForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxItemPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxItemPressedBackgroundThemeBrushDark" Color="#FFD3D3D3" />
+    <SolidColorBrush x:Key="ComboBoxItemPressedBackgroundThemeBrushLight" Color="#FFD3D3D3" />
+    <SolidColorBrush x:Key="ComboBoxItemPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxItemPressedForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedBackgroundThemeBrushDark" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedBackgroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledBackgroundThemeBrushDark" Color="#8C000000" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledBackgroundThemeBrushLight" Color="#8C000000" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledForegroundThemeBrushDark" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedDisabledForegroundThemeBrushLight" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ComboBoxPointerOverBackgroundThemeBrushDark" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPointerOverBackgroundThemeBrushLight" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPointerOverBorderThemeBrushDark" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPointerOverBorderThemeBrushLight" Color="#70000000" />
+    <SolidColorBrush x:Key="ComboBoxPopupBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPopupBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPopupBorderThemeBrushDark" Color="#FF212121" />
+    <SolidColorBrush x:Key="ComboBoxPopupBorderThemeBrushLight" Color="#FF212121" />
+    <SolidColorBrush x:Key="ComboBoxPopupForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxPopupForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPressedBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPressedBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxPressedBorderThemeBrushLight" Color="#A3000000" />
+    <SolidColorBrush x:Key="ComboBoxPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxPressedForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ComboBoxPressedHighlightThemeBrushDark" Color="#FFD3D3D3" />
+    <SolidColorBrush x:Key="ComboBoxPressedHighlightThemeBrushLight" Color="#FFD3D3D3" />
+    <SolidColorBrush x:Key="ComboBoxSelectedBackgroundThemeBrushDark" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ComboBoxSelectedBackgroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ComboBoxSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ComboBoxSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="DefaultTextForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="DefaultTextForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="FlipViewButtonBackgroundThemeBrushDark" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="FlipViewButtonBackgroundThemeBrushLight" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="FlipViewButtonBorderThemeBrushDark" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="FlipViewButtonBorderThemeBrushLight" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="FlipViewButtonForegroundThemeBrushDark" Color="#99000000" />
+    <SolidColorBrush x:Key="FlipViewButtonForegroundThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="FlipViewButtonPointerOverBackgroundThemeBrushDark" Color="#F0D7D7D7" />
+    <SolidColorBrush x:Key="FlipViewButtonPointerOverBackgroundThemeBrushLight" Color="#F0D7D7D7" />
+    <SolidColorBrush x:Key="FlipViewButtonPointerOverBorderThemeBrushDark" Color="#9EC1C1C1" />
+    <SolidColorBrush x:Key="FlipViewButtonPointerOverBorderThemeBrushLight" Color="#9EC1C1C1" />
+    <SolidColorBrush x:Key="FlipViewButtonPointerOverForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="FlipViewButtonPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="FlipViewButtonPressedBackgroundThemeBrushDark" Color="#BD292929" />
+    <SolidColorBrush x:Key="FlipViewButtonPressedBackgroundThemeBrushLight" Color="#BD292929" />
+    <SolidColorBrush x:Key="FlipViewButtonPressedBorderThemeBrushDark" Color="#BD292929" />
+    <SolidColorBrush x:Key="FlipViewButtonPressedBorderThemeBrushLight" Color="#BD292929" />
+    <SolidColorBrush x:Key="FlipViewButtonPressedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="FlipViewButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="FocusVisualBlackStrokeThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="FocusVisualBlackStrokeThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="FocusVisualWhiteStrokeThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="FocusVisualWhiteStrokeThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="HyperlinkButtonBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="HyperlinkButtonBackgroundThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="HyperlinkButtonBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="HyperlinkButtonBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="HyperlinkDisabledThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="HyperlinkDisabledThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="HyperlinkForegroundThemeBrushDark" Color="#FF9C72FF" />
+    <SolidColorBrush x:Key="HyperlinkForegroundThemeBrushLight" Color="#FF4F1ACB" />
+    <SolidColorBrush x:Key="HyperlinkPointerOverForegroundThemeBrushDark" Color="#CC9C72FF" />
+    <SolidColorBrush x:Key="HyperlinkPointerOverForegroundThemeBrushLight" Color="#CC4F1ACB" />
+    <SolidColorBrush x:Key="HyperlinkPressedForegroundThemeBrushDark" Color="#999C72FF" />
+    <SolidColorBrush x:Key="HyperlinkPressedForegroundThemeBrushLight" Color="#994F1ACB" />
+    <SolidColorBrush x:Key="ListBoxBackgroundThemeBrushDark" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="ListBoxBackgroundThemeBrushLight" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="ListBoxBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ListBoxBorderThemeBrushLight" Color="#45000000" />
+    <SolidColorBrush x:Key="ListBoxDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ListBoxDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ListBoxFocusBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListBoxFocusBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListBoxForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ListBoxForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ListBoxItemDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ListBoxItemDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ListBoxItemPointerOverBackgroundThemeBrushDark" Color="#21000000" />
+    <SolidColorBrush x:Key="ListBoxItemPointerOverBackgroundThemeBrushLight" Color="#21000000" />
+    <SolidColorBrush x:Key="ListBoxItemPointerOverForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ListBoxItemPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ListBoxItemPressedBackgroundThemeBrushDark" Color="#FFD3D3D3" />
+    <SolidColorBrush x:Key="ListBoxItemPressedBackgroundThemeBrushLight" Color="#FFD3D3D3" />
+    <SolidColorBrush x:Key="ListBoxItemPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ListBoxItemPressedForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrushDark" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledBackgroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledBackgroundThemeBrushLight" Color="#8C000000" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledForegroundThemeBrushDark" Color="#99000000" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedDisabledForegroundThemeBrushLight" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ListViewItemCheckHintThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemCheckHintThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ListViewItemCheckSelectingThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemCheckSelectingThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ListViewItemCheckThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemCheckThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemDragBackgroundThemeBrushDark" Color="#994617B4" />
+    <SolidColorBrush x:Key="ListViewItemDragBackgroundThemeBrushLight" Color="#994617B4" />
+    <SolidColorBrush x:Key="ListViewItemDragForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemDragForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ListViewItemOverlayBackgroundThemeBrushDark" Color="#A6000000" />
+    <SolidColorBrush x:Key="ListViewItemOverlayBackgroundThemeBrushLight" Color="#A6000000" />
+    <SolidColorBrush x:Key="ListViewItemOverlayForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemOverlayForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemOverlaySecondaryForegroundThemeBrushDark" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemOverlaySecondaryForegroundThemeBrushLight" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemPlaceholderBackgroundThemeBrushDark" Color="#FF3D3D3D" />
+    <SolidColorBrush x:Key="ListViewItemPlaceholderBackgroundThemeBrushLight" Color="#FF3D3D3D" />
+    <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrushDark" Color="#4DFFFFFF" />
+    <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrushLight" Color="#4D000000" />
+    <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrushDark" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrushDark" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrushDark" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrushLight" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ProgressBarBackgroundThemeBrushDark" Color="#59FFFFFF" />
+    <SolidColorBrush x:Key="ProgressBarBackgroundThemeBrushLight" Color="#30000000" />
+    <SolidColorBrush x:Key="ProgressBarBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ProgressBarBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ProgressBarForegroundThemeBrushDark" Color="#FF5B2EC5" />
+    <SolidColorBrush x:Key="ProgressBarForegroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrushDark" Color="#FF8A57FF" />
+    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="RadioButtonBackgroundThemeBrushDark" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonBackgroundThemeBrushLight" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonBorderThemeBrushDark" Color="#CCFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonBorderThemeBrushLight" Color="#45000000" />
+    <SolidColorBrush x:Key="RadioButtonContentDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonContentDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="RadioButtonContentForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonContentForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonDisabledBackgroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonDisabledBackgroundThemeBrushLight" Color="#66CACACA" />
+    <SolidColorBrush x:Key="RadioButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonDisabledBorderThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="RadioButtonDisabledForegroundThemeBrushDark" Color="#66000000" />
+    <SolidColorBrush x:Key="RadioButtonDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="RadioButtonForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonPointerOverBackgroundThemeBrushDark" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonPointerOverBackgroundThemeBrushLight" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonPointerOverBorderThemeBrushDark" Color="#DEFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonPointerOverBorderThemeBrushLight" Color="#70000000" />
+    <SolidColorBrush x:Key="RadioButtonPointerOverForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonPressedBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RadioButtonPressedBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="RadioButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonBorderThemeBrushLight" Color="#33000000" />
+    <SolidColorBrush x:Key="RepeatButtonDisabledBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonDisabledBackgroundThemeBrushLight" Color="#66CACACA" />
+    <SolidColorBrush x:Key="RepeatButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonDisabledBorderThemeBrushLight" Color="#1A000000" />
+    <SolidColorBrush x:Key="RepeatButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RepeatButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonPointerOverBackgroundThemeBrushLight" Color="#D1CDCDCD" />
+    <SolidColorBrush x:Key="RepeatButtonPointerOverForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RepeatButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RepeatButtonPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="RepeatButtonPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="RepeatButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ScrollBarButtonForegroundThemeBrushDark" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonForegroundThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBackgroundThemeBrushDark" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBackgroundThemeBrushLight" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBorderThemeBrushDark" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ScrollBarButtonPointerOverBorderThemeBrushLight" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ScrollBarButtonPointerOverForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonPressedBackgroundThemeBrushDark" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonPressedBackgroundThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonPressedBorderThemeBrushDark" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonPressedBorderThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarButtonPressedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ScrollBarButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ScrollBarPanningBackgroundThemeBrushDark" Color="#FFCDCDCD" />
+    <SolidColorBrush x:Key="ScrollBarPanningBackgroundThemeBrushLight" Color="#FFCDCDCD" />
+    <SolidColorBrush x:Key="ScrollBarPanningBorderThemeBrushDark" Color="#7D9A9A9A" />
+    <SolidColorBrush x:Key="ScrollBarPanningBorderThemeBrushLight" Color="#7D9A9A9A" />
+    <SolidColorBrush x:Key="ScrollBarThumbBackgroundThemeBrushDark" Color="#FFCDCDCD" />
+    <SolidColorBrush x:Key="ScrollBarThumbBackgroundThemeBrushLight" Color="#FFCDCDCD" />
+    <SolidColorBrush x:Key="ScrollBarThumbBorderThemeBrushDark" Color="#3B555555" />
+    <SolidColorBrush x:Key="ScrollBarThumbBorderThemeBrushLight" Color="#3B555555" />
+    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBackgroundThemeBrushDark" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBackgroundThemeBrushLight" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBorderThemeBrushDark" Color="#6BB7B7B7" />
+    <SolidColorBrush x:Key="ScrollBarThumbPointerOverBorderThemeBrushLight" Color="#6BB7B7B7" />
+    <SolidColorBrush x:Key="ScrollBarThumbPressedBackgroundThemeBrushDark" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarThumbPressedBackgroundThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="ScrollBarThumbPressedBorderThemeBrushDark" Color="#ED555555" />
+    <SolidColorBrush x:Key="ScrollBarThumbPressedBorderThemeBrushLight" Color="#ED555555" />
+    <SolidColorBrush x:Key="ScrollBarTrackBackgroundThemeBrushDark" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="ScrollBarTrackBackgroundThemeBrushLight" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="ScrollBarTrackBorderThemeBrushDark" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="ScrollBarTrackBorderThemeBrushLight" Color="#59D5D5D5" />
+    <SolidColorBrush x:Key="SliderBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="SliderBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="SliderDisabledBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="SliderDisabledBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="SliderThumbBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderThumbBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderThumbBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbDisabledBackgroundThemeBrushDark" Color="#FF7E7E7E" />
+    <SolidColorBrush x:Key="SliderThumbDisabledBackgroundThemeBrushLight" Color="#FF929292" />
+    <SolidColorBrush x:Key="SliderThumbPointerOverBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderThumbPointerOverBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbPointerOverBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderThumbPointerOverBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderThumbPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbPressedBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderThumbPressedBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderTickMarkInlineBackgroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderTickMarkInlineBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderTickMarkInlineDisabledForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderTickMarkInlineDisabledForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SliderTickmarkOutsideBackgroundThemeBrushDark" Color="#80FFFFFF" />
+    <SolidColorBrush x:Key="SliderTickmarkOutsideBackgroundThemeBrushLight" Color="#80000000" />
+    <SolidColorBrush x:Key="SliderTickMarkOutsideDisabledForegroundThemeBrushDark" Color="#80FFFFFF" />
+    <SolidColorBrush x:Key="SliderTickMarkOutsideDisabledForegroundThemeBrushLight" Color="#80000000" />
+    <SolidColorBrush x:Key="SliderTrackBackgroundThemeBrushDark" Color="#29FFFFFF" />
+    <SolidColorBrush x:Key="SliderTrackBackgroundThemeBrushLight" Color="#1A000000" />
+    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrushDark" Color="#FF5B2EC5" />
+    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="SliderTrackDecreaseDisabledBackgroundThemeBrushDark" Color="#1FFFFFFF" />
+    <SolidColorBrush x:Key="SliderTrackDecreaseDisabledBackgroundThemeBrushLight" Color="#1C000000" />
+    <SolidColorBrush x:Key="SliderTrackDecreasePointerOverBackgroundThemeBrushDark" Color="#FF724BCD" />
+    <SolidColorBrush x:Key="SliderTrackDecreasePointerOverBackgroundThemeBrushLight" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="SliderTrackDecreasePressedBackgroundThemeBrushDark" Color="#FF8152EF" />
+    <SolidColorBrush x:Key="SliderTrackDecreasePressedBackgroundThemeBrushLight" Color="#FF7241E4" />
+    <SolidColorBrush x:Key="SliderTrackDisabledBackgroundThemeBrushDark" Color="#29FFFFFF" />
+    <SolidColorBrush x:Key="SliderTrackDisabledBackgroundThemeBrushLight" Color="#1A000000" />
+    <SolidColorBrush x:Key="SliderTrackPointerOverBackgroundThemeBrushDark" Color="#46FFFFFF" />
+    <SolidColorBrush x:Key="SliderTrackPointerOverBackgroundThemeBrushLight" Color="#26000000" />
+    <SolidColorBrush x:Key="SliderTrackPressedBackgroundThemeBrushDark" Color="#59FFFFFF" />
+    <SolidColorBrush x:Key="SliderTrackPressedBackgroundThemeBrushLight" Color="#33000000" />
+    <SolidColorBrush x:Key="TextBoxBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBoxBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBoxBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBoxBorderThemeBrushLight" Color="#A3000000" />
+    <SolidColorBrush x:Key="TextBoxButtonBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonBackgroundThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="TextBoxButtonForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="TextBoxButtonPointerOverBackgroundThemeBrushDark" Color="#FFDEDEDE" />
+    <SolidColorBrush x:Key="TextBoxButtonPointerOverBackgroundThemeBrushLight" Color="#FFDEDEDE" />
+    <SolidColorBrush x:Key="TextBoxButtonPointerOverBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonPointerOverBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonPointerOverForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="TextBoxButtonPointerOverForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="TextBoxButtonPressedBackgroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="TextBoxButtonPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="TextBoxButtonPressedBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonPressedBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonPressedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBoxButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBoxDisabledBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxDisabledBackgroundThemeBrushLight" Color="#66CACACA" />
+    <SolidColorBrush x:Key="TextBoxDisabledBorderThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="TextBoxDisabledBorderThemeBrushLight" Color="#26000000" />
+    <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrushDark" Color="#FF666666" />
+    <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrushLight" Color="#FF666666" />
+    <SolidColorBrush x:Key="TextBoxForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="TextBoxForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ThumbBackgroundThemeBrushDark" Color="#FFCDCDCD" />
+    <SolidColorBrush x:Key="ThumbBackgroundThemeBrushLight" Color="#FFCDCDCD" />
+    <SolidColorBrush x:Key="ThumbBorderThemeBrushDark" Color="#3B555555" />
+    <SolidColorBrush x:Key="ThumbBorderThemeBrushLight" Color="#3B555555" />
+    <SolidColorBrush x:Key="ThumbPointerOverBackgroundThemeBrushDark" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ThumbPointerOverBackgroundThemeBrushLight" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="ThumbPointerOverBorderThemeBrushDark" Color="#6BB7B7B7" />
+    <SolidColorBrush x:Key="ThumbPointerOverBorderThemeBrushLight" Color="#6BB7B7B7" />
+    <SolidColorBrush x:Key="ThumbPressedBackgroundThemeBrushDark" Color="#99000000" />
+    <SolidColorBrush x:Key="ThumbPressedBackgroundThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="ThumbPressedBorderThemeBrushDark" Color="#ED555555" />
+    <SolidColorBrush x:Key="ThumbPressedBorderThemeBrushLight" Color="#ED555555" />
+    <SolidColorBrush x:Key="ToggleButtonBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonBackgroundThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledBackgroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledBackgroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedDisabledForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBackgroundThemeBrushDark" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBackgroundThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBorderThemeBrushDark" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPointerOverBorderThemeBrushLight" Color="#99000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBackgroundThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPressedBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPressedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonCheckedPressedForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonDisabledBorderThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonDisabledBorderThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ToggleButtonDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ToggleButtonForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonPointerOverBackgroundThemeBrushDark" Color="#21FFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonPointerOverBackgroundThemeBrushLight" Color="#21000000" />
+    <SolidColorBrush x:Key="ToggleButtonPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleButtonPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonPressedForegroundThemeBrushDark" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleButtonPressedForegroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrushDark" Color="#FF5729C1" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrushLight" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainDisabledBackgroundThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainDisabledBackgroundThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainPointerOverBackgroundThemeBrushDark" Color="#FF6E46CA" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainPointerOverBackgroundThemeBrushLight" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainPressedBackgroundThemeBrushDark" Color="#FF7E4FEC" />
+    <SolidColorBrush x:Key="ToggleSwitchCurtainPressedBackgroundThemeBrushLight" Color="#FF7241E4" />
+    <SolidColorBrush x:Key="ToggleSwitchDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ToggleSwitchForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchHeaderDisabledForegroundThemeBrushDark" Color="#66FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchHeaderDisabledForegroundThemeBrushLight" Color="#66000000" />
+    <SolidColorBrush x:Key="ToggleSwitchHeaderForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchHeaderForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchOuterBorderBorderThemeBrushDark" Color="#59FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchOuterBorderBorderThemeBrushLight" Color="#59000000" />
+    <SolidColorBrush x:Key="ToggleSwitchOuterBorderDisabledBorderThemeBrushDark" Color="#33FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchOuterBorderDisabledBorderThemeBrushLight" Color="#33000000" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBackgroundThemeBrushDark" Color="#FF7E7E7E" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBackgroundThemeBrushLight" Color="#FF929292" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBorderThemeBrushDark" Color="#FF7E7E7E" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbDisabledBorderThemeBrushLight" Color="#FF929292" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBorderThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPointerOverBorderThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPressedBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPressedBackgroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPressedForegroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchThumbPressedForegroundThemeBrushLight" Color="#FF000000" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackBackgroundThemeBrushDark" Color="#42FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackBackgroundThemeBrushLight" Color="#59000000" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackBorderThemeBrushDark" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackBorderThemeBrushLight" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackDisabledBackgroundThemeBrushDark" Color="#1FFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackDisabledBackgroundThemeBrushLight" Color="#1F000000" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackPointerOverBackgroundThemeBrushDark" Color="#4AFFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackPointerOverBackgroundThemeBrushLight" Color="#4A000000" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackPressedBackgroundThemeBrushDark" Color="#59FFFFFF" />
+    <SolidColorBrush x:Key="ToggleSwitchTrackPressedBackgroundThemeBrushLight" Color="#42000000" />
+    <SolidColorBrush x:Key="ToolTipBackgroundThemeBrushDark" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToolTipBackgroundThemeBrushLight" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ToolTipBorderThemeBrushDark" Color="#FF808080" />
+    <SolidColorBrush x:Key="ToolTipBorderThemeBrushLight" Color="#FF808080" />
+    <SolidColorBrush x:Key="ToolTipForegroundThemeBrushDark" Color="#FF666666" />
+    <SolidColorBrush x:Key="ToolTipForegroundThemeBrushLight" Color="#FF666666" />
     -->
 </ResourceDictionary>

@@ -4,19 +4,19 @@
 
 namespace TuneOut
 {
-    public sealed partial class SettingsLegal : UserControl
-    {
-        public SettingsLegal()
-        {
-            this.InitializeComponent();
-            this.Loaded += (sender, e) =>
-            {
-                SettingsUIManager.SettingsCharmOpen = true;
-            };
-            this.Unloaded += (sender, e) =>
-            {
-                SettingsUIManager.SettingsCharmOpen = false;
-            };
-        }
-    }
+	public sealed partial class SettingsLegal : UserControl
+	{
+		public SettingsLegal()
+		{
+			this.InitializeComponent();
+			this.Loaded += (sender, e) =>
+			{
+				SettingsUIManager.SettingsCharmOpen = true;
+			};
+			this.Unloaded += (sender, e) =>
+			{
+				SettingsUIManager.SettingsCharmOpen = false;
+			};
+		}
+	}
 }
