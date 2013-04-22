@@ -8,12 +8,6 @@ License
 In general, most of the code in this repository is licensed under the Microsoft Public License (Ms-PL), a copy of which is available at http://opensource.org/licenses/MS-PL.
 However, certain files are available only under separate licenses; these files will have separate credits and copyright information listed in their headers.
 
-Sample Library
-==============
-The sample library contained in `SAMPLE.zip` can be used to test TuneOut.
-Simply unzip the file anywhere, and choose it from within TuneOut.
-The audio files contained within are several tracks that are available from the [South by Southwest](http://www.sxsw.com) 2013 [unofficial torents](http://www.sxswtorrent.com).
-
 Getting Started with the Code
 =============================
 TuneOut is composed of two main projects: `TuneOut` and `TuneOut.Model`.
