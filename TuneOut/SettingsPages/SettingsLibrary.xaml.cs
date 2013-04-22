@@ -66,9 +66,10 @@ namespace TuneOut
 				VisualStateManager.GoToState(this, "LoggedOut", false);
 			}
 
-			if (TuneOut.AppData.Settings.GetLibraryLocationStatus())
+			StorageFolder folder;
+			if (TuneOut.AppData.Settings.GetLibraryLocationStatus() &&
+				(folder = await TuneOut.AppData.Settings.GetLibraryLocation()) != null)
 			{
-				StorageFolder folder = await TuneOut.AppData.Settings.GetLibraryLocation();
 				LibraryStatus.Text = String.Format(LocalizationManager.GetString("Settings/Library/Linked_F"), folder.Path);
 			}
 

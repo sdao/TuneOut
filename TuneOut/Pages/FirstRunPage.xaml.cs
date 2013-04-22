@@ -67,6 +67,9 @@ namespace TuneOut
 				{
 					VisualStateManager.GoToState(this, "Loading", true);
 
+					// Reset everything just in case first.
+					TunesDataSource.Reset(firstRunComplete: true);
+
 					// Application now has read/write access to all content in the picked folder (including other sub-folder content)
 					TuneOut.AppData.Settings.SetLibraryLocation(folder);
 

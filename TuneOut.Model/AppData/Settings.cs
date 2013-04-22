@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 
 namespace TuneOut.AppData
 {
@@ -161,11 +162,18 @@ namespace TuneOut.AppData
 		/// Retrieves the library location.
 		/// </summary>
 		/// <returns>The library location.</returns>
-		public static Windows.Foundation.IAsyncOperation<Windows.Storage.StorageFolder> GetLibraryLocation()
+		public async static Task<Windows.Storage.StorageFolder> GetLibraryLocation()
 		{
 			Contract.Assume(Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList != null);
 
-			return Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.GetFolderAsync("LibraryFolderToken");
+			try
+			{
+				return await Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.GetFolderAsync("LibraryFolderToken");
+			}
+			catch (Exception)
+			{
+				return null;
+			}
 		}
 
 		/// <summary>
