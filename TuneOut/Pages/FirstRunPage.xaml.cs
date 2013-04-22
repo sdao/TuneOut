@@ -67,7 +67,7 @@ namespace TuneOut
 				{
 					VisualStateManager.GoToState(this, "Loading", true);
 
-					// Application now has read/write access to all contents in the picked folder (including other sub-folder contents)
+					// Application now has read/write access to all content in the picked folder (including other sub-folder content)
 					TuneOut.AppData.Settings.SetLibraryLocation(folder);
 
 					bool hasData = await TunesDataSource.Load();

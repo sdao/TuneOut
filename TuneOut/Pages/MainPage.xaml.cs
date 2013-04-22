@@ -23,9 +23,11 @@ namespace TuneOut
 	{
 		private const int QUEUE_DISPLAY_LIMIT = 8;
 
-		private Flyout _volumeFlyout;
+		Menu _playMenu;
 		private Flyout _playFlyout;
+		private Flyout _volumeFlyout;
 		private Flyout _alertFlyout;
+		RoutedEventHandler _alertHandler;
 
 		private Dictionary<string, object> _pageState;
 		private Guid? _navigationParameter;
@@ -38,17 +40,8 @@ namespace TuneOut
 
 			this.InitializeComponent();
 
-			// Initialize volume controls
-			hiddenControls.Children.Remove(volumeControls);
-
-			_volumeFlyout = new Flyout();
-			_volumeFlyout.Content = volumeControls;
-			_volumeFlyout.Placement = PlacementMode.Top;
-			_volumeFlyout.PlacementTarget = volumeButton;
-			_volumeFlyout.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
-
-			// Initialize Play All menu
-			Menu menu = new Menu();
+			// Initialize Play All _playMenu; this can only occur in code-behind for the moment
+			_playMenu = new Menu();
 
 			MenuItem playAllItem = new MenuItem();
 			playAllItem.Text = LocalizationManager.GetString("TransportControls/PlayMenu/PlayAll");
@@ -64,14 +57,8 @@ namespace TuneOut
 				AudioController.Default.ReplaceAll(TunesDataSource.Default.AllSongsPlaylist, true, true);
 			};
 
-			menu.Items.Add(playAllItem);
-			menu.Items.Add(shuffleItem);
-
-			_playFlyout = new Flyout();
-			_playFlyout.Content = menu;
-			_playFlyout.Placement = PlacementMode.Top;
-			_playFlyout.PlacementTarget = playButton;
-			_playFlyout.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
+			_playMenu.Items.Add(playAllItem);
+			_playMenu.Items.Add(shuffleItem);
 		}
 
 		public void Dispose()
@@ -420,7 +407,7 @@ namespace TuneOut
 			if (AudioController.Default.Status == AudioControllerStatus.Inactive)
 			{
 				// Show a Play All menu
-				_playFlyout.IsOpen = true;
+				ShowFlyout(_playMenu, ref _playFlyout, playButton, PlacementMode.Top);
 			}
 			else if (AudioController.Default.Status == AudioControllerStatus.Paused)
 			{
@@ -434,7 +421,7 @@ namespace TuneOut
 
 		private void volumeButton_Click(object sender, RoutedEventArgs e)
 		{
-			_volumeFlyout.IsOpen = true;
+			ShowFlyout(volumeControls, ref _volumeFlyout, volumeButton, PlacementMode.Top);
 		}
 
 		private void skipBackButton_Click(object sender, RoutedEventArgs e)
@@ -660,64 +647,70 @@ namespace TuneOut
 			}
 		}
 
+		private void ShowFlyout(FrameworkElement content, ref Flyout flyout, UIElement placementTarget, PlacementMode placementMode, Thickness hostMargin = new Thickness())
+		{
+			if (flyout != null)
+			{
+				flyout.IsOpen = false;
+				flyout.Content = null;
+				flyout.Dispose();
+			}
+
+			var parentPanel = content.Parent as Panel;
+			if (parentPanel != null)
+			{
+				parentPanel.Children.Remove(content);
+			}
+
+			flyout = new Flyout();
+			flyout.Content = content;
+			flyout.HostMargin = hostMargin;
+			flyout.Placement = placementMode;
+			flyout.PlacementTarget = placementTarget;
+
+			if (ApplicationView.Value == ApplicationViewState.Snapped)
+			{
+				flyout.MaxWidth = mainGrid.ActualWidth;
+			}
+
+			flyout.IsOpen = true;
+		}
+
 		/// <summary>
 		/// Shows an alert flyout.
 		/// </summary>
 		/// <param name="action">The action to perform when the flyout's button is clicked.</param>
-		/// <param name="alertText">The text to display in the flyout.</param>
-		/// <param name="alertActionText">The text to display in the flyout's button.</param>
+		/// <param name="alertMessage">The text to display in the flyout.</param>
+		/// <param name="alertButtonMessage">The text to display in the flyout's button.</param>
 		/// <param name="target">The object above which the flyout will be shown. If null, the flyout will be shown at the bottom of the screen.</param>
-		private void ShowAlertFlyout(Action action, string alertText, string alertActionText, UIElement target = null)
+		private void ShowAlertFlyout(Action action, string alertMessage, string alertButtonMessage, UIElement target = null)
 		{
-			if (_alertFlyout != null)
+			if (_alertHandler != null)
 			{
-				_alertFlyout.IsOpen = false;
-				_alertFlyout.Dispose();
+				alertButton.Click -= _alertHandler;
 			}
 
-			_alertFlyout = new Flyout();
+			alertText.Text = alertMessage;
+			alertButtonText.Text = alertButtonMessage;
 
-			TextBlock text = new TextBlock();
-			text.Text = alertText;
-			text.Style = (Style)(Application.Current.Resources["FlyoutText"]);
-
-			TextBlock buttonText = new TextBlock();
-			buttonText.Text = alertActionText;
-
-			Button button = new Button();
-			button.Content = buttonText;
-			button.Click += (sender, e) => { _alertFlyout.IsOpen = false; action(); };
-			button.Style = (Style)(Application.Current.Resources["FlyoutActionButton"]);
-
-			StackPanel flyoutContents = new StackPanel();
-			flyoutContents.Orientation = Orientation.Vertical;
-			flyoutContents.Children.Add(text);
-			flyoutContents.Children.Add(button);
-			flyoutContents.Margin = new Thickness(10.0);
-
-			_alertFlyout.Content = flyoutContents;
-			_alertFlyout.HostMargin = new Thickness(10.0, 0.0, 10.0, 0.0);
-			_alertFlyout.Placement = PlacementMode.Top;
-
+			UIElement actualTarget;
 			if (target != null)
 			{
-				_alertFlyout.PlacementTarget = target;
+				actualTarget = target;
 			}
 			else if (BottomAppBar.IsOpen)
 			{
-				_alertFlyout.PlacementTarget = BottomAppBar;
+				actualTarget = BottomAppBar;
 			}
 			else
 			{
-				_alertFlyout.PlacementTarget = hiddenBottomEdge;
+				actualTarget = hiddenBottomEdge;
 			}
 
-			if (ApplicationView.Value == ApplicationViewState.Snapped)
-			{
-				_alertFlyout.MaxWidth = mainGrid.ActualWidth;
-			}
+			ShowFlyout(alertControls, ref _alertFlyout, actualTarget, PlacementMode.Top, new Thickness(10d, 0d, 10d, 0d));
 
-			_alertFlyout.IsOpen = true;
+			_alertHandler = (sender, e) => { _alertFlyout.IsOpen = false; action(); };
+			alertButton.Click += _alertHandler;
 		}
 
 		/// <summary>
