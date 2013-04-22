@@ -404,4 +404,7 @@
   <data name="Legal/Credits/Link.Content" xml:space="preserve">
     <value>View Credits</value>
   </data>
+  <data name="Legal/Credits/LastFmLink.Text" xml:space="preserve">
+    <value>Data from Last.fm</value>
+  </data>
 </root>

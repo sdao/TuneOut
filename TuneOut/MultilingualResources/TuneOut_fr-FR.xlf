@@ -29,14 +29,14 @@
         <trans-unit id="Resources\TransportControls\Volume\Active_F" translate="yes" xml:space="preserve">
           <source>Volume
 {0}</source>
-          <target state="new">Volume
+          <target state="translated">Volume
 {0}</target>
           <note from="MultilingualBuild" priority="2" annotates="source">Two lines: indiate Volume on 1st, \n, {0}=volume on 2nd</note>
         </trans-unit>
         <trans-unit id="Resources\TransportControls\Volume\Muted" translate="yes" xml:space="preserve">
           <source>Muted
 </source>
-          <target state="new">Muted
+          <target state="translated">Muet
 </target>
           <note from="MultilingualBuild" priority="2" annotates="source">Two lines: indicate Muted on 1st, \n, blank on 2nd</note>
         </trans-unit>
@@ -379,6 +379,10 @@
         <trans-unit id="Resources\Legal\Credits\Link\Content" translate="yes" xml:space="preserve">
           <source>View Credits</source>
           <target state="translated">Afficher les attributions</target>
+        </trans-unit>
+        <trans-unit id="Resources\Legal\Credits\LastFmLink\Text" translate="yes" xml:space="preserve">
+          <source>Data from Last.fm</source>
+          <target state="translated">Données de Last.fm</target>
         </trans-unit>
       </group>
     </body>

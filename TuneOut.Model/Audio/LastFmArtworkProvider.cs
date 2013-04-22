@@ -16,9 +16,9 @@ namespace TuneOut.Audio
 	{
 		private const int DOWNLOAD_THROTTLE_RATE = 10;
 
-		private static HttpClient __client = new HttpClient();
-		private static BackgroundDownloader __downloader = new BackgroundDownloader();
-		private static SemaphoreSlim __semaphore = new SemaphoreSlim(DOWNLOAD_THROTTLE_RATE);
+		private static readonly HttpClient __client = new HttpClient();
+		private static readonly BackgroundDownloader __downloader = new BackgroundDownloader();
+		private static readonly SemaphoreSlim __semaphore = new SemaphoreSlim(DOWNLOAD_THROTTLE_RATE);
 
 		private readonly Album _album;
 
@@ -29,7 +29,9 @@ namespace TuneOut.Audio
 		{
 			Settings.CreateArtworkCache();
 			Settings.CleanArtworkCache();
+			__client.DefaultRequestHeaders.Add("user-agent", LastFmApiSecrets.LASTFMAPI_USERAGENT);
 		}
+
 		public LastFmArtworkProvider(Album album)
 		{
 			Contract.Requires(album != null);
@@ -116,10 +118,6 @@ namespace TuneOut.Audio
 			catch (Exception)
 			{
 				return new CacheToken<Guid, Uri>(CacheStatus.CannotCache, artGuid, null);
-			}
-			finally
-			{
-				__semaphore.Release();
 			}
 
 			return new CacheToken<Guid, Uri>(CacheStatus.Cached, artGuid, new Uri(String.Format("ms-appdata:///local/{0}/{1}", artGuid.ToString(), _album.AlbumID)));

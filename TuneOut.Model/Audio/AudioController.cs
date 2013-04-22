@@ -587,6 +587,7 @@ namespace TuneOut.Audio
 			if (deserializedQueue != null)
 			{
 				MutateQueue(() => _queue = deserializedQueue);
+				OnPropertyChanged("UpcomingTracks"); // In this case, a new object was deserialized.
 				if (_queue.Current != null) Status = AudioControllerStatus.Paused;
 			}
 

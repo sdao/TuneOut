@@ -197,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\FirstRun.png" />
+    <Content Include="Assets\LastFmBadgeRed.png" />
     <Content Include="Assets\LastFmLogoWhite.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\Playlist.png" />

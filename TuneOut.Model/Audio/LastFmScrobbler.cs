@@ -20,10 +20,16 @@ namespace TuneOut.Audio
 
 		private static readonly LastFmScrobbler _Default = new LastFmScrobbler();
 		private static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-		
+		private static readonly HttpClient __client = new HttpClient();
+
 		private AudioController _AudioController;
 		private string _session = null;
 		private string _username = null;
+
+		static LastFmScrobbler()
+		{
+			__client.DefaultRequestHeaders.Add("user-agent", LastFmApiSecrets.LASTFMAPI_USERAGENT);
+		}
 
 		/// <summary>
 		/// Creates a new LastFmScrobbler.
@@ -118,9 +124,7 @@ namespace TuneOut.Audio
 
 			try
 			{
-				HttpClient client = new HttpClient();
-
-				HttpResponseMessage getTokenMessage = await client.GetAsync(LastFmApiSecrets.LASTFMAPI_GET_TOKEN);
+				HttpResponseMessage getTokenMessage = await __client.GetAsync(LastFmApiSecrets.LASTFMAPI_GET_TOKEN);
 				string tokenResponse = await getTokenMessage.Content.ReadAsStringAsync();
 
 				string token = JsonObject
@@ -137,7 +141,7 @@ namespace TuneOut.Audio
 							string getSessionSignature = string.Format(LastFmApiSecrets.LASTFMAPI_GET_SESSION_SIGN_FORMAT, token);
 							string getSessionSignatureMd5 = getSessionSignature.GetMd5Hash();
 							string getSession = string.Format(LastFmApiSecrets.LASTFMAPI_GET_SESSION_FORMAT, token, getSessionSignatureMd5);
-							HttpResponseMessage getSessionMessage = await client.GetAsync(getSession);
+							HttpResponseMessage getSessionMessage = await __client.GetAsync(getSession);
 							string sessionResponse = await getSessionMessage.Content.ReadAsStringAsync();
 
 							JsonObject session = JsonObject
@@ -272,8 +276,7 @@ namespace TuneOut.Audio
 			{
 				try
 				{
-					HttpClient client = new HttpClient();
-					client.DefaultRequestHeaders.ExpectContinue = false;
+					__client.DefaultRequestHeaders.ExpectContinue = false;
 
 					string trackNowPlayingSignature = string.Format(LastFmApiSecrets.LASTFMAPI_TRACK_UPDATENOWPLAYING_SIGN_FORMAT,
 						t.Artist,
@@ -290,7 +293,7 @@ namespace TuneOut.Audio
 
 					StringContent content = new StringContent(trackNowPlaying);
 					content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-					HttpResponseMessage trackNowPlayingMessage = await client.PostAsync(LastFmApiSecrets.LASTFMAPI_POST, content);
+					HttpResponseMessage trackNowPlayingMessage = await __client.PostAsync(LastFmApiSecrets.LASTFMAPI_POST, content);
 					// string nowPlayingResponse = await trackNowPlayingMessage.Content.ReadAsStringAsync();
 				}
 				catch (Exception)
@@ -315,8 +318,7 @@ namespace TuneOut.Audio
 			{
 				try
 				{
-					HttpClient client = new HttpClient();
-					client.DefaultRequestHeaders.ExpectContinue = false;
+					__client.DefaultRequestHeaders.ExpectContinue = false;
 
 					string trackScrobbleSignature = string.Format(LastFmApiSecrets.LASTFMAPI_TRACK_SCROBBLE_SIGN_FORMAT,
 						t.Artist,
@@ -335,7 +337,7 @@ namespace TuneOut.Audio
 
 					StringContent content = new StringContent(trackScrobble);
 					content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-					HttpResponseMessage trackScrobbleMessage = await client.PostAsync(LastFmApiSecrets.LASTFMAPI_POST, content);
+					HttpResponseMessage trackScrobbleMessage = await __client.PostAsync(LastFmApiSecrets.LASTFMAPI_POST, content);
 					// string scrobbleResponse = await trackScrobbleMessage.Content.ReadAsStringAsync();
 				}
 				catch (Exception)

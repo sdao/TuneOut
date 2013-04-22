@@ -88,7 +88,8 @@ namespace TuneOut.Audio
 			UserMutatedQueue = true;
 
 			var startIndex = _trackList.Count;
-			var items = t.Select(x => x.UniqueTrack());
+			var items = t.AsParallel().AsOrdered().Select(x => x.UniqueTrack());
+
 			_trackList.Enqueue(items);
 			if (!_trackList.HasCurrent) _trackList.Dequeue();
 		}
@@ -219,7 +220,7 @@ namespace TuneOut.Audio
 
 			Clear();
 
-			var items = a.TrackList.AsParallel().Select(x => x.UniqueTrack());
+			var items = a.TrackList.AsParallel().AsOrdered().Select(x => x.UniqueTrack());
 			_trackList.Enqueue(items);
 
 			int trackOffset = Math.Max(0, a.IndexOf(t));
@@ -251,7 +252,7 @@ namespace TuneOut.Audio
 			}
 			else
 			{
-				var items = a.TrackList.AsParallel().Select(x => x.UniqueTrack());
+				var items = a.TrackList.AsParallel().AsOrdered().Select(x => x.UniqueTrack());
 				_trackList.Enqueue(items);
 				_trackList.Dequeue();
 			}
