@@ -11,7 +11,7 @@ However, certain files are available only under separate licenses; these files w
 Getting Started with the Code
 =============================
 TuneOut is composed of two main projects: `TuneOut` and `TuneOut.Model`.
-`TuneOut.Model` contains (barely) and UI components, and can be taken and used in pretty much any other Windows 8 Store application without any major problems.
+`TuneOut.Model` contains (barely) any UI components, and can be taken and used in pretty much any other Windows 8 Store application without any major problems.
 It contains all of the code necessary to load iTunes libraries, play media, and create a "now playing" queue. All publically-accessible members in TuneOut.Model should have XML code documentation.
 
 The solution will not compile right off-the-bat because it is missing `LastFmApiSecrets.cs`, which contains the info required to connect to Last.fm.
