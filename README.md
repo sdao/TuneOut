@@ -5,5 +5,5 @@ A media player for Windows 8 that read iTunes libraries, including libraries on 
 
 License
 =======
-In general, most of the code in this repository is licensed under the GNU General Public License, Version 3, available at http://www.gnu.org/licenses/gpl.html.
+In general, most of the code in this repository is licensed under the Microsoft Public License (Ms-PL), a copy of which is available at http://opensource.org/licenses/MS-PL.
 However, certain files are available only under separate licenses; these files will have separate credits and copyright information in their headers.
