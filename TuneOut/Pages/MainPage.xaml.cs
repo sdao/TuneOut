@@ -719,7 +719,7 @@ namespace TuneOut
         }
 
         /// <summary>
-        /// Shows or hides the app bars depending on the UI state.
+        /// Shows or hides the app bars and selection controls depending on the UI state.
         /// </summary>
         private void ShowAppBars()
         {
