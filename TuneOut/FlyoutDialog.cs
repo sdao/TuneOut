@@ -13,29 +13,22 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 namespace TuneOut
 {
-	class FlyoutDialog : IDisposable
+	/// <summary>
+	/// A wrapper for <seealso cref="Callisto.Controls.Flyout"/> for showing short informational messages.
+	/// </summary>
+	class FlyoutDialog : Flyout
 	{
-		private readonly object _showAsyncLock = new object();
 		private readonly List<IUICommand> _commands = new List<IUICommand>();
 
-		private bool _open = false;
-
-		private Flyout _flyout = null;
-		private Panel _flyoutContainer = null;
-
-		public void Dispose()
+		/// <summary>
+		/// Creates a new, empty flyout dialog.
+		/// </summary>
+		public FlyoutDialog()
+			: base(null)
 		{
-			_flyout.DisposeIfNonNull();
-
-			GC.SuppressFinalize(this);
 		}
 
-		~FlyoutDialog()
-		{
-			Dispose();
-		}
-
-		public FrameworkElement Content
+		public String Text
 		{
 			get;
 			set;
@@ -49,71 +42,54 @@ namespace TuneOut
 			}
 		}
 
-		public void Show(UIElement target, PlacementMode placement, Thickness internalPadding = new Thickness())
+		/// <summary>
+		/// Shows a flyout with the current <seealso cref="Text"/> and <seealso cref="Commands"/>.
+		/// </summary>
+		/// <param name="target">The object near which to show the flyout.</param>
+		/// <param name="placement">The direction from the <paramref name="target"/> to show the flyout.</param>
+		/// <param name="maxWidth">The maximum width of the flyout. If null, automatically determines a feasible width.</param>
+		public override void Show(UIElement target, PlacementMode placement, double? maxWidth)
 		{
-			lock (_showAsyncLock)
+			// Create text
+			TextBlock textContainer = new TextBlock()
 			{
-				if (_open)
-				{
-					// Must close previous one before opening a new one.
-					DisposeFlyout();
-				}
+				Text = this.Text,
+				Style = Application.Current.Resources["FlyoutText"] as Style
+			};
 
-				_open = true;
-
-				// Ensure Content is unparented, just in case!
-				Panel contentParent = Content.Parent as Panel;
-				if (contentParent != null)
-				{
-					contentParent.Children.Remove(Content);
-				}
-
-				// Create action buttons
-				StackPanel flyoutButtonContainer = new StackPanel()
-				{
-					Orientation = Orientation.Horizontal,
-					HorizontalAlignment = HorizontalAlignment.Right
-				};
-				foreach (IUICommand cmd in _commands)
-				{
-					Button button = new Button();
-					button.Content = new TextBlock() { Text = cmd.Label };
-					button.Tag = cmd;
-					button.Style = Application.Current.Resources["FlyoutActionButton"] as Style;
-					button.Click += button_Click;
-
-					flyoutButtonContainer.Children.Add(button);
-				}
-
-				// Create outer container
-				_flyoutContainer = new StackPanel()
-				{
-					Orientation = Orientation.Vertical,
-					Margin = internalPadding
-				};
-
-				_flyoutContainer.Children.Add(Content);
-				_flyoutContainer.Children.Add(flyoutButtonContainer);
-
-				// Create flyout
-				_flyout = new Flyout()
-				{
-					Content = _flyoutContainer,
-					PlacementTarget = target,
-					Placement = placement
-				};
-
-				_flyout.Closed += _flyout_Closed;
-				_flyout.IsOpen = true;
-			}
-		}
-
-		void _flyout_Closed(object sender, object e)
-		{
-			if (_open) // Prevent flyout from being disposed if that has already happened in click handler
+			// Create action buttons
+			StackPanel flyoutButtonContainer = new StackPanel()
 			{
-				DisposeFlyout();
+				Orientation = Orientation.Horizontal,
+				HorizontalAlignment = HorizontalAlignment.Right
+			};
+
+			foreach (IUICommand cmd in _commands)
+			{
+				Button button = new Button()
+				{
+					Content = new TextBlock() { Text = cmd.Label },
+					Tag = cmd,
+					Style = Application.Current.Resources["FlyoutActionButton"] as Style
+				};
+
+				button.Click += button_Click;
+
+				flyoutButtonContainer.Children.Add(button);
 			}
+
+			// Create outer container
+			var outerContainer = new StackPanel()
+			{
+				Orientation = Orientation.Vertical,
+				Margin = new Thickness(10d)
+			};
+
+			outerContainer.Children.Add(textContainer);
+			outerContainer.Children.Add(flyoutButtonContainer);
+
+			Content = outerContainer;
+			base.Show(target, placement, maxWidth);
 		}
 
 		void button_Click(object sender, RoutedEventArgs e)
@@ -122,24 +98,13 @@ namespace TuneOut
 			var command = senderButton.Tag as IUICommand;
 			command.Invoked(command);
 
-			if (_open)
-			{
-				DisposeFlyout();
-			}
+			this.DisposeFlyout();
 		}
 
-		private void DisposeFlyout()
+		protected override void DisposeFlyout()
 		{
-			_flyout.IsOpen = false;
-			_flyout.Content = null;
-
-			_flyoutContainer.Children.Remove(Content);
-			_flyoutContainer = null;
-
-			_flyout.Dispose();
-			_flyout = null;
-
-			_open = false;
+			base.DisposeFlyout();
+			Content = null;
 		}
 	}
 }

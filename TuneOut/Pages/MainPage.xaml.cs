@@ -1,5 +1,4 @@
-﻿using Callisto.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -23,9 +22,8 @@ namespace TuneOut
 	{
 		private const int QUEUE_DISPLAY_LIMIT = 8;
 
-		private FlyoutDialog _playFlyout = null;
-		private FlyoutDialog _volumeFlyout = null;
-		private FlyoutDialog _alertFlyout = null;
+		private Flyout _playFlyout = null;
+		private Flyout _volumeFlyout = null;
 
 		private Dictionary<string, object> _pageState;
 		private Guid? _navigationParameter;
@@ -39,16 +37,16 @@ namespace TuneOut
 			this.InitializeComponent();
 
 			// Initialize Play All playMenu; this can only occur in code-behind for the moment
-			var playMenu = new Menu();
+			var playMenu = new Callisto.Controls.Menu();
 
-			MenuItem playAllItem = new MenuItem();
+			var playAllItem = new Callisto.Controls.MenuItem();
 			playAllItem.Text = LocalizationManager.GetString("TransportControls/PlayMenu/PlayAll");
 			playAllItem.Tapped += (thatSender, thoseEventArgs) =>
 			{
 				AudioController.Default.ReplaceAll(TunesDataSource.Default.AllSongsPlaylist, false, true);
 			};
 
-			MenuItem shuffleItem = new MenuItem();
+			var shuffleItem = new Callisto.Controls.MenuItem();
 			shuffleItem.Text = LocalizationManager.GetString("TransportControls/PlayMenu/ShuffleAll");
 			shuffleItem.Tapped += (thatSender, thosEventArgs) =>
 			{
@@ -59,27 +57,14 @@ namespace TuneOut
 			playMenu.Items.Add(shuffleItem);
 
 			// Initialize FlyoutDialog controls
-			_playFlyout = new FlyoutDialog()
-			{
-				Content = playMenu
-			};
-
-			_volumeFlyout = new FlyoutDialog()
-			{
-				Content = volumeControls
-			};
-
-			_alertFlyout = new FlyoutDialog()
-			{
-				Content = alertText
-			};
+			_playFlyout = new Flyout(playMenu);
+			_volumeFlyout = new Flyout(volumeControls);
 		}
 
 		public void Dispose()
 		{
 			_volumeFlyout.DisposeIfNonNull();
 			_playFlyout.DisposeIfNonNull();
-			_alertFlyout.DisposeIfNonNull();
 			ACProxy.DisposeIfNonNull();
 
 			GC.SuppressFinalize(this);
@@ -278,7 +263,8 @@ namespace TuneOut
 
 		private void AudioController_CurrentTrackFailed(object sender, TrackEventArgs e)
 		{
-			alertText.Text = e.Track != null ? string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) : LocalizationManager.GetString("MainPage/AudioError/Text");
+			FlyoutDialog dialog = new FlyoutDialog();
+			dialog.Text = e.Track != null ? string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) : LocalizationManager.GetString("MainPage/AudioError/Text");
 			
 			UIElement actualTarget;
 			if (BottomAppBar.IsOpen)
@@ -290,10 +276,8 @@ namespace TuneOut
 				actualTarget = hiddenBottomEdge;
 			}
 
-			_alertFlyout.Commands.Clear();
-			_alertFlyout.Commands.Add(new Windows.UI.Popups.UICommand(LocalizationManager.GetString("MainPage/AudioError/OKButton"), (command) => { }));
-
-			_alertFlyout.Show(actualTarget, PlacementMode.Top);
+			dialog.Commands.Add(new Windows.UI.Popups.UICommand(LocalizationManager.GetString("MainPage/AudioError/OKButton"), (command) => { }));
+			dialog.Show(actualTarget, PlacementMode.Top, ApplicationView.Value == ApplicationViewState.Snapped ? (double?)mainGrid.ActualWidth : null);
 		}
 
 		#endregion AudioController events
@@ -439,7 +423,7 @@ namespace TuneOut
 			if (AudioController.Default.Status == AudioControllerStatus.Inactive)
 			{
 				// Show a Play All menu
-				_playFlyout.Show(playButton, PlacementMode.Top);
+				_playFlyout.Show(playButton, PlacementMode.Top, null);
 			}
 			else if (AudioController.Default.Status == AudioControllerStatus.Paused)
 			{
@@ -454,7 +438,7 @@ namespace TuneOut
 		private void volumeButton_Click(object sender, RoutedEventArgs e)
 		{
 			// Show the volume controls
-			_volumeFlyout.Show(volumeButton, PlacementMode.Top);
+			_volumeFlyout.Show(volumeButton, PlacementMode.Top, null);
 		}
 
 		private void skipBackButton_Click(object sender, RoutedEventArgs e)
@@ -573,16 +557,13 @@ namespace TuneOut
 				if (AudioController.Default.UserMutatedQueue)
 				{
 					// Prompt before replacement!
-					alertText.Text = String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), target.Title);
-
-					_alertFlyout.Commands.Clear();
-					_alertFlyout.Commands.Add(
-						new Windows.UI.Popups.UICommand(
+					FlyoutDialog dialog = new FlyoutDialog();
+					dialog.Text = String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), target.Title);
+					dialog.Commands.Add(new Windows.UI.Popups.UICommand(
 							LocalizationManager.GetString("Library/QueueWarning/Confirm"),
 							(command) => AudioController.Default.ReplaceAll(target, CurrentSelection, true)
-						)
-					);
-					_alertFlyout.Show(sender as UIElement, PlacementMode.Top, new Thickness(10d));
+						));
+					dialog.Show(sender as UIElement, PlacementMode.Top, ApplicationView.Value == ApplicationViewState.Snapped ? (double?)mainGrid.ActualWidth : null);
 				}
 				else
 				{
@@ -596,16 +577,13 @@ namespace TuneOut
 			if (AudioController.Default.UserMutatedQueue)
 			{
 				// Prompt before replacement!
-				alertText.Text = String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), CurrentSelection.Title);
-
-				_alertFlyout.Commands.Clear();
-				_alertFlyout.Commands.Add(
-					new Windows.UI.Popups.UICommand(
+				FlyoutDialog dialog = new FlyoutDialog();
+				dialog.Text = String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), CurrentSelection.Title);
+				dialog.Commands.Add(new Windows.UI.Popups.UICommand(
 						LocalizationManager.GetString("Library/QueueWarning/Confirm"),
 						(command) => AudioController.Default.ReplaceAll(CurrentSelection, false, true)
-					)
-				);
-				_alertFlyout.Show(sender as UIElement, PlacementMode.Top, new Thickness(10d));
+					));
+				dialog.Show(sender as UIElement, PlacementMode.Top, ApplicationView.Value == ApplicationViewState.Snapped ? (double?)mainGrid.ActualWidth : null);
 			}
 			else
 			{
@@ -618,16 +596,13 @@ namespace TuneOut
 			if (AudioController.Default.UserMutatedQueue)
 			{
 				// Prompt before replacement!
-				alertText.Text = String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), CurrentSelection.Title);
-
-				_alertFlyout.Commands.Clear();
-				_alertFlyout.Commands.Add(
-					new Windows.UI.Popups.UICommand(
+				FlyoutDialog dialog = new FlyoutDialog();
+				dialog.Text = String.Format(LocalizationManager.GetString("Library/QueueWarning/Text_F"), CurrentSelection.Title);
+				dialog.Commands.Add(new Windows.UI.Popups.UICommand(
 						LocalizationManager.GetString("Library/QueueWarning/Confirm"),
 						(command) => AudioController.Default.ReplaceAll(CurrentSelection, true, true)
-					)
-				);
-				_alertFlyout.Show(sender as UIElement, PlacementMode.Top, new Thickness(10d));
+					));
+				dialog.Show(sender as UIElement, PlacementMode.Top, ApplicationView.Value == ApplicationViewState.Snapped ? (double?)mainGrid.ActualWidth : null);
 			}
 			else
 			{
@@ -695,35 +670,6 @@ namespace TuneOut
 			{
 				IsQueueOverlayShown = false;
 			}
-		}
-
-		private void ShowFlyout(FrameworkElement content, ref Flyout flyout, UIElement placementTarget, PlacementMode placementMode, Thickness hostMargin = new Thickness())
-		{
-			if (flyout != null)
-			{
-				flyout.IsOpen = false;
-				flyout.Content = null;
-				flyout.Dispose();
-			}
-
-			var parentPanel = content.Parent as Panel;
-			if (parentPanel != null)
-			{
-				parentPanel.Children.Remove(content);
-			}
-
-			flyout = new Flyout();
-			flyout.Content = content;
-			flyout.HostMargin = hostMargin;
-			flyout.Placement = placementMode;
-			flyout.PlacementTarget = placementTarget;
-
-			if (ApplicationView.Value == ApplicationViewState.Snapped)
-			{
-				flyout.MaxWidth = mainGrid.ActualWidth;
-			}
-
-			flyout.IsOpen = true;
 		}
 
 		/// <summary>

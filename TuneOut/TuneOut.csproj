@@ -163,6 +163,7 @@
     <Compile Include="Common\TimeDoubleToTimeStringConverter.cs" />
     <Compile Include="Common\TimeSpanToDoubleConverter.cs" />
     <Compile Include="Common\TimeSpanToStringConverter.cs" />
+    <Compile Include="Flyout.cs" />
     <Compile Include="FlyoutDialog.cs" />
     <Compile Include="LibraryItemToken.cs" />
     <Compile Include="Pages\FirstRunPage.xaml.cs">

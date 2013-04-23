@@ -729,11 +729,34 @@ namespace TuneOut.Audio
 		/// Occurs when a property value changes.
 		/// </summary>
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		private event EventHandler<AudioControllerStatusEventArgs> _StatusChanged;
+
 		/// <summary>
 		/// Occurs when the status of the <seealso cref="AudioController"/> instance changes, for example,
 		/// due to the the audio being paused or started.
+		/// When a new handler is added to StatusChanged, it will be called immediately to report the status.
 		/// </summary>
-		public event EventHandler<AudioControllerStatusEventArgs> StatusChanged;
+		public event EventHandler<AudioControllerStatusEventArgs> StatusChanged
+		{
+			add
+			{
+				lock (_syncRoot)
+				{
+					_StatusChanged += value;
+					value(this, new AudioControllerStatusEventArgs(Status));
+				}
+			}
+
+			remove
+			{
+				lock (_syncRoot)
+				{
+					_StatusChanged -= value;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Calls the <seealso cref="CurrentTrackChanged"/> event handler if it is non-null.
 		/// </summary>
@@ -802,6 +825,7 @@ namespace TuneOut.Audio
 				h(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+
 		/// <summary>
 		/// Calls the <seealso cref="StatusChanged"/> event handler if it is non-null.
 		/// </summary>
@@ -816,7 +840,7 @@ namespace TuneOut.Audio
 				Windows.Media.MediaControl.IsPlaying = false;
 			}
 
-			EventHandler<AudioControllerStatusEventArgs> h = StatusChanged;
+			EventHandler<AudioControllerStatusEventArgs> h = _StatusChanged;
 
 			if (h != null)
 			{
@@ -825,7 +849,9 @@ namespace TuneOut.Audio
 
 			OnPropertyChanged("Status");
 		}
+
 		#endregion Event handling
+
 		/// <summary>
 		/// Moves the queue back one track.
 		/// </summary>
@@ -910,7 +936,7 @@ namespace TuneOut.Audio
 				//Test error message bar
 				//if (new Random().NextDouble() > 0.5)
 				//{
-				//    throw new Exception();
+				//	throw new Exception();
 				//}
 
 				var file = await StorageFile.GetFileFromPathAsync(Current.Location);
