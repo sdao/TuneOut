@@ -58,18 +58,13 @@ namespace TuneOut.Audio
 				return true;
 			}
 
-			try
+			// Attempt to find the iTunes Library first
+			if (Settings.GetLibraryLocationStatus())
 			{
-				// Attempt to find the iTunes Library first
-				if (Settings.GetLibraryLocationStatus())
-				{
-					var iTunesLibLocation = await Settings.GetLibraryLocation();
-					return (await LoadLibraryFromCache(iTunesLibLocation) || await LoadLibraryFromXml(iTunesLibLocation));
-				}
-
-				return false;
+				var iTunesLibLocation = await Settings.GetLibraryLocation();
+				return (await LoadLibraryFromCache(iTunesLibLocation) || await LoadLibraryFromXml(iTunesLibLocation));
 			}
-			catch (Exception)
+			else
 			{
 				return false;
 			}
@@ -104,7 +99,10 @@ namespace TuneOut.Audio
 					deserializedSource = (TunesDataSource)dcs.ReadObject(stream.AsStreamForRead());
 				}
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+				// Justification: deserialization failure should assume corrupt file and fail gracefully
+			}
 
 			if (deserializedSource != null)
 			{
@@ -133,6 +131,7 @@ namespace TuneOut.Audio
 				for (int i = declaredPathComps.Length - 1; i >= 0; i--)
 				{
 					// The Media path should be within the Library path
+					// Figure out the path component in the Media path that is the last component in the Library path
 					if (declaredPathComps[i] == actualPathComps[actualPathComps.Length - 1])
 					{
 						System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -186,41 +185,50 @@ namespace TuneOut.Audio
 		/// <returns>Whether the process was successful or not.</returns>
 		private static async Task<bool> LoadLibraryFromCache(StorageFolder library)
 		{
-			bool cachedAfterLastUpdate = false;
-			bool cacheRestoreStatus = false;
+			try
+			{
+				bool cachedAfterLastUpdate = false;
+				bool cacheRestoreStatus = false;
 
-			// Check XML file timestamp
-			StorageFile xmlFile = await library.GetFileAsync(ITUNES_XML);
-			BasicProperties xmlFileProperties = await xmlFile.GetBasicPropertiesAsync();
-			DateTimeOffset xmlFileCurrentDate = xmlFileProperties.DateModified;
+				// Check XML file timestamp
+				StorageFile xmlFile = await library.GetFileAsync(ITUNES_XML);
+				BasicProperties xmlFileProperties = await xmlFile.GetBasicPropertiesAsync();
+				DateTimeOffset xmlFileCurrentDate = xmlFileProperties.DateModified;
 
-			// Check cached time
-			var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-			if (Settings.LastLibraryUpdate > xmlFileCurrentDate)
-				cachedAfterLastUpdate = true;
+				// Check cached time
+				var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+				if (Settings.LastLibraryUpdate > xmlFileCurrentDate)
+					cachedAfterLastUpdate = true;
 
-			// If possible, load the cache!
-			if (cachedAfterLastUpdate)
-				cacheRestoreStatus = await DeserializeAsync();
+				// If possible, load the cache!
+				if (cachedAfterLastUpdate)
+					cacheRestoreStatus = await DeserializeAsync();
 
-			return cacheRestoreStatus;
+				return cacheRestoreStatus;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
 		}
 
 		/// <summary>
 		/// Loads the iTunes Library from an XML file and reads the PLIST-formatted contents.
 		/// </summary>
 		/// <param name="library">The folder containing the iTunes Library.</param>
+		/// <returns>Whether the XML file exists or not.</returns>
 		/// <returns>Whether the process was successful or not.</returns>
 		private static async Task<bool> LoadLibraryFromXml(StorageFolder library)
 		{
-			StorageFile xmlFile = await library.GetFileAsync(ITUNES_XML);
-			XDocument xmlDocument = null;
-
-			// Attempt to read the XML file format
-			var xmlStreamInfo = await xmlFile.TryReadAsync();
-			if (xmlStreamInfo.Item1.HasValue)
+			try
 			{
+				StorageFile xmlFile = await library.GetFileAsync(ITUNES_XML);
+				XDocument xmlDocument = null;
+
+				// Attempt to read the XML file format
+				var xmlStreamInfo = await xmlFile.TryReadAsync();
 				OperatingSystem libraryType = xmlStreamInfo.Item1.Value;
+
 				using (var xmlStream = xmlStreamInfo.Item2)
 				{
 					xmlDocument = XDocument.Load(xmlStream.AsStreamForRead());
@@ -231,24 +239,26 @@ namespace TuneOut.Audio
 
 				IEnumerable<Album> libraryAlbums;
 				IEnumerable<Playlist> libraryPlaylists;
-				var parseResult = ParseXml(library.Path, plist, out libraryAlbums, out libraryPlaylists);
+				ParseXml(library.Path, plist, out libraryAlbums, out libraryPlaylists);
 
 				// Save the parsed objects if possible
-				if (parseResult)
-				{
-					TunesDataSource.Default = new TunesDataSource(libraryAlbums, libraryPlaylists, libraryType);
-					await SerializeAsync();
-					return true;
-				}
-			}
+				TunesDataSource.Default = new TunesDataSource(libraryAlbums, libraryPlaylists, libraryType);
+				await SerializeAsync();
 
-			return false;
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
 		}
+
 		/// <summary>
 		/// Helper method to process an iTunes PLIST into a List of Album objects.
 		/// </summary>
 		/// <returns>Whether the process was successful or not.</returns>
-		private static bool ParseXml(string actualLibaryPath, PList libraryIndex, out IEnumerable<Album> outAlbums, out IEnumerable<Playlist> outPlaylists)
+		/// <exception cref="System.Exception">if the PLIST parsing failed.</exception>
+		private static void ParseXml(string actualLibaryPath, PList libraryIndex, out IEnumerable<Album> outAlbums, out IEnumerable<Playlist> outPlaylists)
 		{
 			Contract.Requires(!string.IsNullOrEmpty(actualLibaryPath));
 			Contract.Requires(libraryIndex != null);
@@ -256,99 +266,88 @@ namespace TuneOut.Audio
 			// file://localhost/C:/Users/Steve/Music/iTunes/iTunes%20Media/
 			// file://localhost/Users/Steve/Music/iTunes/iTunes%20Media/
 
-			try
+			string musicFolderString = libraryIndex.GetStringOrDefault("Music Folder");
+			string declaredMediaPath = new Uri(musicFolderString).LocalPath;
+			var absoluteMediaPath = GetAbsoluteMediaPathUri(actualLibaryPath, declaredMediaPath);
+
+			IEnumerable<PList> trackListRaw = libraryIndex.GetOrDefault<PList>("Tracks").Values.Cast<PList>();
+			IEnumerable<PList> playlistListRaw = libraryIndex.GetOrDefault<List<object>>("Playlists").Cast<PList>();
+
+			if (string.IsNullOrEmpty(declaredMediaPath) || trackListRaw == null || playlistListRaw == null)
 			{
-				string musicFolderString = libraryIndex.GetStringOrDefault("Music Folder");
-				string declaredMediaPath = new Uri(musicFolderString).LocalPath;
-				var absoluteMediaPath = GetAbsoluteMediaPathUri(actualLibaryPath, declaredMediaPath);
+				throw new InvalidOperationException();
+			}
 
-				IEnumerable<PList> trackListRaw = libraryIndex.GetOrDefault<PList>("Tracks").Values.Cast<PList>();
-				IEnumerable<PList> playlistListRaw = libraryIndex.GetOrDefault<List<object>>("Playlists").Cast<PList>();
+			Dictionary<AlbumKey, AlbumBuilder> albumBuilders = new Dictionary<AlbumKey, AlbumBuilder>();
+			foreach (var trackInfoRaw in trackListRaw)
+			{
+				string trackLocationString = trackInfoRaw.GetStringOrDefault("Location");
+				long trackBitRateLong = trackInfoRaw.GetLongOrDefault("Bit Rate");
 
-				if (string.IsNullOrEmpty(declaredMediaPath) || trackListRaw == null || playlistListRaw == null)
+				if (IsValidMediaKind(trackLocationString, trackBitRateLong))
 				{
-					throw new InvalidOperationException();
-				}
+					string titleString = trackInfoRaw.GetStringOrDefault("Name");
+					string albumString = trackInfoRaw.GetStringOrDefault("Album");
+					string artistString = trackInfoRaw.GetStringOrDefault("Artist");
+					string albumArtistString = trackInfoRaw.GetStringOrDefault("Album Artist") ?? artistString;
+					int trackIDInt = trackInfoRaw.GetIntOrDefault("Track ID");
+					int discNumberInt = trackInfoRaw.GetIntOrDefault("Disc Number");
+					int trackNumberInt = trackInfoRaw.GetIntOrDefault("Track Number");
+					int yearInt = trackInfoRaw.GetIntOrDefault("Year");
+					int totalTimeInt = trackInfoRaw.GetIntOrDefault("Total Time");
 
-				Dictionary<UniqueAlbum, AlbumBuilder> albumBuilders = new Dictionary<UniqueAlbum, AlbumBuilder>();
-				foreach (var trackInfoRaw in trackListRaw)
-				{
-					string trackLocationString = trackInfoRaw.GetStringOrDefault("Location");
-					long trackBitRateLong = trackInfoRaw.GetLongOrDefault("Bit Rate");
+					var relativeTrackLocation = new Uri(trackLocationString).LocalPath.Replace(declaredMediaPath, string.Empty);
+					string formattedLocationString = Path.Combine(absoluteMediaPath, relativeTrackLocation);
 
-					if (IsValidMediaKind(trackLocationString, trackBitRateLong))
+					AlbumBuilder albumBuilder;
+					var albumBuilderID = new AlbumKey(albumString, albumArtistString);
+					if (!albumBuilders.TryGetValue(albumBuilderID, out albumBuilder))
 					{
-						string titleString = trackInfoRaw.GetStringOrDefault("Name");
-						string albumString = trackInfoRaw.GetStringOrDefault("Album");
-						string artistString = trackInfoRaw.GetStringOrDefault("Artist");
-						string albumArtistString = trackInfoRaw.GetStringOrDefault("Album Artist") ?? artistString;
-						int trackIDInt = trackInfoRaw.GetIntOrDefault("Track ID");
-						int discNumberInt = trackInfoRaw.GetIntOrDefault("Disc Number");
-						int trackNumberInt = trackInfoRaw.GetIntOrDefault("Track Number");
-						int yearInt = trackInfoRaw.GetIntOrDefault("Year");
-						int totalTimeInt = trackInfoRaw.GetIntOrDefault("Total Time");
+						albumBuilder = new AlbumBuilder(albumString, albumArtistString, yearInt);
+						albumBuilders.Add(albumBuilderID, albumBuilder);
+					}
 
-						var relativeTrackLocation = new Uri(trackLocationString).LocalPath.Replace(declaredMediaPath, string.Empty);
-						string formattedLocationString = Path.Combine(absoluteMediaPath, relativeTrackLocation);
+					Contract.Assume(albumBuilder != null); // New AlbumBuilder should have been created if it doesn't yet exist.
 
-						AlbumBuilder albumBuilder;
-						var albumBuilderID = new UniqueAlbum(albumString, albumArtistString);
-						if (!albumBuilders.TryGetValue(albumBuilderID, out albumBuilder))
-						{
-							albumBuilder = new AlbumBuilder(albumString, albumArtistString, yearInt);
-							albumBuilders.Add(albumBuilderID, albumBuilder);
-						}
+					albumBuilder.AddTrack(
+						trackID: trackIDInt,
+						title: titleString,
+						artist: artistString,
+						discNumber: discNumberInt,
+						trackNumber: trackNumberInt,
+						location: formattedLocationString,
+						totalTime: new TimeSpan(0, 0, totalTimeInt / 1000));
+				}
+			}
 
-						Contract.Assume(albumBuilder != null); // New AlbumBuilder should have been created if it doesn't yet exist.
+			IEnumerable<Album> libraryAlbumsUnsorted = albumBuilders.Values.AsParallel().Select(thatBuilder => thatBuilder.GetAlbum()).ToList();
+			IEnumerable<Track> libraryTracksUnsorted = libraryAlbumsUnsorted.AsParallel().SelectMany(thatAlbum => thatAlbum.TrackList);
 
-						albumBuilder.AddTrack(
-							trackID: trackIDInt,
-							title: titleString,
-							artist: artistString,
-							discNumber: discNumberInt,
-							trackNumber: trackNumberInt,
-							location: formattedLocationString,
-							totalTime: new TimeSpan(0, 0, totalTimeInt / 1000));
+			List<Playlist> libraryPlaylists = new List<Playlist>();
+			foreach (var playlistInfoRaw in playlistListRaw)
+			{
+				List<object> playlistItemsRaw = playlistInfoRaw.GetOrDefault<List<object>>("Playlist Items");
+				if (playlistItemsRaw != null)
+				{
+					List<Track> playlistItems = playlistItemsRaw
+						.Cast<PList>() // This is the only thing I can think of that would cause an exception in this method.
+						.Select(thatPlist => thatPlist.GetIntOrDefault("Track ID"))
+						.Join(libraryTracksUnsorted,
+							itemIndex => itemIndex,
+							track => track.TrackID,
+							(index, track) => track).ToList();
+
+					if (playlistItems.Count > 0)
+					{
+						libraryPlaylists.Add(new Playlist(playlistInfoRaw.GetStringOrDefault("Name"), playlistItems));
 					}
 				}
-
-				IEnumerable<Album> libraryAlbumsUnsorted = albumBuilders.Values.AsParallel().Select(thatBuilder => thatBuilder.GetAlbum()).ToList();
-				IEnumerable<Track> libraryTracksUnsorted = libraryAlbumsUnsorted.AsParallel().SelectMany(thatAlbum => thatAlbum.TrackList);
-
-				List<Playlist> libraryPlaylists = new List<Playlist>();
-				foreach (var playlistInfoRaw in playlistListRaw)
-				{
-					List<object> playlistItemsRaw = playlistInfoRaw.GetOrDefault<List<object>>("Playlist Items");
-					if (playlistItemsRaw != null)
-					{
-						List<Track> playlistItems = playlistItemsRaw
-							.Cast<PList>() // This is the only thing I can think of that would cause an exception in this method.
-							.Select(thatPlist => thatPlist.GetIntOrDefault("Track ID"))
-							.Join(libraryTracksUnsorted,
-								itemIndex => itemIndex,
-								track => track.TrackID,
-								(index, track) => track).ToList();
-
-						if (playlistItems.Count > 0)
-						{
-							libraryPlaylists.Add(new Playlist(playlistInfoRaw.GetStringOrDefault("Name"), playlistItems));
-						}
-					}
-				}
-
-				outAlbums = libraryAlbumsUnsorted.OrderBy(thatAlbum => thatAlbum.AlbumArtist).ThenBy(thatAlbum => thatAlbum.Title);
-				outPlaylists = libraryPlaylists.OrderBy(playlist => playlist.Title);
-
-				return true;
 			}
-			catch (Exception)
-			{
-				outAlbums = null;
-				outPlaylists = null;
 
-				return false;
-			}
+			outAlbums = libraryAlbumsUnsorted.OrderBy(thatAlbum => thatAlbum.AlbumArtist).ThenBy(thatAlbum => thatAlbum.Title);
+			outPlaylists = libraryPlaylists.OrderBy(playlist => playlist.Title);
 		}
+
 		private static async Task SerializeAsync()
 		{
 			if (TunesDataSource.IsLoaded) // Make sure there is something to save

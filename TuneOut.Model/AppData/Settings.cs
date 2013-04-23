@@ -198,22 +198,22 @@ namespace TuneOut.AppData
 		/// Adds an item to the artwork cache.
 		/// </summary>
 		/// <param name="trackID">The item's ID.</param>
-		/// <returns>A CacheToken that indicates the success of the request and the Uri of the image, if possible.</returns>
-		internal static CacheToken<Uri> GetArtworkCacheItem(uint trackID)
+		/// <returns>A CacheReceipt that indicates the success of the request and the Uri of the image, if possible.</returns>
+		internal static CacheReceipt<Uri> GetArtworkCacheItem(uint trackID)
 		{
 			var x = _local.CreateContainer(ArtContainerGuid.ToString(), Windows.Storage.ApplicationDataCreateDisposition.Always).Values[trackID.ToString()] as string;
 
 			if (x == null)
 			{
-				return new CacheToken<Uri>(CacheStatus.Uncached, null);
+				return new CacheReceipt<Uri>(CacheStatus.Uncached, null);
 			}
 			else if (x.Length == 0)
 			{
-				return new CacheToken<Uri>(CacheStatus.CannotCache, null);
+				return new CacheReceipt<Uri>(CacheStatus.CannotCache, null);
 			}
 			else
 			{
-				return new CacheToken<Uri>(CacheStatus.Cached, new Uri(x));
+				return new CacheReceipt<Uri>(CacheStatus.Cached, new Uri(x));
 			}
 		}
 
@@ -300,7 +300,10 @@ namespace TuneOut.AppData
 					}
 				}
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+				// Justification: artwork cache cleaning happens automatically, and failure does not harm user
+			}
 		}
 	}
 }

@@ -15,13 +15,13 @@ namespace TuneOut
 		Uncached, Cached, CannotCache
 	}
 
-	internal struct CacheToken<T>
+	internal struct CacheReceipt<T>
 	{
 		private CacheStatus _cs;
 
 		private T _o1;
 
-		internal CacheToken(CacheStatus status, T obj)
+		internal CacheReceipt(CacheStatus status, T obj)
 		{
 			_cs = status;
 			_o1 = obj;
@@ -32,7 +32,7 @@ namespace TuneOut
 		internal CacheStatus Status { get { return _cs; } }
 	}
 
-	internal struct CacheToken<T, U>
+	internal struct CacheReceipt<T, U>
 	{
 		private CacheStatus _cs;
 
@@ -40,7 +40,7 @@ namespace TuneOut
 
 		private U _o2;
 
-		internal CacheToken(CacheStatus status, T obj1, U obj2)
+		internal CacheReceipt(CacheStatus status, T obj1, U obj2)
 		{
 			_cs = status;
 			_o1 = obj1;
@@ -102,14 +102,20 @@ namespace TuneOut
 				var randomAccessStream = await file.OpenReadAsync(OperatingSystem.Windows);
 				return new Tuple<OperatingSystem?, IRandomAccessStream>(OperatingSystem.Windows, randomAccessStream);
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+				// Justification: testing to see if Windows file access works
+			}
 
 			try
 			{
 				var randomAccessStream = await file.OpenReadAsync(OperatingSystem.MacBootCamp);
 				return new Tuple<OperatingSystem?, IRandomAccessStream>(OperatingSystem.MacBootCamp, randomAccessStream);
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+				// Justification: just testing to see if Boot Camp file access works
+			}
 
 			return new Tuple<OperatingSystem?, IRandomAccessStream>(null, null);
 		}

@@ -84,8 +84,8 @@ namespace TuneOut.Audio
 		/// Asynchronously download the artwork for an album from Last.fm.
 		/// </summary>
 		/// <param name="artGuid">The current Guid for the art container.</param>
-		/// <returns>A CacheToken that indicates whether the cache succeeded, and the Uri to the image if so.</returns>
-		private async Task<CacheToken<Guid, Uri>> DownloadAsync(Guid artGuid)
+		/// <returns>A CacheReceipt that indicates whether the cache succeeded, and the Uri to the image if so.</returns>
+		private async Task<CacheReceipt<Guid, Uri>> DownloadAsync(Guid artGuid)
 		{
 			// Download art from Last.fm
 			try
@@ -100,27 +100,32 @@ namespace TuneOut.Audio
 					.GetObject()
 					.GetNamedString("#text");
 
-				Uri source = new Uri(imageLoc);
-				StorageFolder destinationFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(artGuid.ToString(), CreationCollisionOption.OpenIfExists);
-				StorageFile destinationFile = await destinationFolder.CreateFileAsync(_album.AlbumID.ToString(), CreationCollisionOption.ReplaceExisting);
+				if (!string.IsNullOrWhiteSpace(imageLoc))
+				{
+					Uri source = new Uri(imageLoc);
+					StorageFolder destinationFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(artGuid.ToString(), CreationCollisionOption.OpenIfExists);
+					StorageFile destinationFile = await destinationFolder.CreateFileAsync(_album.AlbumID.ToString(), CreationCollisionOption.ReplaceExisting);
 
-				DownloadOperation download = __downloader.CreateDownload(source, destinationFile);
-				await download.StartAsync();
+					DownloadOperation download = __downloader.CreateDownload(source, destinationFile);
+					await download.StartAsync();
+
+					return new CacheReceipt<Guid, Uri>(CacheStatus.Cached, artGuid, new Uri(String.Format("ms-appdata:///local/{0}/{1}", artGuid.ToString(), _album.AlbumID)));
+				}
 			}
 			catch (HttpRequestException)
 			{
-				return new CacheToken<Guid, Uri>(CacheStatus.Uncached, artGuid, null);
+				return new CacheReceipt<Guid, Uri>(CacheStatus.Uncached, artGuid, null);
 			}
 			catch (WebException)
 			{
-				return new CacheToken<Guid, Uri>(CacheStatus.Uncached, artGuid, null);
+				return new CacheReceipt<Guid, Uri>(CacheStatus.Uncached, artGuid, null);
 			}
 			catch (Exception)
 			{
-				return new CacheToken<Guid, Uri>(CacheStatus.CannotCache, artGuid, null);
+				// Justification: In case of API breaking changes, Json parsing may fail
 			}
 
-			return new CacheToken<Guid, Uri>(CacheStatus.Cached, artGuid, new Uri(String.Format("ms-appdata:///local/{0}/{1}", artGuid.ToString(), _album.AlbumID)));
+			return new CacheReceipt<Guid, Uri>(CacheStatus.CannotCache, artGuid, null);
 		}
 
 		[ContractInvariantMethod]

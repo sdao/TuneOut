@@ -168,12 +168,7 @@
 				<local:AppBarToggleButton x:Name="MuteButton" AutoToggle="True" Style="{StaticResource FlyoutUnmutedSymbolButton}" CheckedStyle="{StaticResource FlyoutMutedSymbolButton}" HorizontalAlignment="Center" IsChecked="{Binding Controller.IsMuted, Source={StaticResource ACProxy}, Mode=TwoWay}" />
 				<Slider HorizontalAlignment="Center" VerticalAlignment="Top" Value="{Binding Controller.Volume, Source={StaticResource ACProxy}, Mode=TwoWay}" IsEnabled="{Binding Controller.IsMuted, Source={StaticResource ACProxy}, Converter={StaticResource BNConverter}}" Orientation="Vertical" Height="200" Margin="10" Style="{StaticResource SliderLight}" />
 			</StackPanel>
-			<StackPanel x:Name="alertControls" Margin="10">
-				<TextBlock x:Name="alertText" Style="{StaticResource FlyoutText}" />
-				<Button x:Name="alertButton" Style="{StaticResource FlyoutActionButton}">
-					<TextBlock x:Name="alertButtonText" />
-				</Button>
-			</StackPanel>
+			<TextBlock x:Name="alertText" Style="{StaticResource FlyoutText}" />
 		</Grid>
 
 		<VisualStateManager.VisualStateGroups>

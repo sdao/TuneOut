@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:TuneOut"
-    xmlns:callisto="using:Callisto.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:TuneOut"
+	xmlns:callisto="using:Callisto.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
 
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key="Default">
@@ -178,8 +178,6 @@
 		<Setter Property="Background" Value="{StaticResource FlyoutActionButtonBackground}" />
 		<Setter Property="Foreground" Value="{StaticResource FlyoutActionButtonForeground}" />
 		<Setter Property="Padding" Value="14,6,14,6" />
-		<Setter Property="HorizontalAlignment" Value="Right" />
-		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
 		<Setter Property="FontWeight" Value="SemiBold" />
 		<Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
@@ -628,15 +626,15 @@
 								<VisualState x:Name="Focused">
 									<Storyboard>
 										<DoubleAnimation
-                                            Storyboard.TargetName="FocusVisualWhite"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
+											Storyboard.TargetName="FocusVisualWhite"
+											Storyboard.TargetProperty="Opacity"
+											To="1"
+											Duration="0" />
 										<DoubleAnimation
-                                            Storyboard.TargetName="FocusVisualBlack"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
+											Storyboard.TargetName="FocusVisualBlack"
+											Storyboard.TargetProperty="Opacity"
+											To="1"
+											Duration="0" />
 									</Storyboard>
 								</VisualState>
 								<VisualState x:Name="Unfocused" />
@@ -668,30 +666,30 @@
 								<ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="-1,-1,0,0" VerticalAlignment="Center" />
 							</Grid>
 							<TextBlock
-                                x:Name="TextLabel"
-                                Text="{TemplateBinding AutomationProperties.Name}"
-                                Foreground="{StaticResource AppBarItemForegroundThemeBrushLight}"
-                                Margin="9,9,0,0"
-                                FontSize="16"
-                                TextTrimming="WordEllipsis"
-                                Style="{StaticResource BasicTextStyle}" FontWeight="SemiBold" />
+								x:Name="TextLabel"
+								Text="{TemplateBinding AutomationProperties.Name}"
+								Foreground="{StaticResource AppBarItemForegroundThemeBrushLight}"
+								Margin="9,9,0,0"
+								FontSize="16"
+								TextTrimming="WordEllipsis"
+								Style="{StaticResource BasicTextStyle}" FontWeight="SemiBold" />
 						</StackPanel>
 						<Rectangle
-                            x:Name="FocusVisualWhite"
-                            IsHitTestVisible="False"
-                            Stroke="{StaticResource FocusVisualWhiteStrokeThemeBrush}"
-                            StrokeEndLineCap="Square"
-                            StrokeDashArray="1,1"
-                            Opacity="0"
-                            StrokeDashOffset="1.5" />
+							x:Name="FocusVisualWhite"
+							IsHitTestVisible="False"
+							Stroke="{StaticResource FocusVisualWhiteStrokeThemeBrush}"
+							StrokeEndLineCap="Square"
+							StrokeDashArray="1,1"
+							Opacity="0"
+							StrokeDashOffset="1.5" />
 						<Rectangle
-                            x:Name="FocusVisualBlack"
-                            IsHitTestVisible="False"
-                            Stroke="{StaticResource FocusVisualBlackStrokeThemeBrush}"
-                            StrokeEndLineCap="Square"
-                            StrokeDashArray="1,1"
-                            Opacity="0"
-                            StrokeDashOffset="0.5" />
+							x:Name="FocusVisualBlack"
+							IsHitTestVisible="False"
+							Stroke="{StaticResource FocusVisualBlackStrokeThemeBrush}"
+							StrokeEndLineCap="Square"
+							StrokeDashArray="1,1"
+							Opacity="0"
+							StrokeDashOffset="0.5" />
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>

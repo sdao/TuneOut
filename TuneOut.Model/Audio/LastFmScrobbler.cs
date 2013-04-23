@@ -46,7 +46,10 @@ namespace TuneOut.Audio
 					_session = vault.Retrieve(PASSWORD_STORE, _username).Password;
 				}
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+				// Justification: PaswordVault / PasswordCredential throw exception when no password found
+			}
 		}
 
 		/// <summary>
@@ -195,7 +198,10 @@ namespace TuneOut.Audio
 					vault.Remove(cred);
 				}
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+				// Justification: PaswordVault / PasswordCredential throw exception when no password found
+			}
 		}
 
 		/// <summary>

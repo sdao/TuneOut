@@ -178,11 +178,14 @@ namespace TuneOut.Audio
 		}
 	}
 
-	internal struct UniqueAlbum
+	/// <summary>
+	/// A unique key that can be used for <seealso cref="Album"/> objects in a dictionary.
+	/// </summary>
+	internal struct AlbumKey
 	{
 		private readonly string _albumArtistString;
 		private readonly string _albumString;
-		public UniqueAlbum(string albumString, string albumArtistString)
+		public AlbumKey(string albumString, string albumArtistString)
 		{
 			Contract.Requires(albumString != null);
 			Contract.Requires(albumArtistString != null);
@@ -193,9 +196,9 @@ namespace TuneOut.Audio
 
 		public override bool Equals(object obj)
 		{
-			if (obj is UniqueAlbum)
+			if (obj is AlbumKey)
 			{
-				UniqueAlbum a = (UniqueAlbum)obj;
+				AlbumKey a = (AlbumKey)obj;
 				return _albumString == a._albumString && _albumArtistString == a._albumArtistString;
 			}
 			else return false;

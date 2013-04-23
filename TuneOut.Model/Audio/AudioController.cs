@@ -582,7 +582,10 @@ namespace TuneOut.Audio
 					deserializedQueue = (TrackQueue)dcs.ReadObject(stream.AsStreamForRead());
 				}
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+				// Justification: deserialization failure should assume corrupt file and fail gracefully
+			}
 
 			if (deserializedQueue != null)
 			{
@@ -883,6 +886,7 @@ namespace TuneOut.Audio
 			queueMutationFunction();
 			OnCurrentTrackChanged(storedTrack);
 		}
+
 		[ContractInvariantMethod]
 		private void ObjectInvariant()
 		{
