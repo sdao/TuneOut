@@ -160,13 +160,11 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Button x:Name="queueBackButton" Grid.Column="0" Style="{StaticResource RoundButtonStyleLight}" Content="" Click="navigateOpenQueueButton_Click" />
-					<TextBlock x:Name="queueTitleText" Grid.Column="1" x:Uid="MainPage/QueuePaneTitle" FontSize="30" Foreground="Black" FontStretch="Expanded" Margin="0,12,0,0" FontFamily="Global User Interface" />
-					<Image x:Name="queueNowPlayingImage" Grid.Column="2" Source="{Binding Controller.Current.Artwork.Image, Source={StaticResource ACProxy}}" Margin="5" Visibility="Collapsed" />
-					<StackPanel x:Name="queueNowPlayingTextArea" Grid.Column ="3" Orientation="Vertical" Height="50" Visibility="Collapsed">
+					<TextBlock x:Name="queueTitleText" Grid.Column="0" x:Uid="MainPage/QueuePaneTitle" FontSize="30" Foreground="Black" FontStretch="Expanded" Margin="0,12,0,0" FontFamily="Global User Interface" />
+					<Image x:Name="queueNowPlayingImage" Grid.Column="1" Source="{Binding Controller.Current.Artwork.Image, Source={StaticResource ACProxy}}" Margin="5" Visibility="Collapsed" />
+					<StackPanel x:Name="queueNowPlayingTextArea" Grid.Column="2" Orientation="Vertical" Height="50" Visibility="Collapsed">
 						<TextBlock Text="{Binding Controller.Current.Title, Source={StaticResource ACProxy}}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" Foreground="Black" />
 						<TextBlock Text="{Binding Controller.Current.Artist, Source={StaticResource ACProxy}}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" Foreground="Black" />
 					</StackPanel>
@@ -466,13 +464,6 @@
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
 									<x:Int32>3</x:Int32>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueBackButton">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Collapsed</Visibility>
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
