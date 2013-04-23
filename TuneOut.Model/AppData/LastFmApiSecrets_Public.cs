@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TuneOut.AppData
+﻿namespace TuneOut.AppData
 {
 	/// <summary>
 	/// Contains Last.fm API constants that should not be revealed.

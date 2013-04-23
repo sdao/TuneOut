@@ -20,8 +20,6 @@ namespace TuneOut
 	/// </summary>
 	public sealed partial class MainPage : TuneOut.Common.LayoutAwarePage, IDisposable
 	{
-		private const int QUEUE_DISPLAY_LIMIT = 8;
-
 		private Flyout _playFlyout = null;
 		private Flyout _volumeFlyout = null;
 
@@ -56,16 +54,16 @@ namespace TuneOut
 			playMenu.Items.Add(playAllItem);
 			playMenu.Items.Add(shuffleItem);
 
-			// Initialize FlyoutDialog controls
+			// Initialize Flyout controls
 			_playFlyout = new Flyout(playMenu);
 			_volumeFlyout = new Flyout(volumeControls);
 		}
 
 		public void Dispose()
 		{
-			_volumeFlyout.DisposeIfNonNull();
-			_playFlyout.DisposeIfNonNull();
-			ACProxy.DisposeIfNonNull();
+			_volumeFlyout.Dispose();
+			_playFlyout.Dispose();
+			ACProxy.Dispose();
 
 			GC.SuppressFinalize(this);
 		}
