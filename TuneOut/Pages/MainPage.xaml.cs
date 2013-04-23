@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 using TuneOut.AppData;
 using TuneOut.Audio;
 using Windows.Foundation;
@@ -153,8 +154,10 @@ namespace TuneOut
 				AudioController.Default.Ready(rootMediaElement);
 			}
 
-			// Set initial animation state; initializes the FadeXXXThemeAnimations
-			VisualStateManager.GoToState(this, "NoOverlay", false);
+			// Initialize animations
+			VisualStateManager.GoToState(this, "NoOverlayAlbum", false);
+			VisualStateManager.GoToState(this, "NoOverlayQueue", false);
+			VisualStateManager.GoToState(this, "NoOverlayMessage", false);
 
 			Type pageMode = typeof(Album);
 			double scroll = 0d;
@@ -206,33 +209,30 @@ namespace TuneOut
 
 			if (navigationContainer != null)
 			{
-				VisualStateManager.GoToState(this, "AlbumGridViewPreparing", false);
-				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+				// Delay scrolling after animation
+				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
 				{
-					// Delay scrolling after animation
 					CurrentSelection = navigationContainer;
 					albumGridView.ScrollIntoView(CurrentSelection);
-
-					VisualStateManager.GoToState(this, "AlbumGridViewReady", true);
 
 					if (navigationItem != null)
 					{
 						albumDetailListView.SelectedIndex = navigationContainer.IndexOf(navigationItem);
 						albumDetailListView.ScrollIntoView(albumDetailListView.SelectedItem);
 					}
-				});
 
-				IsAlbumOverlayShown = true;
+					// Give the user a bit of time (0.5 seconds) to collect their thoughts
+					await Task.Delay(500);
+
+					IsAlbumOverlayShown = true;
+				});
 			}
 			else if (scroll > double.Epsilon) // Don't scroll if scroll is negative or less than Epsilon
 			{
-				VisualStateManager.GoToState(this, "AlbumGridViewPreparing", false);
+				// Delay scrolling after animation
 				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
-					// Delay scrolling after animation
 					FindVisualChild<ScrollViewer>(albumGridView).ScrollToHorizontalOffset(scroll);
-
-					VisualStateManager.GoToState(this, "AlbumGridViewReady", true);
 				});
 			}
 		}
@@ -261,21 +261,7 @@ namespace TuneOut
 
 		private void AudioController_CurrentTrackFailed(object sender, TrackEventArgs e)
 		{
-			FlyoutDialog dialog = new FlyoutDialog();
-			dialog.Text = e.Track != null ? string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) : LocalizationManager.GetString("MainPage/AudioError/Text");
-			
-			UIElement actualTarget;
-			if (BottomAppBar.IsOpen)
-			{
-				actualTarget = BottomAppBar;
-			}
-			else
-			{
-				actualTarget = hiddenBottomEdge;
-			}
-
-			dialog.Commands.Add(new Windows.UI.Popups.UICommand(LocalizationManager.GetString("MainPage/AudioError/OKButton"), (command) => { }));
-			dialog.Show(actualTarget, PlacementMode.Top, ApplicationView.Value == ApplicationViewState.Snapped ? (double?)mainGrid.ActualWidth : null);
+			ShowMessageBar(e.Track != null ? string.Format(LocalizationManager.GetString("MainPage/AudioError/Text_F"), e.Track.Title) : LocalizationManager.GetString("MainPage/AudioError/Text"));
 		}
 
 		#endregion AudioController events
@@ -308,18 +294,24 @@ namespace TuneOut
 			{
 				if (_PageMode != value)
 				{
+					FindVisualChild<ScrollViewer>(albumGridView).ScrollToHorizontalOffset(0d);
+
 					if (value == typeof(Playlist))
 					{
 						_PageMode = typeof(Playlist);
+						navigateToAlbumsButton.IsChecked = false;
+						navigateToPlaylistsButton.IsChecked = true;
 						this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.PlaylistsFlat;
-						this.ShowAppBars();
 					}
 					else
 					{
 						_PageMode = typeof(Album);
+						navigateToAlbumsButton.IsChecked = true;
+						navigateToPlaylistsButton.IsChecked = false;
 						this.DefaultViewModel["CurrentFolder"] = TunesDataSource.Default.AlbumsFlat;
-						this.ShowAppBars();
 					}
+
+					this.ShowAppBars();
 				}
 			}
 		}
@@ -347,7 +339,7 @@ namespace TuneOut
 					}
 					else
 					{
-						VisualStateManager.GoToState(this, "NoOverlay", true);
+						VisualStateManager.GoToState(this, "NoOverlayAlbum", true);
 						albumDetailListView.SelectedItems.Clear();
 						this.ShowAppBars();
 					}
@@ -378,7 +370,7 @@ namespace TuneOut
 					}
 					else
 					{
-						VisualStateManager.GoToState(this, "NoOverlay", true);
+						VisualStateManager.GoToState(this, "NoOverlayQueue", true);
 						queueListView.SelectedItems.Clear();
 						this.ShowAppBars();
 					}
@@ -639,6 +631,21 @@ namespace TuneOut
 
 		#endregion UI: Queue overlay
 
+		#region UI: Message bar overlay
+
+		private void ShowMessageBar(string message)
+		{
+			messageText.Text = message;
+			VisualStateManager.GoToState(this, "OverlayMessage", true);
+		}
+
+		private void messageClearButton_Click(object sender, RoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "NoOverlayMessage", true);
+		}
+
+		#endregion
+
 		private async void MainPage_SourceRequested(Windows.Media.PlayTo.PlayToManager sender, Windows.Media.PlayTo.PlayToSourceRequestedEventArgs args)
 		{
 			await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -675,7 +682,7 @@ namespace TuneOut
 		/// </summary>
 		private void ShowAppBars()
 		{
-			if (BottomAppBar == null || TopAppBar == null)
+			if (BottomAppBar == null)
 			{
 				return;
 			}
@@ -699,7 +706,6 @@ namespace TuneOut
 
 				BottomAppBar.IsSticky = false;
 				BottomAppBar.IsOpen = false;
-				TopAppBar.IsOpen = false;
 			}
 		}
 	}

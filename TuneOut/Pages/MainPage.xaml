@@ -24,37 +24,67 @@
 		<common:BooleanNegationConverter x:Name="BNConverter" />
 	</Page.Resources>
 
-	<Grid x:Name="mainGrid">
-		<Grid.Background>
-			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-				<GradientStop Color="#FF0F0F0F" />
-				<GradientStop Color="#FF4B4B4B" Offset="1" />
-			</LinearGradientBrush>
-		</Grid.Background>
+	<Grid>
+		<Grid x:Name="mainGrid" Style="{StaticResource LayoutRootStyle}">
+			<Grid.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#FF0F0F0F" />
+					<GradientStop Color="#FF4B4B4B" Offset="1" />
+				</LinearGradientBrush>
+			</Grid.Background>
+			
+			<Grid.RowDefinitions>
+				<RowDefinition Height="140"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
 
-		<GridView x:Name="albumGridView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource albumsSource}}" SelectionMode="None" Grid.Row="1" ItemClick="albumGridView_ItemClick" IsItemClickEnabled="True" Padding="30">
-			<GridView.ItemTemplate>
-				<DataTemplate>
-					<Grid HorizontalAlignment="Left" Height="220" VerticalAlignment="Top" Width="220">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="50" />
-						</Grid.RowDefinitions>
-						<Image Height="220" Width="220" VerticalAlignment="Center" CacheMode="BitmapCache" Grid.RowSpan="3">
-							<Image.Source>
-								<BitmapImage UriSource="{Binding Artwork.Image}" DecodePixelWidth="220" />
-							</Image.Source>
-						</Image>
-						<StackPanel Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}" Grid.Row="1">
-							<TextBlock TextTrimming="WordEllipsis" Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource ListViewItemOverlayForegroundThemeBrush}" Margin="5,3,5,0"></TextBlock>
-							<TextBlock TextTrimming="WordEllipsis" Text="{Binding Subtitle}" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource ListViewItemOverlayForegroundThemeBrush}" Margin="5,0,5,3"></TextBlock>
-						</StackPanel>
-					</Grid>
-				</DataTemplate>
-			</GridView.ItemTemplate>
-		</GridView>
+			<Grid Canvas.ZIndex="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<RadioButton x:Name="navigateToAlbumsButton" GroupName="headerGroup" Grid.Column="0" Margin="120,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Click="navigateToAlbumsButton_Click" x:Uid="MainPage/NavAppBar/AlbumsButton" />
+				<RadioButton x:Name="navigateToPlaylistsButton" GroupName="headerGroup" Grid.Column="1" Margin="0,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Click="navigateToPlaylistsButton_Click" x:Uid="MainPage/NavAppBar/PlaylistsButton" />
+				<Button x:Name="navigateOpenQueueButton" x:Uid="MainPage/NavAppBar/QueueButton" Margin="0,35,45,0" Style="{StaticResource RoundButtonStyle}" Content="" Click="navigateOpenQueueButton_Click" Grid.Column="2" HorizontalAlignment="Right" Height="45" />
+			</Grid>
 
-		<Grid x:Name="albumDetailOverlay" Canvas.ZIndex="1">
+			<GridView x:Name="albumGridView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource albumsSource}}" SelectionMode="None" ItemClick="albumGridView_ItemClick" IsItemClickEnabled="True" Padding="116,137,40,46" Grid.RowSpan="2" Canvas.ZIndex="-1">
+				<GridView.ItemContainerStyle>
+					<Style TargetType="GridViewItem">
+						<Setter Property="Margin" Value="5"/>
+					</Style>
+				</GridView.ItemContainerStyle>
+
+				<GridView.ItemTemplate>
+					<DataTemplate>
+						<Grid HorizontalAlignment="Left" Height="160" VerticalAlignment="Top" Width="320">
+							<Grid.Background>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#FFDEDEDE"/>
+									<GradientStop Color="#FFCCCCCC" Offset="1"/>
+								</LinearGradientBrush>
+							</Grid.Background>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="160" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<Image VerticalAlignment="Center" CacheMode="BitmapCache" Grid.Column="0" Width="140" Height="140" HorizontalAlignment="Center">
+								<Image.Source>
+									<BitmapImage UriSource="{Binding Artwork.Image}" DecodePixelWidth="140" />
+								</Image.Source>
+							</Image>
+							<StackPanel Grid.Column="2" Margin="5,10">
+								<TextBlock TextTrimming="WordEllipsis" Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Foreground="#FF111111" TextWrapping="Wrap" MaxHeight="100" />
+								<TextBlock TextTrimming="WordEllipsis" Text="{Binding Subtitle}" FontSize="13" FontWeight="SemiBold" Foreground="#CC111111" TextWrapping="Wrap" MaxHeight="40" />
+							</StackPanel>
+						</Grid>
+					</DataTemplate>
+				</GridView.ItemTemplate>
+			</GridView>
+		</Grid>
+
+		<Grid x:Name="albumDetailOverlay" Canvas.ZIndex="1" Visibility="Collapsed" IsHitTestVisible="False">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="1*" />
 				<RowDefinition Height="4*" />
@@ -75,9 +105,9 @@
 
 				<StackPanel Grid.Column="0" Background="#FFCCCCCC">
 					<Image Source="{Binding CurrentSelection.Artwork.Image}" Margin="15" />
-					<Button x:Name="playAllButton" x:Uid="MainPage/PlayWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Play all" Click="playAllButton_Click" />
-					<Button x:Name="shuffleAllButton" x:Uid="MainPage/ShuffleWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Shuffle all" Click="shuffleAllButton_Click" />
-					<Button x:Name="queueAllButton" x:Uid="MainPage/QueueWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyle}" Content="" AutomationProperties.Name="Add to queue" Click="queueAllButton_Click" />
+					<Button x:Name="playAllButton" x:Uid="MainPage/PlayWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Play all" Click="playAllButton_Click" />
+					<Button x:Name="shuffleAllButton" x:Uid="MainPage/ShuffleWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Shuffle all" Click="shuffleAllButton_Click" />
+					<Button x:Name="queueAllButton" x:Uid="MainPage/QueueWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Add to queue" Click="queueAllButton_Click" />
 				</StackPanel>
 
 				<Grid Grid.Column="1" Background="#FFEEEEEE">
@@ -104,7 +134,7 @@
 										<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
 										<TextBlock Text="{Binding Track.TotalTime, Converter={StaticResource TSConverter}}" FontSize="13" Margin="10,0,0,10" TextTrimming="WordEllipsis" />
 									</StackPanel>
-									<Button Grid.Column="2" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Click="albumDetailListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
+									<Button Grid.Column="2" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Click="albumDetailListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
 								</Grid>
 							</DataTemplate>
 						</ListView.ItemTemplate>
@@ -113,7 +143,7 @@
 			</Grid>
 		</Grid>
 
-		<Grid x:Name="queueOverlay" Canvas.ZIndex="1">
+		<Grid x:Name="queueOverlay" Canvas.ZIndex="1" Visibility="Collapsed" IsHitTestVisible="False">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="queueOverlayCol1" Width="500" />
 				<ColumnDefinition x:Name="queueOverlayCol2" Width="*" />
@@ -133,7 +163,7 @@
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Button x:Name="queueBackButton" Grid.Column="0" Style="{StaticResource RoundButtonStyle}" Content="" Click="navigateOpenQueueButton_Click" />
+					<Button x:Name="queueBackButton" Grid.Column="0" Style="{StaticResource RoundButtonStyleLight}" Content="" Click="navigateOpenQueueButton_Click" />
 					<TextBlock x:Name="queueTitleText" Grid.Column="1" x:Uid="MainPage/QueuePaneTitle" FontSize="30" Foreground="Black" FontStretch="Expanded" Margin="0,12,0,0" FontFamily="Global User Interface" />
 					<Image x:Name="queueNowPlayingImage" Grid.Column="2" Source="{Binding Controller.Current.Artwork.Image, Source={StaticResource ACProxy}}" Margin="5" Visibility="Collapsed" />
 					<StackPanel x:Name="queueNowPlayingTextArea" Grid.Column ="3" Orientation="Vertical" Height="50" Visibility="Collapsed">
@@ -153,7 +183,7 @@
 									<TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" />
 									<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
 								</StackPanel>
-								<Button Grid.Column="1" Style="{StaticResource RoundButtonStyle}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5,10,5" Click="queueListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
+								<Button Grid.Column="1" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5,10,5" Click="queueListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
 							</Grid>
 						</DataTemplate>
 					</ListView.ItemTemplate>
@@ -161,7 +191,19 @@
 			</Grid>
 		</Grid>
 
-		<Rectangle x:Name="hiddenBottomEdge" VerticalAlignment="Bottom" Canvas.ZIndex="-1" />
+		<Grid x:Name="messageBar" Canvas.ZIndex="100">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<Border Background="#FFE21F26" Grid.ColumnSpan="2" BorderThickness="0,0,0,5" BorderBrush="#7FE21F26" />
+			<TextBlock x:Name="messageText" Text="An error was encountered while..." Margin="20,20,20,25" Style="{StaticResource BasicTextStyle}" />
+			<Button x:Name="messageClearButton" x:Uid="MainPage/AudioError/OKButton" Content="OK" Grid.Column="1" Margin="0,0,20,5" Click="messageClearButton_Click" />
+		</Grid>
 
 		<Grid x:Name="hiddenControls" Visibility="Collapsed">
 			<StackPanel x:Name="volumeControls">
@@ -399,20 +441,6 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="topAppBar">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<x:Boolean>False</x:Boolean>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="topAppBar">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Collapsed</Visibility>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bottomAppBar_NowPlaying">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -458,26 +486,18 @@
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
-			<VisualStateGroup x:Name="OverlayStates">
-				<VisualState x:Name="NoOverlay">
+			<VisualStateGroup x:Name="OverlayQueueStates">
+				<VisualState x:Name="NoOverlayQueue">
 					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="queueOverlay">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<x:Boolean>False</x:Boolean>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="albumDetailOverlay">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<x:Boolean>False</x:Boolean>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-						<FadeOutThemeAnimation TargetName="albumDetailOverlay" />
 						<FadeOutThemeAnimation TargetName="queueOverlay" />
 						<PopOutThemeAnimation TargetName="queueContentsGrid" />
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueOverlay">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Visible</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 				<VisualState x:Name="OverlayQueue">
@@ -489,14 +509,6 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="albumDetailOverlay">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<x:Boolean>False</x:Boolean>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-						<FadeOutThemeAnimation TargetName="albumDetailOverlay" />
 						<FadeInThemeAnimation TargetName="queueOverlay" />
 						<PopInThemeAnimation TargetName="queueContentsGrid" FromHorizontalOffset="-300" />
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Selector.SelectedIndex)" Storyboard.TargetName="queueListView">
@@ -506,14 +518,47 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueOverlay">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Visible</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+			<VisualStateGroup x:Name="AlbumGridViewStates">
+				<VisualState x:Name="AlbumGridViewPreparing">
+					<Storyboard>
+						<FadeOutThemeAnimation TargetName="albumGridView"/>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="AlbumGridViewReady">
+					<Storyboard>
+						<FadeInThemeAnimation TargetName="albumGridView"/>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+			<VisualStateGroup x:Name="OverlayAlbumDetailStates">
+				<VisualState x:Name="NoOverlayAlbum">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="albumDetailOverlay">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Visible</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
+						<FadeOutThemeAnimation TargetName="albumDetailOverlay"/>
 					</Storyboard>
 				</VisualState>
 				<VisualState x:Name="OverlayAlbum">
 					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="queueOverlay">
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="albumDetailOverlay">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
-									<x:Boolean>False</x:Boolean>
+									<Visibility>Visible</Visibility>
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
@@ -524,44 +569,24 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<FadeOutThemeAnimation TargetName="queueOverlay" />
-						<PopOutThemeAnimation TargetName="queueContentsGrid" />
-						<FadeInThemeAnimation TargetName="albumDetailOverlay" />
+						<FadeInThemeAnimation TargetName="albumDetailOverlay"/>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
-			<VisualStateGroup x:Name="AlbumGridViewStates">
-				<VisualState x:Name="AlbumGridViewPreparing">
+			<VisualStateGroup x:Name="OverlayMessageStates">
+				<VisualState x:Name="NoOverlayMessage">
 					<Storyboard>
-						<PopOutThemeAnimation TargetName="albumGridView" />
+						<PopOutThemeAnimation TargetName="messageBar"/>
 					</Storyboard>
 				</VisualState>
-				<VisualState x:Name="AlbumGridViewReady">
+				<VisualState x:Name="OverlayMessage">
 					<Storyboard>
-						<PopInThemeAnimation TargetName="albumGridView" FromHorizontalOffset="100" />
+						<PopInThemeAnimation TargetName="messageBar" FromHorizontalOffset="0" FromVerticalOffset="-100"/>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
 	</Grid>
-
-	<Page.TopAppBar>
-		<AppBar x:Name="topAppBar" BorderBrush="#E5111111">
-			<AppBar.Background>
-				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-					<GradientStop Color="#E5111111" Offset="1" />
-					<GradientStop Color="#FF000000" />
-				</LinearGradientBrush>
-			</AppBar.Background>
-			<Grid>
-				<Button x:Name="navigateOpenQueueButton" Content="" x:Uid="MainPage/NavAppBar/QueueButton" Click="navigateOpenQueueButton_Click"  Margin="10,15" Style="{StaticResource NavButtonStyle}" />
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<Button x:Name="navigateToAlbumsButton" Content="" x:Uid="MainPage/NavAppBar/AlbumsButton"  Margin="10,15,0,15" Style="{StaticResource NavButtonStyle}" Click="navigateToAlbumsButton_Click" />
-					<Button x:Name="navigateToPlaylistsButton" Content="" x:Uid="MainPage/NavAppBar/PlaylistsButton"  Margin="0,15,10,15" Style="{StaticResource NavButtonStyle}" Click="navigateToPlaylistsButton_Click" />
-				</StackPanel>
-			</Grid>
-		</AppBar>
-	</Page.TopAppBar>
 
 	<Page.BottomAppBar>
 		<AppBar x:Name="bottomAppBar" Loaded="BottomAppBar_Loaded" Unloaded="BottomAppBar_Unloaded" BorderBrush="#E5111111">

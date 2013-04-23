@@ -137,7 +137,7 @@
 
 		<!-- Back button and page title -->
 		<Grid>
-			<TextBlock x:Name="pageTitle" x:Uid="FirstRunPage/Title" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Margin="80,0,30,40" />
+			<TextBlock x:Name="pageTitle" x:Uid="FirstRunPage/Title" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Margin="120,0,30,40" />
 		</Grid>
 
 		<Image x:Name="image" Grid.Row="1" Source="ms-appx:///Assets/FirstRun.png" Height="240" />

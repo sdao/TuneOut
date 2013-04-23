@@ -86,9 +86,9 @@
           <note from="MultilingualBuild" priority="2" annotates="source">App bar</note>
         </trans-unit>
         <trans-unit id="Resources\MainPage\NavAppBar\QueueButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
-          <source>Queue</source>
+          <source>Show the queue</source>
           <target state="translated">File d'attente de lecture</target>
-          <note from="MultilingualBuild" priority="2" annotates="source">App bar</note>
+          <note from="MultilingualBuild" priority="2" annotates="source">Capitalized</note>
         </trans-unit>
         <trans-unit id="Resources\MainPage\QueuePaneTitle\Text" translate="yes" xml:space="preserve">
           <source>Queue</source>
@@ -262,7 +262,7 @@
           <source>Options</source>
           <target state="translated">Options</target>
         </trans-unit>
-        <trans-unit id="Resources\MainPage\AudioError\OKButton" translate="yes" xml:space="preserve">
+        <trans-unit id="Resources\MainPage\AudioError\OKButton\Content" translate="yes" xml:space="preserve">
           <source>OK</source>
           <target state="translated">OK</target>
         </trans-unit>
@@ -355,13 +355,15 @@
           <target state="translated">{0}—{1}</target>
           <note from="MultilingualBuild" priority="2" annotates="source">Format string with {0}=Album, {1}=Artist</note>
         </trans-unit>
-        <trans-unit id="Resources\MainPage\NavAppBar\AlbumsButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
-          <source>Albums</source>
-          <target state="translated">Albums</target>
+        <trans-unit id="Resources\MainPage\NavAppBar\AlbumsButton\Content" translate="yes" xml:space="preserve">
+          <source>albums</source>
+          <target state="translated">albums</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Lowercase</note>
         </trans-unit>
-        <trans-unit id="Resources\MainPage\NavAppBar\PlaylistsButton\[using:Windows.UI.Xaml.Automation]AutomationProperties\Name" translate="yes" xml:space="preserve">
-          <source>Playlists</source>
-          <target state="translated">Listes de lecture</target>
+        <trans-unit id="Resources\MainPage\NavAppBar\PlaylistsButton\Content" translate="yes" xml:space="preserve">
+          <source>playlists</source>
+          <target state="translated">listes</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Lowercase</note>
         </trans-unit>
         <trans-unit id="Resources\SearchResultsPage\Title\Text" translate="yes" xml:space="preserve">
           <source>TuneOut</source>
