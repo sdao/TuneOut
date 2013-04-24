@@ -16,7 +16,7 @@ namespace TuneOut
 	{
 		private static string NAVIGATION_EMPTY = null;
 		private static readonly Uri UNKNOWN_ARTWORK = new Uri("ms-appx:///Assets/UnknownMusic.png");
-		private static readonly Uri PLAYLIST_ARTWORK = new Uri("ms-appx:///Assets/Playlist.png");
+		private static readonly Uri PLAYLIST_ARTWORK = new Uri("ms-appx:///Assets/UnknownPlaylist.png");
 
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code

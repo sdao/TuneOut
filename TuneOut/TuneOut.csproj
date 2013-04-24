@@ -198,15 +198,29 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\FirstRun.png" />
-    <Content Include="Assets\LastFmBadgeRed.png" />
-    <Content Include="Assets\LastFmLogoWhite.png" />
-    <Content Include="Assets\Logo.png" />
-    <Content Include="Assets\Playlist.png" />
-    <Content Include="Assets\SmallLogo.png" />
-    <Content Include="Assets\SplashScreen.png" />
-    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\FirstRun.scale-100.png" />
+    <Content Include="Assets\FirstRun.scale-140.png" />
+    <Content Include="Assets\FirstRun.scale-180.png" />
+    <Content Include="Assets\LastFmBadgeRed.scale-100.png" />
+    <Content Include="Assets\LastFmBadgeRed.scale-140.png" />
+    <Content Include="Assets\LastFmBadgeRed.scale-180.png" />
+    <Content Include="Assets\LastFmLogoWhite.scale-100.png" />
+    <Content Include="Assets\LastFmLogoWhite.scale-140.png" />
+    <Content Include="Assets\LastFmLogoWhite.scale-180.png" />
+    <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\Logo.scale-140.png" />
+    <Content Include="Assets\Logo.scale-180.png" />
+    <Content Include="Assets\SmallLogo.scale-100.png" />
+    <Content Include="Assets\SmallLogo.scale-140.png" />
+    <Content Include="Assets\SmallLogo.scale-180.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-140.png" />
+    <Content Include="Assets\SplashScreen.scale-180.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-140.png" />
+    <Content Include="Assets\StoreLogo.scale-180.png" />
     <Content Include="Assets\UnknownMusic.png" />
+    <Content Include="Assets\UnknownPlaylist.png" />
     <Content Include="Common\ReadMe.txt" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="Common\ThemeColors.xaml">

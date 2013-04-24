@@ -19,7 +19,7 @@
 
 			<HyperlinkButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="http://www.last.fm">
 				<StackPanel>
-					<Image Source="ms-appx:///Assets/LastFmBadgeRed.png" Stretch="None" />
+					<Image Source="ms-appx:///Assets/LastFmBadgeRed.png" Width="80" />
 					<TextBlock x:Uid="Legal/Credits/LastFmLink" FontSize="15" HorizontalAlignment="Center" Margin="6">Data from Last.fm</TextBlock>
 				</StackPanel>
 			</HyperlinkButton>
