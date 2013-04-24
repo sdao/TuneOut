@@ -22,7 +22,6 @@
 		<common:TimeSpanToDoubleConverter x:Name="TDConverter" />
 		<common:TimeDoubleToTimeStringConverter x:Name="TDSConverter" />
 		<common:BooleanNegationConverter x:Name="BNConverter" />
-		<common:ZeroToVisibilityConverter x:Name="ZTVConverter" />
 	</Page.Resources>
 
 	<Grid>
@@ -144,7 +143,7 @@
 			</Grid>
 		</Grid>
 
-		<Grid x:Name="queueOverlay" Canvas.ZIndex="10" Visibility="Collapsed" IsHitTestVisible="False">
+		<Grid x:Name="queueOverlay" Canvas.ZIndex="10" IsHitTestVisible="False">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="queueOverlayCol1" Width="500" />
 				<ColumnDefinition x:Name="queueOverlayCol2" Width="*" />
@@ -163,7 +162,6 @@
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<TextBlock x:Name="queueTitleText" Grid.Column="0" x:Uid="MainPage/QueuePaneTitle" FontSize="30" Foreground="Black" FontStretch="Expanded" Margin="0,12,0,0" FontFamily="Global User Interface" />
 					<Image x:Name="queueNowPlayingImage" Grid.Column="1" Source="{Binding Controller.Current.Artwork.Image, Source={StaticResource ACProxy}}" Margin="5" Visibility="Collapsed" />
 					<StackPanel x:Name="queueNowPlayingTextArea" Grid.Column="2" Orientation="Vertical" Height="50" Visibility="Collapsed">
 						<TextBlock Text="{Binding Controller.Current.Title, Source={StaticResource ACProxy}}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" Foreground="Black" />
@@ -187,7 +185,7 @@
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>
-				<Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Controller.UpcomingTracks.Count, Source={StaticResource ACProxy}, Converter={StaticResource ZTVConverter}}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}" CornerRadius="20" Padding="20,10">
+				<Border x:Name="queueEmptyPlaceholder" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource ApplicationPageBackgroundThemeBrush}" CornerRadius="20" Padding="20,10">
 					<TextBlock x:Uid="MainPage/QueuePaneEmptyText" FontSize="16" FontWeight="SemiBold" />
 				</Border>
 			</Grid>
@@ -326,16 +324,26 @@
 			</VisualStateGroup>
 
 			<VisualStateGroup x:Name="PlayStates">
-				<VisualState x:Name="NotPlaying" />
-				<VisualState x:Name="Playing">
+				<VisualState x:Name="NotPlaying" >
 					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueTitleText">
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Row)" Storyboard.TargetName="queueEmptyPlaceholder">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Collapsed</Visibility>
+									<x:Int32>0</x:Int32>
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.RowSpan)" Storyboard.TargetName="queueEmptyPlaceholder">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<x:Int32>2</x:Int32>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="Playing">
+					<Storyboard>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="skipBackButton">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -373,17 +381,17 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-				<VisualState x:Name="Paused">
-					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueTitleText">
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueEmptyPlaceholder">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
 									<Visibility>Collapsed</Visibility>
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="Paused">
+					<Storyboard>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="skipBackButton">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -414,6 +422,13 @@
 						</ObjectAnimationUsingKeyFrames>
 						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_NowPlaying" d:IsOptimized="True" />
 						<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bottomAppBar_Seeker" d:IsOptimized="True" />
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueEmptyPlaceholder">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Collapsed</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
