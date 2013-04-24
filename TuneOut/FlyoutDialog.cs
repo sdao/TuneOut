@@ -12,6 +12,8 @@ namespace TuneOut
 	/// </summary>
 	class FlyoutDialog : Flyout
 	{
+		private static readonly object __showLock = new object();
+
 		private readonly List<IUICommand> _commands = new List<IUICommand>();
 
 		/// <summary>
@@ -82,8 +84,11 @@ namespace TuneOut
 			outerContainer.Children.Add(textContainer);
 			outerContainer.Children.Add(flyoutButtonContainer);
 
-			Content = outerContainer;
-			base.Show(target, placement, maxWidth);
+			lock (__showLock)
+			{
+				Content = outerContainer;
+				base.Show(target, placement, maxWidth);
+			}
 		}
 
 		void button_Click(object sender, RoutedEventArgs e)

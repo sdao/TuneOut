@@ -145,7 +145,7 @@
         </trans-unit>
         <trans-unit id="Resources\SearchResultsPage\SubtitleText\Text" translate="yes" xml:space="preserve">
           <source>Results for </source>
-          <target state="translated">Résulats pour</target>
+          <target state="translated">Résulats pour </target>
           <note from="MultilingualBuild" priority="2" annotates="source">Must end with a non-breaking space (U+00a0)</note>
         </trans-unit>
         <trans-unit id="Resources\Settings\Internet\ForceDownloadSwitch\Header" translate="yes" xml:space="preserve">
@@ -385,6 +385,10 @@
         <trans-unit id="Resources\Legal\Credits\LastFmLink\Text" translate="yes" xml:space="preserve">
           <source>Data from Last.fm</source>
           <target state="translated">Données de Last.fm</target>
+        </trans-unit>
+        <trans-unit id="Resources\MainPage\QueuePaneEmptyText\Text" translate="yes" xml:space="preserve">
+          <source>Nothing here right now :(</source>
+          <target state="translated">Rien pour le moment :(</target>
         </trans-unit>
       </group>
     </body>

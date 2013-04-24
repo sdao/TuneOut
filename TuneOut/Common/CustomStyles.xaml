@@ -1249,23 +1249,7 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-
-	<DataTemplate x:Key="SearchResultItemTemplate">
-		<Grid Width="294" Margin="6">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-			<Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Margin="0,0,0,10" Width="40" Height="40">
-				<Image Source="{Binding Artwork.Image}" Stretch="UniformToFill" />
-			</Border>
-			<StackPanel Grid.Column="1" Margin="10,-10,0,0">
-				<TextBlock Text="{Binding Title}" Style="{StaticResource BodyTextStyle}" TextWrapping="NoWrap" />
-				<TextBlock Text="{Binding Subtitle}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}" TextWrapping="NoWrap" />
-				<TextBlock Text="{Binding Description}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}" TextWrapping="NoWrap" />
-			</StackPanel>
-		</Grid>
-	</DataTemplate>
+	
 	<Style x:Key="HeaderRadioButtonStyle" TargetType="RadioButton">
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="Foreground" Value="{StaticResource RadioButtonContentForegroundThemeBrush}"/>
@@ -1290,7 +1274,11 @@
 						<VisualStateManager.VisualStateGroups>
 							<VisualStateGroup x:Name="CommonStates">
 								<VisualState x:Name="Normal"/>
-								<VisualState x:Name="PointerOver"/>
+								<VisualState x:Name="PointerOver">
+									<Storyboard>
+										<DoubleAnimation Duration="0" To="0.5" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ContentPresenterShadow" d:IsOptimized="True"/>
+									</Storyboard>
+								</VisualState>
 								<VisualState x:Name="Pressed"/>
 								<VisualState x:Name="Disabled">
 									<Storyboard>
@@ -1320,11 +1308,12 @@
 								<VisualState x:Name="PointerFocused"/>
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
-						<Grid>
+						<Grid x:Name="grid">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
 							<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+							<ContentPresenter x:Name="ContentPresenterShadow" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Opacity="0"/>
 							<Rectangle x:Name="FocusVisualWhite" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>
 							<Rectangle x:Name="FocusVisualBlack" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualBlackStrokeThemeBrush}" StrokeDashArray="1,1"/>
 						</Grid>
@@ -1333,4 +1322,21 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+	<DataTemplate x:Key="SearchResultItemTemplate">
+		<Grid Width="294" Margin="6">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Margin="0,0,0,10" Width="40" Height="40">
+				<Image Source="{Binding Artwork.Image}" Stretch="UniformToFill" />
+			</Border>
+			<StackPanel Grid.Column="1" Margin="10,-10,0,0">
+				<TextBlock Text="{Binding Title}" Style="{StaticResource BodyTextStyle}" TextWrapping="NoWrap" />
+				<TextBlock Text="{Binding Subtitle}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}" TextWrapping="NoWrap" />
+				<TextBlock Text="{Binding Description}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}" TextWrapping="NoWrap" />
+			</StackPanel>
+		</Grid>
+	</DataTemplate>
 </ResourceDictionary>

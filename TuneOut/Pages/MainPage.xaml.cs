@@ -222,6 +222,7 @@ namespace TuneOut
 					}
 
 					// Give the user a bit of time (0.5 seconds) to collect their thoughts
+					// and for the animation to complete
 					await Task.Delay(500);
 
 					IsAlbumOverlayShown = true;

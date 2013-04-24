@@ -22,6 +22,7 @@
 		<common:TimeSpanToDoubleConverter x:Name="TDConverter" />
 		<common:TimeDoubleToTimeStringConverter x:Name="TDSConverter" />
 		<common:BooleanNegationConverter x:Name="BNConverter" />
+		<common:ZeroToVisibilityConverter x:Name="ZTVConverter" />
 	</Page.Resources>
 
 	<Grid>
@@ -44,7 +45,7 @@
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
-				<RadioButton x:Name="navigateToAlbumsButton" GroupName="headerGroup" Grid.Column="0" Margin="120,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Click="navigateToAlbumsButton_Click" x:Uid="MainPage/NavAppBar/AlbumsButton" />
+				<RadioButton x:Name="navigateToAlbumsButton" GroupName="headerGroup" Grid.Column="0" Margin="120,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Click="navigateToAlbumsButton_Click" x:Uid="MainPage/NavAppBar/AlbumsButton" Content="albums" />
 				<RadioButton x:Name="navigateToPlaylistsButton" GroupName="headerGroup" Grid.Column="1" Margin="0,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Click="navigateToPlaylistsButton_Click" x:Uid="MainPage/NavAppBar/PlaylistsButton" />
 				<Button x:Name="navigateOpenQueueButton" x:Uid="MainPage/NavAppBar/QueueButton" Margin="0,35,45,0" Style="{StaticResource RoundButtonStyle}" Content="" Click="navigateOpenQueueButton_Click" Grid.Column="2" HorizontalAlignment="Right" Height="45" />
 			</Grid>
@@ -84,7 +85,7 @@
 			</GridView>
 		</Grid>
 
-		<Grid x:Name="albumDetailOverlay" Canvas.ZIndex="1" Visibility="Collapsed" IsHitTestVisible="False">
+		<Grid x:Name="albumDetailOverlay" Canvas.ZIndex="10" Visibility="Collapsed" IsHitTestVisible="False">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="1*" />
 				<RowDefinition Height="4*" />
@@ -143,7 +144,7 @@
 			</Grid>
 		</Grid>
 
-		<Grid x:Name="queueOverlay" Canvas.ZIndex="1" Visibility="Collapsed" IsHitTestVisible="False">
+		<Grid x:Name="queueOverlay" Canvas.ZIndex="10" Visibility="Collapsed" IsHitTestVisible="False">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="queueOverlayCol1" Width="500" />
 				<ColumnDefinition x:Name="queueOverlayCol2" Width="*" />
@@ -186,6 +187,9 @@
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>
+				<Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Controller.UpcomingTracks.Count, Source={StaticResource ACProxy}, Converter={StaticResource ZTVConverter}}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}" CornerRadius="20" Padding="20,10">
+					<TextBlock x:Uid="MainPage/QueuePaneEmptyText" FontSize="16" FontWeight="SemiBold" />
+				</Border>
 			</Grid>
 		</Grid>
 
@@ -519,18 +523,6 @@
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
-			<VisualStateGroup x:Name="AlbumGridViewStates">
-				<VisualState x:Name="AlbumGridViewPreparing">
-					<Storyboard>
-						<FadeOutThemeAnimation TargetName="albumGridView"/>
-					</Storyboard>
-				</VisualState>
-				<VisualState x:Name="AlbumGridViewReady">
-					<Storyboard>
-						<FadeInThemeAnimation TargetName="albumGridView"/>
-					</Storyboard>
-				</VisualState>
-			</VisualStateGroup>
 			<VisualStateGroup x:Name="OverlayAlbumDetailStates">
 				<VisualState x:Name="NoOverlayAlbum">
 					<Storyboard>
@@ -568,6 +560,13 @@
 				<VisualState x:Name="NoOverlayMessage">
 					<Storyboard>
 						<PopOutThemeAnimation TargetName="messageBar"/>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="messageBar">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<x:Boolean>False</x:Boolean>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 				<VisualState x:Name="OverlayMessage">

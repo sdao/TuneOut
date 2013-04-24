@@ -11,9 +11,9 @@ namespace TuneOut
 	/// </summary>
 	class Flyout : IDisposable
 	{
-		private static Flyout __currentOpenFlyout = null;
+		private static readonly object __showLock = new object();
 
-		private readonly object _showAsyncLock = new object();
+		private static Flyout __currentOpenFlyout = null;
 
 		private Callisto.Controls.Flyout _flyout = null;
 
@@ -81,7 +81,7 @@ namespace TuneOut
 		/// <param name="maxWidth">The maximum width of the flyout. If null, automatically determines a feasible width.</param>
 		public virtual void Show(UIElement target, PlacementMode placement, double? maxWidth)
 		{
-			lock (_showAsyncLock)
+			lock (__showLock)
 			{
 				if (__currentOpenFlyout != null)
 				{

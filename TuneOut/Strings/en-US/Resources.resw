@@ -409,4 +409,7 @@
   <data name="Legal/Credits/LastFmLink.Text" xml:space="preserve">
     <value>Data from Last.fm</value>
   </data>
+  <data name="MainPage/QueuePaneEmptyText.Text" xml:space="preserve">
+    <value>Nothing here right now :(</value>
+  </data>
 </root>
