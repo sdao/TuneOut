@@ -639,7 +639,7 @@ namespace TuneOut.Audio
 
 		private async void MediaControl_NextTrackPressed(object sender, object e)
 		{
-			if (Status != AudioControllerStatus.Inactive)
+			if (Status == AudioControllerStatus.Paused || Status == AudioControllerStatus.Playing)
 			{
 				await _media.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
@@ -650,7 +650,7 @@ namespace TuneOut.Audio
 
 		private async void MediaControl_PausePressed(object sender, object e)
 		{
-			if (Status != AudioControllerStatus.Inactive)
+			if (Status == AudioControllerStatus.Playing)
 			{
 				await _media.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
@@ -679,7 +679,7 @@ namespace TuneOut.Audio
 
 		private async void MediaControl_PlayPressed(object sender, object e)
 		{
-			if (Status != AudioControllerStatus.Inactive)
+			if (Status == AudioControllerStatus.Paused)
 			{
 				await _media.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
@@ -690,7 +690,7 @@ namespace TuneOut.Audio
 
 		private async void MediaControl_PreviousTrackPressed(object sender, object e)
 		{
-			if (Status != AudioControllerStatus.Inactive)
+			if (Status == AudioControllerStatus.Paused || Status == AudioControllerStatus.Playing)
 			{
 				await _media.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
@@ -700,7 +700,7 @@ namespace TuneOut.Audio
 		}
 		private async void MediaControl_StopPressed(object sender, object e)
 		{
-			if (Status != AudioControllerStatus.Inactive)
+			if (Status == AudioControllerStatus.Playing)
 			{
 				await _media.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
