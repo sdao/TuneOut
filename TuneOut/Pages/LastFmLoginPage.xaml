@@ -44,8 +44,8 @@
 			<TextBlock x:Name="ErrorText" x:Uid="LastFmLoginPage/ErrorText" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />
 
 			<Image x:Name="image" Grid.Row="1" Source="ms-appx:///Assets/LastFmLogoWhite.png" HorizontalAlignment="Left" Margin="40,0" Width="120" />
-			<Button x:Name="CancelButton" x:Uid="LastFmLoginPage/CancelButton" Grid.Row="1" Margin="40,0" Click="GoBack" HorizontalAlignment="Right" />
-			<Button x:Name="FinishButton" x:Uid="LastFmLoginPage/FinishButton" Grid.Row="1" Margin="40,0" Click="GoBack" Visibility="Collapsed" HorizontalAlignment="Right" />
+			<Button x:Name="CancelButton" x:Uid="LastFmLoginPage/CancelButton" Grid.Row="1" Margin="40,0" Tapped="GoBack" HorizontalAlignment="Right" />
+			<Button x:Name="FinishButton" x:Uid="LastFmLoginPage/FinishButton" Grid.Row="1" Margin="40,0" Tapped="GoBack" Visibility="Collapsed" HorizontalAlignment="Right" />
 		</Grid>
 
 		<VisualStateManager.VisualStateGroups>

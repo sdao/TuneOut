@@ -52,7 +52,7 @@ namespace TuneOut
 		{
 		}
 
-		private async void BrowseButton_Click(object sender, RoutedEventArgs e)
+		private async void BrowseButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			MessageDialog errorDialog = null;
 

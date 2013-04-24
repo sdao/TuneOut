@@ -44,9 +44,9 @@
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
-				<RadioButton x:Name="navigateToAlbumsButton" GroupName="headerGroup" Grid.Column="0" Margin="120,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Click="navigateToAlbumsButton_Click" x:Uid="MainPage/NavAppBar/AlbumsButton" Content="albums" />
-				<RadioButton x:Name="navigateToPlaylistsButton" GroupName="headerGroup" Grid.Column="1" Margin="0,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Click="navigateToPlaylistsButton_Click" x:Uid="MainPage/NavAppBar/PlaylistsButton" />
-				<Button x:Name="navigateOpenQueueButton" x:Uid="MainPage/NavAppBar/QueueButton" Margin="0,35,45,0" Style="{StaticResource RoundButtonStyle}" Content="" Click="navigateOpenQueueButton_Click" Grid.Column="2" HorizontalAlignment="Right" Height="45" />
+				<RadioButton x:Name="navigateToAlbumsButton" GroupName="headerGroup" Grid.Column="0" Margin="120,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Tapped="navigateToAlbumsButton_Tapped" x:Uid="MainPage/NavAppBar/AlbumsButton" Content="albums" />
+				<RadioButton x:Name="navigateToPlaylistsButton" GroupName="headerGroup" Grid.Column="1" Margin="0,0,30,40" Style="{StaticResource HeaderRadioButtonStyle}" Tapped="navigateToPlaylistsButton_Tapped" x:Uid="MainPage/NavAppBar/PlaylistsButton" />
+				<Button x:Name="navigateOpenQueueButton" x:Uid="MainPage/NavAppBar/QueueButton" Margin="0,35,45,0" Style="{StaticResource RoundButtonStyle}" Content="" Tapped="navigateOpenQueueButton_Tapped" Grid.Column="2" HorizontalAlignment="Right" Height="45" />
 			</Grid>
 
 			<GridView x:Name="albumGridView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource albumsSource}}" SelectionMode="None" ItemClick="albumGridView_ItemClick" IsItemClickEnabled="True" Padding="116,137,40,46" Grid.RowSpan="2" Canvas.ZIndex="-1">
@@ -105,9 +105,9 @@
 
 				<StackPanel Grid.Column="0" Background="#FFCCCCCC">
 					<Image Source="{Binding CurrentSelection.Artwork.Image}" Margin="15" />
-					<Button x:Name="playAllButton" x:Uid="MainPage/PlayWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Play all" Click="playAllButton_Click" />
-					<Button x:Name="shuffleAllButton" x:Uid="MainPage/ShuffleWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Shuffle all" Click="shuffleAllButton_Click" />
-					<Button x:Name="queueAllButton" x:Uid="MainPage/QueueWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Add to queue" Click="queueAllButton_Click" />
+					<Button x:Name="playAllButton" x:Uid="MainPage/PlayWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Play all" Tapped="playAllButton_Tapped" />
+					<Button x:Name="shuffleAllButton" x:Uid="MainPage/ShuffleWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Shuffle all" Tapped="shuffleAllButton_Tapped" />
+					<Button x:Name="queueAllButton" x:Uid="MainPage/QueueWholeAlbumButton" Margin="15,5" Style="{StaticResource RoundButtonStyleLight}" Content="" AutomationProperties.Name="Add to queue" Tapped="queueAllButton_Tapped" />
 				</StackPanel>
 
 				<Grid Grid.Column="1" Background="#FFEEEEEE">
@@ -134,7 +134,7 @@
 										<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
 										<TextBlock Text="{Binding Track.TotalTime, Converter={StaticResource TSConverter}}" FontSize="13" Margin="10,0,0,10" TextTrimming="WordEllipsis" />
 									</StackPanel>
-									<Button Grid.Column="2" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Click="albumDetailListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
+									<Button Grid.Column="2" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Tapped="albumDetailListView_ItemPlayButton_Tapped" HorizontalAlignment="Center" VerticalAlignment="Center" />
 								</Grid>
 							</DataTemplate>
 						</ListView.ItemTemplate>
@@ -180,7 +180,7 @@
 									<TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" />
 									<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
 								</StackPanel>
-								<Button Grid.Column="1" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5,10,5" Click="queueListView_ItemPlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
+								<Button Grid.Column="1" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5,10,5" Tapped="queueListView_ItemPlayButton_Tapped" HorizontalAlignment="Center" VerticalAlignment="Center" />
 							</Grid>
 						</DataTemplate>
 					</ListView.ItemTemplate>
@@ -202,7 +202,7 @@
 			</Grid.RowDefinitions>
 			<Border Background="#FFE21F26" Grid.ColumnSpan="2" BorderThickness="0,0,0,5" BorderBrush="#7FE21F26" />
 			<TextBlock x:Name="messageText" Text="An error was encountered while..." Margin="20,20,20,25" Style="{StaticResource BasicTextStyle}" />
-			<Button x:Name="messageClearButton" x:Uid="MainPage/AudioError/OKButton" Content="OK" Grid.Column="1" Margin="0,0,20,5" Click="messageClearButton_Click" />
+			<Button x:Name="messageClearButton" x:Uid="MainPage/AudioError/OKButton" Content="OK" Grid.Column="1" Margin="0,0,20,5" Tapped="messageClearButton_Tapped" />
 		</Grid>
 
 		<Grid x:Name="hiddenControls" Visibility="Collapsed">
@@ -615,10 +615,10 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<StackPanel x:Name="bottomAppBar_LeftCommands" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-					<Button x:Name="addSelectionToQueueButton" x:Uid="MainPage/CmdAppBar/AddToQueueButton" Style="{StaticResource AddAppBarButtonStyle}" Visibility="Collapsed" Click="addSelectionToQueueButton_Click" />
-					<Button x:Name="deleteSelectionFromQueueButton" x:Uid="MainPage/CmdAppBar/DeleteFromQueueButton" Style="{StaticResource DiscardAppBarButtonStyle}" Visibility="Collapsed" Click="deleteSelectionFromQueueButton_Click" />
-					<Button x:Name="clearAlbumSelectionButton" x:Uid="MainPage/CmdAppBar/ClearAlbumSelectionButton" Style="{StaticResource ClearSelectionAppBarButtonStyle}" Visibility="Collapsed" Click="clearAlbumSelectionButton_Click" />
-					<Button x:Name="clearQueueSelectionButton" x:Uid="MainPage/CmdAppBar/ClearQueueSelectionButton" Style="{StaticResource ClearSelectionAppBarButtonStyle}" Visibility="Collapsed" Click="clearQueueSelectionButton_Click" />
+					<Button x:Name="addSelectionToQueueButton" x:Uid="MainPage/CmdAppBar/AddToQueueButton" Style="{StaticResource AddAppBarButtonStyle}" Visibility="Collapsed" Tapped="addSelectionToQueueButton_Tapped" />
+					<Button x:Name="deleteSelectionFromQueueButton" x:Uid="MainPage/CmdAppBar/DeleteFromQueueButton" Style="{StaticResource DiscardAppBarButtonStyle}" Visibility="Collapsed" Tapped="deleteSelectionFromQueueButton_Tapped" />
+					<Button x:Name="clearAlbumSelectionButton" x:Uid="MainPage/CmdAppBar/ClearAlbumSelectionButton" Style="{StaticResource ClearSelectionAppBarButtonStyle}" Visibility="Collapsed" Tapped="clearAlbumSelectionButton_Tapped" />
+					<Button x:Name="clearQueueSelectionButton" x:Uid="MainPage/CmdAppBar/ClearQueueSelectionButton" Style="{StaticResource ClearSelectionAppBarButtonStyle}" Visibility="Collapsed" Tapped="clearQueueSelectionButton_Tapped" />
 				</StackPanel>
 				<Grid x:Name="bottomAppBar_NowPlaying" Grid.Column="0" Opacity="0">
 					<Grid.ColumnDefinitions>
@@ -643,10 +643,10 @@
 					<TextBlock x:Name="seekerDurationText" Grid.Column="2" Text="{Binding Controller.Current.TotalTime, Converter={StaticResource TSConverter}, Source={StaticResource ACProxy}}" FontSize="13" VerticalAlignment="Top" Margin="10,58,10,0" FontWeight="SemiBold" HorizontalAlignment="Right" />
 				</Grid>
 				<StackPanel x:Name="bottomAppBar_RightCommands" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-					<Button x:Name="skipBackButton" x:Uid="MainPage/RewindButton" Style="{StaticResource SkipBackAppBarButtonStyle}" IsEnabled="False" Click="skipBackButton_Click" />
-					<local:AppBarToggleButton x:Name="playButton" x:Uid="MainPage/PlayButton" Style="{StaticResource PlayAppBarButtonStyle}" CheckedStyle="{StaticResource PauseAppBarButtonStyle}" Click="playButton_Click" />
-					<Button x:Name="skipAheadButton" x:Uid="MainPage/SkipButton" Style="{StaticResource SkipAheadAppBarButtonStyle}" IsEnabled="False" Click="skipAheadButton_Click" />
-					<local:AppBarToggleButton x:Name="volumeButton" Style="{StaticResource VolumeAppBarButtonStyle}" CheckedStyle="{StaticResource MuteAppBarButtonStyle}" AutomationProperties.Name="{Binding VolumeDisplayLabel, Source={StaticResource ACProxy}}" Click="volumeButton_Click" />
+					<Button x:Name="skipBackButton" x:Uid="MainPage/RewindButton" Style="{StaticResource SkipBackAppBarButtonStyle}" IsEnabled="False" Tapped="skipBackButton_Tapped" />
+					<local:AppBarToggleButton x:Name="playButton" x:Uid="MainPage/PlayButton" Style="{StaticResource PlayAppBarButtonStyle}" CheckedStyle="{StaticResource PauseAppBarButtonStyle}" Tapped="playButton_Tapped" />
+					<Button x:Name="skipAheadButton" x:Uid="MainPage/SkipButton" Style="{StaticResource SkipAheadAppBarButtonStyle}" IsEnabled="False" Tapped="skipAheadButton_Tapped" />
+					<local:AppBarToggleButton x:Name="volumeButton" Style="{StaticResource VolumeAppBarButtonStyle}" CheckedStyle="{StaticResource MuteAppBarButtonStyle}" AutomationProperties.Name="{Binding VolumeDisplayLabel, Source={StaticResource ACProxy}}" Tapped="volumeButton_Tapped" />
 				</StackPanel>
 			</Grid>
 		</AppBar>

@@ -382,7 +382,7 @@ namespace TuneOut
 
 		#region Top app bar commands
 
-		private void navigateOpenQueueButton_Click(object sender, RoutedEventArgs e)
+		private void navigateOpenQueueButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			if (IsQueueOverlayShown)
 			{
@@ -394,12 +394,12 @@ namespace TuneOut
 			}
 		}
 
-		private void navigateToAlbumsButton_Click(object sender, RoutedEventArgs e)
+		private void navigateToAlbumsButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			PageMode = typeof(Album);
 		}
 
-		private void navigateToPlaylistsButton_Click(object sender, RoutedEventArgs e)
+		private void navigateToPlaylistsButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			PageMode = typeof(Playlist);
 		}
@@ -408,7 +408,7 @@ namespace TuneOut
 
 		#region Bottom app bar commands
 
-		private void playButton_Click(object sender, object e)
+		private void playButton_Tapped(object sender, object e)
 		{
 			if (AudioController.Default.Status == AudioControllerStatus.Inactive)
 			{
@@ -425,13 +425,13 @@ namespace TuneOut
 			}
 		}
 
-		private void volumeButton_Click(object sender, RoutedEventArgs e)
+		private void volumeButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			// Show the volume controls
 			_volumeFlyout.Show(volumeButton, PlacementMode.Top, null);
 		}
 
-		private void skipBackButton_Click(object sender, RoutedEventArgs e)
+		private void skipBackButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			if (AudioController.Default.Status == AudioControllerStatus.Playing || AudioController.Default.Status == AudioControllerStatus.Paused)
 			{
@@ -439,7 +439,7 @@ namespace TuneOut
 			}
 		}
 
-		private void skipAheadButton_Click(object sender, RoutedEventArgs e)
+		private void skipAheadButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			if (AudioController.Default.Status == AudioControllerStatus.Playing || AudioController.Default.Status == AudioControllerStatus.Paused)
 			{
@@ -447,17 +447,17 @@ namespace TuneOut
 			}
 		}
 
-		private void clearQueueSelectionButton_Click(object sender, RoutedEventArgs e)
+		private void clearQueueSelectionButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			queueListView.SelectedItems.Clear();
 		}
 
-		private void clearAlbumSelectionButton_Click(object sender, RoutedEventArgs e)
+		private void clearAlbumSelectionButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			albumDetailListView.SelectedItems.Clear();
 		}
 
-		private void addSelectionToQueueButton_Click(object sender, RoutedEventArgs e)
+		private void addSelectionToQueueButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			AudioController.Default.Add(albumDetailListView.SelectedItems
 				.Cast<IndexedTrack>()
@@ -471,7 +471,7 @@ namespace TuneOut
 			albumDetailListView.SelectedItems.Clear();
 		}
 
-		private void deleteSelectionFromQueueButton_Click(object sender, RoutedEventArgs e)
+		private void deleteSelectionFromQueueButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			var itemsToDelete = queueListView.SelectedItems.Cast<UniqueTrack>().ToList();
 			foreach (UniqueTrack t in itemsToDelete)
@@ -536,7 +536,7 @@ namespace TuneOut
 			this.ShowAppBars();
 		}
 
-		private void albumDetailListView_ItemPlayButton_Click(object sender, RoutedEventArgs e)
+		private void albumDetailListView_ItemPlayButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			FrameworkElement senderElement;
 			if ((senderElement = sender as FrameworkElement) != null
@@ -562,7 +562,7 @@ namespace TuneOut
 			}
 		}
 
-		private void playAllButton_Click(object sender, RoutedEventArgs e)
+		private void playAllButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			if (AudioController.Default.UserMutatedQueue)
 			{
@@ -581,7 +581,7 @@ namespace TuneOut
 			}
 		}
 
-		private void shuffleAllButton_Click(object sender, RoutedEventArgs e)
+		private void shuffleAllButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			if (AudioController.Default.UserMutatedQueue)
 			{
@@ -600,7 +600,7 @@ namespace TuneOut
 			}
 		}
 
-		private void queueAllButton_Click(object sender, RoutedEventArgs e)
+		private void queueAllButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			AudioController.Default.Add(CurrentSelection.TrackList, true);
 		}
@@ -619,7 +619,7 @@ namespace TuneOut
 			this.ShowAppBars();
 		}
 
-		private void queueListView_ItemPlayButton_Click(object sender, RoutedEventArgs e)
+		private void queueListView_ItemPlayButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			FrameworkElement senderElement;
 			if ((senderElement = sender as FrameworkElement) != null
@@ -639,7 +639,7 @@ namespace TuneOut
 			VisualStateManager.GoToState(this, "OverlayMessage", true);
 		}
 
-		private void messageClearButton_Click(object sender, RoutedEventArgs e)
+		private void messageClearButton_Tapped(object sender, RoutedEventArgs e)
 		{
 			VisualStateManager.GoToState(this, "NoOverlayMessage", true);
 		}

@@ -159,6 +159,6 @@
 			<Run x:Uid="FirstRunPage/MacPath" FontWeight="Bold" />
 		</TextBlock>
 
-		<Button x:Name="BrowseButton" x:Uid="FirstRunPage/BrowseButton" Grid.Row="3" Margin="40,0" HorizontalAlignment="Right" Click="BrowseButton_Click" />
+		<Button x:Name="BrowseButton" x:Uid="FirstRunPage/BrowseButton" Grid.Row="3" Margin="40,0" HorizontalAlignment="Right" Tapped="BrowseButton_Tapped" />
 	</Grid>
 </common:LayoutAwarePage>
