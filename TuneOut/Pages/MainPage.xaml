@@ -143,7 +143,7 @@
 			</Grid>
 		</Grid>
 
-		<Grid x:Name="queueOverlay" Canvas.ZIndex="10" IsHitTestVisible="False">
+		<Grid x:Name="queueOverlay" Canvas.ZIndex="10" IsHitTestVisible="False" Visibility="Collapsed">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="queueOverlayCol1" Width="500" />
 				<ColumnDefinition x:Name="queueOverlayCol2" Width="*" />
@@ -191,7 +191,7 @@
 			</Grid>
 		</Grid>
 
-		<Grid x:Name="messageBar" Canvas.ZIndex="100" Visibility="Collapsed">
+		<Grid x:Name="messageBar" Canvas.ZIndex="100" Visibility="Collapsed" IsHitTestVisible="False">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
@@ -521,13 +521,6 @@
 						</ObjectAnimationUsingKeyFrames>
 						<FadeInThemeAnimation TargetName="queueOverlay" />
 						<PopInThemeAnimation TargetName="queueContentsGrid" FromHorizontalOffset="-300" />
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Selector.SelectedIndex)" Storyboard.TargetName="queueListView">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<x:Int32>-1</x:Int32>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="queueOverlay">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -541,6 +534,7 @@
 			<VisualStateGroup x:Name="OverlayAlbumDetailStates">
 				<VisualState x:Name="NoOverlayAlbum">
 					<Storyboard>
+						<FadeOutThemeAnimation TargetName="albumDetailOverlay"/>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="albumDetailOverlay">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -548,18 +542,10 @@
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
-						<FadeOutThemeAnimation TargetName="albumDetailOverlay"/>
 					</Storyboard>
 				</VisualState>
 				<VisualState x:Name="OverlayAlbum">
 					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="albumDetailOverlay">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Visible</Visibility>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
 						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="albumDetailOverlay">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
@@ -568,6 +554,13 @@
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
 						<FadeInThemeAnimation TargetName="albumDetailOverlay"/>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="albumDetailOverlay">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Visible</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
@@ -575,10 +568,10 @@
 				<VisualState x:Name="NoOverlayMessage">
 					<Storyboard>
 						<PopOutThemeAnimation TargetName="messageBar"/>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="messageBar">
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="messageBar">
 							<DiscreteObjectKeyFrame KeyTime="0">
 								<DiscreteObjectKeyFrame.Value>
-									<x:Boolean>False</x:Boolean>
+									<Visibility>Visible</Visibility>
 								</DiscreteObjectKeyFrame.Value>
 							</DiscreteObjectKeyFrame>
 						</ObjectAnimationUsingKeyFrames>
@@ -587,6 +580,20 @@
 				<VisualState x:Name="OverlayMessage">
 					<Storyboard>
 						<PopInThemeAnimation TargetName="messageBar" FromHorizontalOffset="0" FromVerticalOffset="-100"/>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="messageBar">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<x:Boolean>True</x:Boolean>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="messageBar">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Visible</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>

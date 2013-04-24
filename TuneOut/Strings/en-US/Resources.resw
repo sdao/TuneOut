@@ -183,10 +183,6 @@
     <value>Show the queue</value>
     <comment>Capitalized</comment>
   </data>
-  <data name="MainPage/QueuePaneTitle.Text" xml:space="preserve">
-    <value>Queue</value>
-    <comment>Title of Queue flyout</comment>
-  </data>
   <data name="FirstRunPage/BrowseButton.Content" xml:space="preserve">
     <value>Browse for iTunes Library…</value>
   </data>

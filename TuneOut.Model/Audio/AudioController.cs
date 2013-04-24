@@ -938,11 +938,13 @@ namespace TuneOut.Audio
 
 			try
 			{
-				//Test error message bar
-				//if (new Random().NextDouble() > 0.5)
-				//{
-				//	throw new Exception();
-				//}
+
+#if SIMULATE_FAILURE
+				if (new Random().NextDouble() > 0.5)
+				{
+					throw new Exception();
+				}
+#endif
 
 				var file = await StorageFile.GetFileFromPathAsync(Current.Location);
 				var stream = await file.OpenReadAsync(TunesDataSource.Default.LibraryOS);

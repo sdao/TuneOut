@@ -331,6 +331,7 @@ namespace TuneOut
 					if (_IsAlbumOverlayShown)
 					{
 						IsQueueOverlayShown = false; // Only one at a time
+
 						VisualStateManager.GoToState(this, "OverlayAlbum", true);
 						this.ShowAppBars();
 					}
@@ -362,7 +363,9 @@ namespace TuneOut
 					if (_IsQueueOverlayShown)
 					{
 						IsAlbumOverlayShown = false; // Only one at a time
+
 						VisualStateManager.GoToState(this, "OverlayQueue", true);
+						queueListView.SelectedItems.Clear();
 						this.ShowAppBars();
 					}
 					else

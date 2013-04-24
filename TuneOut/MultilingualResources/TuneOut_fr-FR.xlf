@@ -90,11 +90,6 @@
           <target state="translated">File d'attente de lecture</target>
           <note from="MultilingualBuild" priority="2" annotates="source">Capitalized</note>
         </trans-unit>
-        <trans-unit id="Resources\MainPage\QueuePaneTitle\Text" translate="yes" xml:space="preserve">
-          <source>Queue</source>
-          <target state="translated">File d'attente</target>
-          <note from="MultilingualBuild" priority="2" annotates="source">Title of Queue flyout</note>
-        </trans-unit>
         <trans-unit id="Resources\FirstRunPage\BrowseButton\Content" translate="yes" xml:space="preserve">
           <source>Browse for iTunes Library…</source>
           <target state="translated">Rechercher votre bibliothèque iTunes...</target>
