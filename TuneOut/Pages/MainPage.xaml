@@ -193,7 +193,7 @@
 			</Grid>
 		</Grid>
 
-		<Grid x:Name="messageBar" Canvas.ZIndex="100">
+		<Grid x:Name="messageBar" Canvas.ZIndex="100" Visibility="Collapsed">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />

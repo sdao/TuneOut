@@ -209,6 +209,8 @@ namespace TuneOut
 
 			if (navigationContainer != null)
 			{
+				IsAlbumOverlayShown = true;
+
 				// Delay scrolling after animation
 				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
 				{
@@ -220,12 +222,6 @@ namespace TuneOut
 						albumDetailListView.SelectedIndex = navigationContainer.IndexOf(navigationItem);
 						albumDetailListView.ScrollIntoView(albumDetailListView.SelectedItem);
 					}
-
-					// Give the user a bit of time (0.5 seconds) to collect their thoughts
-					// and for the animation to complete
-					await Task.Delay(500);
-
-					IsAlbumOverlayShown = true;
 				});
 			}
 			else if (scroll > double.Epsilon) // Don't scroll if scroll is negative or less than Epsilon
