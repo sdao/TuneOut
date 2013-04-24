@@ -20,16 +20,11 @@ namespace TuneOut.Audio
 
 		private static readonly LastFmScrobbler _Default = new LastFmScrobbler();
 		private static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-		private static readonly HttpClient __client = new HttpClient();
+		private static readonly HttpClient __client = LastFmApiSecrets.GetHttpClient();
 
 		private AudioController _AudioController;
 		private string _session = null;
 		private string _username = null;
-
-		static LastFmScrobbler()
-		{
-			__client.DefaultRequestHeaders.Add("user-agent", LastFmApiSecrets.LASTFMAPI_USERAGENT);
-		}
 
 		/// <summary>
 		/// Creates a new LastFmScrobbler.
@@ -214,7 +209,7 @@ namespace TuneOut.Audio
 
 			if (Session != null && NetworkStatusManager.Default.IsInternetAvailable)
 			{
-				IAsyncOperation<bool> asyncOp = NowPlayingAsync(t);
+				NowPlayingAsync(t);
 			}
 		}
 
@@ -229,7 +224,7 @@ namespace TuneOut.Audio
 
 			if (Session != null && NetworkStatusManager.Default.IsInternetAvailable)
 			{
-				IAsyncOperation<bool> asyncOp = ScrobbleAsync(t, (int)time.Subtract(UNIX_EPOCH).TotalSeconds);
+				ScrobbleAsync(t, (int)time.Subtract(UNIX_EPOCH).TotalSeconds);
 			}
 		}
 
@@ -273,12 +268,11 @@ namespace TuneOut.Audio
 		/// Sends a Now Playing message to Last.fm.
 		/// </summary>
 		/// <param name="t">The track that is now playing.</param>
-		/// <returns>An async Task.</returns>
-		private IAsyncOperation<bool> NowPlayingAsync(Track t)
+		private async void NowPlayingAsync(Track t)
 		{
 			Contract.Requires(t != null);
 
-			return Task.Run(async () =>
+			await Task.Run(async () =>
 			{
 				try
 				{
@@ -308,19 +302,18 @@ namespace TuneOut.Audio
 				}
 
 				return true;
-			}).AsAsyncOperation();
+			});
 		}
 		/// <summary>
 		/// Sends a Scrobble request to Last.fm.
 		/// </summary>
 		/// <param name="t">The track to scrobble.</param>
 		/// <param name="timeStamp">The UNIX timestamp that the track started playing.</param>
-		/// <returns>An async Task.</returns>
-		private IAsyncOperation<bool> ScrobbleAsync(Track t, int timeStamp)
+		private async void ScrobbleAsync(Track t, int timeStamp)
 		{
 			Contract.Requires(t != null);
 
-			return Task.Run(async () =>
+			await Task.Run(async () =>
 			{
 				try
 				{
@@ -351,7 +344,7 @@ namespace TuneOut.Audio
 					return false;
 				}
 				return true;
-			}).AsAsyncOperation();
+			});
 		}
 	}
 }

@@ -14,7 +14,10 @@ namespace TuneOut.AppData
 		static Settings()
 		{
 			Contract.Assume(Windows.Storage.ApplicationData.Current != null);
+
 			_local = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+			Settings.CleanArtworkCache();
 		}
 
 		/// <summary>
@@ -51,17 +54,32 @@ namespace TuneOut.AppData
 
 		/// <summary>
 		/// Gets or sets the <seealso cref="Guid"/> that labels the current <seealso cref="Windows.Storage.ApplicationDataContainer"/> used for album artwork.
+		/// If the stored value is equal to <seealso cref="Guid.Empty"/>, a new value will be generated and stored on the next request.
 		/// </summary>
 		internal static Guid ArtContainerGuid
 		{
 			get
 			{
-				return GetValue<Guid>("ArtGuid");
+				Guid current = GetValue<Guid>("ArtGuid");
+
+				if (current == Guid.Empty)
+				{
+					current = Guid.NewGuid();
+					_local.Values["ArtGuid"] = current;
+				}
+
+				return current;
 			}
 
 			set
 			{
-				_local.Values["ArtGuid"] = value;
+				Guid current = GetValue<Guid>("ArtGuid");
+
+				if (current != value)
+				{
+					_local.DeleteContainer(ArtContainerGuid.ToString());
+					_local.Values["ArtGuid"] = value;
+				}
 			}
 		}
 
@@ -180,7 +198,7 @@ namespace TuneOut.AppData
 		/// Sets the library location.
 		/// </summary>
 		/// <param name="cache">The new library location.</param>
-		public static void SetLibraryLocation(Windows.Storage.StorageFolder cache)
+		public static void SetLibraryLocation(Windows.Storage.IStorageFolder cache)
 		{
 			Contract.Assume(Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList != null);
 
@@ -251,41 +269,9 @@ namespace TuneOut.AppData
 		}
 
 		/// <summary>
-		/// Creates a new artwork cache.
-		/// </summary>
-		/// <returns>The <see cref="System.Guid"/> of the new cache.</returns>
-		internal static Guid CreateArtworkCache()
-		{
-			var current = ArtContainerGuid;
-			if (current == Guid.Empty)
-			{
-				var x = Guid.NewGuid();
-				ArtContainerGuid = x;
-				return x;
-			}
-			else
-			{
-				return current;
-			}
-		}
-
-		/// <summary>
-		/// Invalidates the current artwork cache and creates a new one.
-		/// </summary>
-		/// <returns>The <see cref="System.Guid"/> of the new cache.</returns>
-		public static Guid ResetArtworkCache()
-		{
-			_local.DeleteContainer(ArtContainerGuid.ToString());
-
-			Guid x = Guid.NewGuid();
-			ArtContainerGuid = x;
-			return x;
-		}
-
-		/// <summary>
 		/// Deletes any album artwork containers that are not the current one in the local storage.
 		/// </summary>
-		internal static async void CleanArtworkCache()
+		private static async void CleanArtworkCache()
 		{
 			try
 			{

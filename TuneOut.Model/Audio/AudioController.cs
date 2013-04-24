@@ -741,9 +741,14 @@ namespace TuneOut.Audio
 		{
 			add
 			{
-				lock (_syncRoot)
+				if (value != null)
 				{
-					_StatusChanged += value;
+					lock (_syncRoot)
+					{
+						_StatusChanged += value;
+					}
+
+
 					value(this, new AudioControllerStatusEventArgs(Status));
 				}
 			}

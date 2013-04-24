@@ -76,7 +76,7 @@ namespace TuneOut.Audio
 		/// <param name="firstRunComplete">Optional. Default is false. The value to which <seealso cref="Settings.IsFirstRunComplete"/> will be set after the reset is performed.</param>
 		public static void Reset(bool firstRunComplete = false)
 		{
-			Settings.ResetArtworkCache();
+			Settings.ArtContainerGuid = Guid.Empty;
 			Settings.LastLibraryUpdate = DateTimeOffset.MinValue;
 			Settings.IsFirstRunComplete = firstRunComplete;
 			Settings.SetLibraryLocation(null);

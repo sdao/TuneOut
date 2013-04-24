@@ -375,7 +375,7 @@ namespace TuneOut
 					}
 					else throw new ArgumentOutOfRangeException("index");
 				}
-				else throw new ArgumentException("value");
+				else throw new ArgumentException("value must be of type " + typeof(T).Name, "value");
 			}
 		}
 
@@ -385,7 +385,7 @@ namespace TuneOut
 			{
 				return Enqueue((T)value);
 			}
-			else throw new ArgumentException("value");
+			else throw new ArgumentException("value must be of type " + typeof(T).Name, "value");
 		}
 
 		void IList.Clear()
@@ -421,7 +421,7 @@ namespace TuneOut
 				}
 				else throw new ArgumentOutOfRangeException("index");
 			}
-			else throw new ArgumentException("value");
+			else throw new ArgumentException("value must be of type " + typeof(T).Name, "value");
 		}
 		void IList.Remove(object value)
 		{
@@ -429,7 +429,7 @@ namespace TuneOut
 			{
 				Remove((T)value);
 			}
-			else throw new ArgumentException("value");
+			else throw new ArgumentException("value must be of type " + typeof(T).Name, "value");
 		}
 
 		void IList.RemoveAt(int index)
@@ -468,7 +468,7 @@ namespace TuneOut
 					array.SetValue(_backing[QueueToBackingIndex(i)], index + i);
 				}
 			}
-			else throw new ArgumentException("array");
+			else throw new ArgumentException("array is too small", "array");
 		}
 		#endregion ICollection implementation
 

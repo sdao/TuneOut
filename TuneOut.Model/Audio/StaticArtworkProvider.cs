@@ -5,8 +5,6 @@ namespace TuneOut.Audio
 {
 	internal class StaticArtworkProvider : IArtworkProvider
 	{
-		public static readonly StaticArtworkProvider UNKNOWN = new StaticArtworkProvider(Defaults.UnknownArtwork);
-
 		private readonly Uri _Image = null;
 
 		public StaticArtworkProvider(Uri artUri)

@@ -1,4 +1,6 @@
-﻿namespace TuneOut.AppData
+﻿using System.Net.Http;
+
+namespace TuneOut.AppData
 {
 	/// <summary>
 	/// Contains Last.fm API constants that should not be revealed.
@@ -20,5 +22,12 @@
 		internal const string LASTFMAPI_TRACK_UPDATENOWPLAYING_FORMAT = "method=track.updatenowplaying&api_key=[*INSERT API KEY HERE*]&api_sig={4}&artist={0}&track={1}&album={2}&sk={3}";
 		internal const string LASTFMAPI_TRACK_UPDATENOWPLAYING_SIGN_FORMAT = "album{2}api_key[*INSERT API KEY HERE*]artist{0}methodtrack.updatenowplayingsk{3}track{1}[*INSERT SHARED SECRET HERE*]";
 		internal const string LASTFMAPI_USERAGENT = "TuneOut/1.0";
+
+		internal static HttpClient GetHttpClient()
+		{
+			var client = new HttpClient();
+			client.DefaultRequestHeaders.Add("user-agent", LastFmApiSecrets.LASTFMAPI_USERAGENT);
+			return client;
+		}
 	}
 }

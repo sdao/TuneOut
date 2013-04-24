@@ -16,7 +16,7 @@ namespace TuneOut.Audio
 	{
 		private const int DOWNLOAD_THROTTLE_RATE = 10;
 
-		private static readonly HttpClient __client = new HttpClient();
+		private static readonly HttpClient __client = LastFmApiSecrets.GetHttpClient();
 		private static readonly BackgroundDownloader __downloader = new BackgroundDownloader();
 		private static readonly SemaphoreSlim __semaphore = new SemaphoreSlim(DOWNLOAD_THROTTLE_RATE);
 
@@ -24,13 +24,6 @@ namespace TuneOut.Audio
 
 		private Uri _cachedUri;
 		private bool _queried;
-
-		static LastFmArtworkProvider()
-		{
-			Settings.CreateArtworkCache();
-			Settings.CleanArtworkCache();
-			__client.DefaultRequestHeaders.Add("user-agent", LastFmApiSecrets.LASTFMAPI_USERAGENT);
-		}
 
 		public LastFmArtworkProvider(Album album)
 		{
