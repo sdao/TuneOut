@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="30162PamplemousseSoftware.TuneOut" Publisher="CN=8732D267-6CC3-45C4-9CD6-AF5542A99A23" Version="1.0.0.6" />
+  <Identity Name="30162PamplemousseSoftware.TuneOut" Publisher="CN=8732D267-6CC3-45C4-9CD6-AF5542A99A23" Version="1.0.0.8" />
   <Properties>
     <DisplayName>TuneOut</DisplayName>
     <PublisherDisplayName>Pamplemousse Software</PublisherDisplayName>

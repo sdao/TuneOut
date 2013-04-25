@@ -347,6 +347,8 @@ namespace TuneOut
 						VisualStateManager.GoToState(this, "NoOverlayAlbum", true);
 						albumDetailListView.SelectedItems.Clear();
 						this.ShowAppBars();
+
+						ScrollZeroAlbumDetailListView();
 					}
 				}
 			}
@@ -714,6 +716,15 @@ namespace TuneOut
 				BottomAppBar.IsSticky = false;
 				BottomAppBar.IsOpen = false;
 			}
+		}
+
+		/// <summary>
+		/// Scrolls the <seealso cref="albumDetailListView"/> to zero after a delay, so that the scrolling is invisible to the user.
+		/// </summary>
+		private async void ScrollZeroAlbumDetailListView()
+		{
+			await Task.Delay(200);
+			FindVisualChild<ScrollViewer>(albumDetailListView).ScrollToVerticalOffset(0d);
 		}
 	}
 }
