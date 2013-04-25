@@ -174,13 +174,13 @@
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="60" />
+									<ColumnDefinition Width="70" />
 								</Grid.ColumnDefinitions>
 								<StackPanel Grid.Column ="0" Orientation="Vertical">
 									<TextBlock Text="{Binding Track.Title}" FontSize="18" Margin="10,5,0,0" TextTrimming="WordEllipsis" />
-									<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,0" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
+									<TextBlock Text="{Binding Track.Artist}" FontSize="13" Margin="10,0,0,10" TextTrimming="WordEllipsis" FontWeight="SemiBold" />
 								</StackPanel>
-								<Button Grid.Column="1" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Margin="0,5,10,5" Tapped="queueListView_ItemPlayButton_Tapped" HorizontalAlignment="Center" VerticalAlignment="Center" />
+								<Button Grid.Column="1" Style="{StaticResource RoundButtonStyleLight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Tag="{Binding}" Content="" Tapped="queueListView_ItemPlayButton_Tapped" HorizontalAlignment="Left" VerticalAlignment="Center" />
 							</Grid>
 						</DataTemplate>
 					</ListView.ItemTemplate>

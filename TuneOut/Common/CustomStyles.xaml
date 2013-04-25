@@ -660,7 +660,7 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 						<StackPanel Orientation="Horizontal" Margin="0,2,0,2">
-							<Grid Width="40" Height="40" HorizontalAlignment="Center">
+							<Grid Width="40" Height="40" HorizontalAlignment="Center" Margin="9,0">
 								<TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0" Foreground="{StaticResource AppBarItemBackgroundThemeBrushLight}" />
 								<TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0" />
 								<ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="-1,-1,0,0" VerticalAlignment="Center" />
@@ -669,7 +669,7 @@
 								x:Name="TextLabel"
 								Text="{TemplateBinding AutomationProperties.Name}"
 								Foreground="{StaticResource AppBarItemForegroundThemeBrushLight}"
-								Margin="9,9,0,0"
+								Margin="0,9,0,0"
 								FontSize="16"
 								TextTrimming="WordEllipsis"
 								Style="{StaticResource BasicTextStyle}" FontWeight="SemiBold" />
@@ -810,7 +810,7 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 						<StackPanel Orientation="Horizontal" Margin="0,2,0,2">
-							<Grid Width="40" Height="40" HorizontalAlignment="Center">
+							<Grid Width="40" Height="40" HorizontalAlignment="Center" Margin="9,0">
 								<TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0" Foreground="{StaticResource AppBarItemBackgroundThemeBrush}" />
 								<TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0" />
 								<ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="-1,-1,0,0" VerticalAlignment="Center" />
@@ -819,7 +819,7 @@
 								x:Name="TextLabel"
 								Text="{TemplateBinding AutomationProperties.Name}"
 								Foreground="{StaticResource AppBarItemForegroundThemeBrush}"
-								Margin="9,9,0,0"
+								Margin="0,9,0,0"
 								FontSize="16"
 								TextTrimming="WordEllipsis"
 								Style="{StaticResource BasicTextStyle}" FontWeight="SemiBold" />
