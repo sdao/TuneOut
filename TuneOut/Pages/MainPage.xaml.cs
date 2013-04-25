@@ -98,8 +98,15 @@ namespace TuneOut
 		/// <param name="pageState">An wasEmpty dictionary to be populated with serializable state.</param>
 		protected override void SaveState(Dictionary<String, Object> pageState)
 		{
-			pageState["PageMode"] = this.PageMode.AssemblyQualifiedName;
-			pageState["AlbumScroll"] = FindVisualChild<ScrollViewer>(albumGridView).HorizontalOffset;
+			if (PageMode != null)
+			{
+				pageState["PageMode"] = this.PageMode.AssemblyQualifiedName;
+			}
+
+			if (albumGridView != null)
+			{
+				pageState["AlbumScroll"] = FindVisualChild<ScrollViewer>(albumGridView).HorizontalOffset;
+			}
 		}
 
 		/// <summary>
@@ -212,7 +219,7 @@ namespace TuneOut
 				IsAlbumOverlayShown = true;
 
 				// Delay scrolling after animation
-				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
 					CurrentSelection = navigationContainer;
 					albumGridView.ScrollIntoView(CurrentSelection);

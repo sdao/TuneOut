@@ -124,7 +124,7 @@
         </trans-unit>
         <trans-unit id="Resources\Legal\Privacy\Content\Text" translate="yes" xml:space="preserve">
           <source>TuneOut uses your Internet connection to download album art and to connect to Last.fm</source>
-          <target state="translated">TuneOut utilise votre connexion Internet pour télécharger des pochettes d'album et pour vous connecter à Last.fm</target>
+          <target state="translated">TuneOut utilise votre connexion Internet pour télécharger les pochettes d'album et pour vous connecter à Last.fm</target>
         </trans-unit>
         <trans-unit id="Resources\Legal\Privacy\Header\Text" translate="yes" xml:space="preserve">
           <source>Privacy Policy</source>
@@ -144,22 +144,17 @@
           <note from="MultilingualBuild" priority="2" annotates="source">Must end with a non-breaking space (U+00a0)</note>
         </trans-unit>
         <trans-unit id="Resources\Settings\Internet\ForceDownloadSwitch\Header" translate="yes" xml:space="preserve">
-          <source>Download album art even when roaming</source>
-          <target state="translated">Télécharger des pochettes en itinérance</target>
+          <source>Always download album art</source>
+          <target state="translated">Toujours télécharger les pochettes</target>
         </trans-unit>
         <trans-unit id="Resources\Settings\Internet\Header\Text" translate="yes" xml:space="preserve">
           <source>Internet</source>
           <target state="translated" state-qualifier="mt-suggestion">Internet</target>
         </trans-unit>
-        <trans-unit id="Resources\Settings\Internet\Instructions1\Text" translate="yes" xml:space="preserve">
-          <source>Last.fm scrobbling always occurs when Internet is available</source>
-          <target state="translated">Le scrobbling sur Last.fm se produit toujours lorsqu'une connexion Internet est disponible</target>
-          <note from="MultilingualBuild" priority="2" annotates="source">Instructions about Last.fm scrobbling always occurring</note>
-        </trans-unit>
-        <trans-unit id="Resources\Settings\Internet\Instructions2\Text" translate="yes" xml:space="preserve">
-          <source>However, by default, album art is not downloaded when roaming</source>
-          <target state="translated">Toutefois, par défaut, TuneOut ne télécharge pas de pochettes d'album avec une connexion en itinérance</target>
-          <note from="MultilingualBuild" priority="2" annotates="source">Instructions about album art downloading</note>
+        <trans-unit id="Resources\Settings\Internet\Instructions\Text" translate="yes" xml:space="preserve">
+          <source>By default, TuneOut does not download album art on limited Internet connections</source>
+          <target state="translated">Par défaut, TuneOut ne télécharge pas de pochettes d'album sur les réseaux avec un forfait plafonné</target>
+          <note from="MultilingualBuild" priority="2" annotates="source">Instructions about Internet connection usage</note>
         </trans-unit>
         <trans-unit id="Resources\Settings\LastFm\Header\Text" translate="yes" xml:space="preserve">
           <source>Last.fm</source>

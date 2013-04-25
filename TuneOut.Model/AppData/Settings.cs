@@ -9,15 +9,12 @@ namespace TuneOut.AppData
 	/// </summary>
 	public static class Settings
 	{
-		private static Windows.Storage.ApplicationDataContainer _local;
+		private static Windows.Storage.ApplicationDataContainer _local = GetLocalSettings();
 
-		static Settings()
+		private static Windows.Storage.ApplicationDataContainer GetLocalSettings()
 		{
 			Contract.Assume(Windows.Storage.ApplicationData.Current != null);
-
-			_local = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-			Settings.CleanArtworkCache();
+			return Windows.Storage.ApplicationData.Current.LocalSettings;
 		}
 
 		/// <summary>
@@ -213,7 +210,7 @@ namespace TuneOut.AppData
 		}
 
 		/// <summary>
-		/// Adds an item to the artwork cache.
+		/// Gets an item from the artwork cache.
 		/// </summary>
 		/// <param name="trackID">The item's ID.</param>
 		/// <returns>A CacheReceipt that indicates the success of the request and the Uri of the image, if possible.</returns>
@@ -270,8 +267,9 @@ namespace TuneOut.AppData
 
 		/// <summary>
 		/// Deletes any album artwork containers that are not the current one in the local storage.
+		/// API consumers should periodically call this function during normal app operation.
 		/// </summary>
-		private static async void CleanArtworkCache()
+		public static async void CleanArtworkCache()
 		{
 			try
 			{

@@ -58,6 +58,9 @@ namespace TuneOut
 				await Navigate(typeof(FirstRunPage), args.Arguments, args.PreviousExecutionState, NavigationReplacementMode.ReplaceIfDifferent, false);
 			}
 
+			// Clean artwork cache if possible
+			AppData.Settings.CleanArtworkCache();
+
 			// Load settings charm
 			SettingsUIManager.LoadSettingsCharm();
 		}
@@ -91,6 +94,9 @@ namespace TuneOut
 			await TunesDataSource.Load();
 
 			await Navigate(typeof(SearchResultsPage), args.QueryText, args.PreviousExecutionState, NavigationReplacementMode.AlwaysReplace, false);
+
+			// Clean artwork cache if possible
+			AppData.Settings.CleanArtworkCache();
 
 			// Load settings charm
 			SettingsUIManager.LoadSettingsCharm();

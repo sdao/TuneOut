@@ -224,18 +224,14 @@
     <comment>Must end with a non-breaking space (U+00a0)</comment>
   </data>
   <data name="Settings/Internet/ForceDownloadSwitch.Header" xml:space="preserve">
-    <value>Download album art even when roaming</value>
+    <value>Always download album art</value>
   </data>
   <data name="Settings/Internet/Header.Text" xml:space="preserve">
     <value>Internet</value>
   </data>
-  <data name="Settings/Internet/Instructions1.Text" xml:space="preserve">
-    <value>Last.fm scrobbling always occurs when Internet is available</value>
-    <comment>Instructions about Last.fm scrobbling always occurring</comment>
-  </data>
-  <data name="Settings/Internet/Instructions2.Text" xml:space="preserve">
-    <value>However, by default, album art is not downloaded when roaming</value>
-    <comment>Instructions about album art downloading</comment>
+  <data name="Settings/Internet/Instructions.Text" xml:space="preserve">
+    <value>By default, TuneOut does not download album art on limited Internet connections</value>
+    <comment>Instructions about Internet connection usage</comment>
   </data>
   <data name="Settings/LastFm/Header.Text" xml:space="preserve">
     <value>Last.fm</value>

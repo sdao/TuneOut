@@ -135,7 +135,8 @@
 		<Image x:Name="image" Grid.Row="1" Source="ms-appx:///Assets/FirstRun.png" Height="240" />
 		<ProgressRing x:Name="LoadProgress" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="120" Visibility="Collapsed" Foreground="White" />
 
-		<TextBlock x:Name="textBlock" Grid.Row="2" Style="{StaticResource BodyTextStyle}" Margin="120,0">
+		<Grid Grid.Row="2">
+			<TextBlock x:Name="textBlock" Style="{StaticResource BodyTextStyle}" Margin="120,0">
 			<Run x:Uid="FirstRunPage/IntroText" />
 			<LineBreak />
 			<LineBreak />
@@ -145,9 +146,9 @@
 			<LineBreak />
 			<Run x:Uid="FirstRunPage/MacText" />
 			<Run x:Uid="FirstRunPage/MacPath" FontWeight="Bold" />
-		</TextBlock>
+			</TextBlock>
 
-		<TextBlock x:Name="textBlockError" Grid.Row="2" Style="{StaticResource BodyTextStyle}" Margin="120,0" Visibility="Collapsed">
+			<TextBlock x:Name="textBlockError" Style="{StaticResource BodyTextStyle}" Margin="120,0" Visibility="Collapsed">
 			<Run x:Uid="FirstRunPage/ErrorText" />
 			<LineBreak />
 			<LineBreak />
@@ -157,7 +158,8 @@
 			<LineBreak />
 			<Run x:Uid="FirstRunPage/MacText" />
 			<Run x:Uid="FirstRunPage/MacPath" FontWeight="Bold" />
-		</TextBlock>
+			</TextBlock>
+		</Grid>
 
 		<Button x:Name="BrowseButton" x:Uid="FirstRunPage/BrowseButton" Grid.Row="3" Margin="40,0" HorizontalAlignment="Right" Tapped="BrowseButton_Tapped" />
 	</Grid>
